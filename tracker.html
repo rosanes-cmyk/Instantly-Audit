@@ -347,6 +347,7 @@
   .acct .cap{width:82px;font-variant-numeric:tabular-nums;}
   .acct .numf{display:flex;flex-direction:column;gap:2px;flex:none;}
   .acct .numf .nlab{
+    white-space:nowrap;
     font-family:var(--f-mono);font-size:8.5px;font-weight:600;letter-spacing:.1em;
     text-transform:uppercase;color:var(--ink-3);padding-left:1px;
   }
@@ -1563,7 +1564,7 @@
       statuses:["Active","Warming","Paused","Disconnected","Unknown"], initial:"Active",
       scoreLabel:"deliverability",
       scores:[["5","5 · Healthy"],["4","4 · Minor issues"],["3","3 · Watch"],["2","2 · At risk"],["1","1 · Burned"]],
-      nums:[{key:"cap", ph:"cap/day", label:"Daily send cap"}], group:"domain",
+      nums:[{key:"cap", ph:"per day", label:"Daily cap"}], group:"domain",
       reportPh:"Report — warmup state, reputation, what this inbox sends"
     },
     campaigns: {
@@ -1572,9 +1573,9 @@
       statuses:["Active","Paused","Completed"], initial:"Active",
       scoreLabel:"performance",
       scores:[["5","5 · Performing"],["4","4 · Acceptable"],["3","3 · Watch"],["2","2 · Underperforming"],["1","1 · Failing"]],
-      nums:[{key:"sent", ph:"sent", label:"Emails sent"},
-            {key:"bounced", ph:"bounced", label:"Bounces"},
-            {key:"opps", ph:"opps", label:"Opportunities"}], group:"status",
+      nums:[{key:"sent", ph:"0", label:"Emails sent"},
+            {key:"bounced", ph:"0", label:"Bounces"},
+            {key:"opps", ph:"0", label:"Opportunities"}], group:"status",
       rate:{num:"bounced", den:"sent", label:"bounce rate", thr:"bounce", dp:2},
       reportPh:"Report — who it targets, how many steps, why it is paused"
     }
@@ -1747,7 +1748,7 @@
 
     (cfg.nums || []).forEach(function(n){
       var col = el("div","numf");
-      var lab = el("span","nlab", n.ph);
+      var lab = el("span","nlab", n.label);
       lab.setAttribute("aria-hidden","true");
       var f = document.createElement("input");
       f.type = "number"; f.min = "0"; f.className = "cap";
