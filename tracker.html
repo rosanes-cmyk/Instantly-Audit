@@ -541,6 +541,13 @@
 
   function plural(n, one, many){ return n===1 ? one : many; }
 
+  // Snapshot bodies are frozen (and reused across deliveries), so every one
+  // becomes local state only as a mutable copy — editing a frozen body throws.
+  function thaw(v){
+    try{ return v ? JSON.parse(JSON.stringify(v)) : {}; }
+    catch(e){ return {}; }
+  }
+
   function relTime(iso){
     var t = Date.parse(iso);
     if(isNaN(t)) return "";
@@ -1193,7 +1200,7 @@
     d.doc("state/tasks").onSnapshot(function(snap){
       tasksExists = snap.exists;
       var data = snap.data();
-      if(data) tasks = data;
+      if(data) tasks = thaw(data);
       gotTasks = true;
       renderTasks();
       flushPending();
@@ -1202,7 +1209,7 @@
     d.doc("state/fields").onSnapshot(function(snap){
       fieldsExists = snap.exists;
       var data = snap.data();
-      if(data) fields = data;
+      if(data) fields = thaw(data);
       gotFields = true;
       renderFields();
       flushPending();
