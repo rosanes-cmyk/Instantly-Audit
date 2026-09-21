@@ -345,6 +345,11 @@
   }
   .acct select{min-width:118px;}
   .acct .cap{width:82px;font-variant-numeric:tabular-nums;}
+  .acct .numf{display:flex;flex-direction:column;gap:2px;flex:none;}
+  .acct .numf .nlab{
+    font-family:var(--f-mono);font-size:8.5px;font-weight:600;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--ink-3);padding-left:1px;
+  }
   .acct select:focus,.acct .cap:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft);}
   .acct .del{
     flex:none;width:26px;height:26px;line-height:1;font-size:15px;cursor:pointer;
@@ -1741,14 +1746,20 @@
     top.appendChild(scorePicker(key, cfg, id, e));
 
     (cfg.nums || []).forEach(function(n){
+      var col = el("div","numf");
+      var lab = el("span","nlab", n.ph);
+      lab.setAttribute("aria-hidden","true");
       var f = document.createElement("input");
       f.type = "number"; f.min = "0"; f.className = "cap";
       f.id = n.key + "_" + key + "_" + id;
       f.placeholder = n.ph;
       f.setAttribute("aria-label", n.label + " for " + (e.name || cfg.noun));
+      f.title = n.label;
       f.value = (e[n.key] == null ? "" : e[n.key]);
       bindRosterField(f, key, id, n.key);
-      top.appendChild(f);
+      col.appendChild(lab);
+      col.appendChild(f);
+      top.appendChild(col);
     });
 
     // Two-step delete: no modal, and no single click that loses a report.
