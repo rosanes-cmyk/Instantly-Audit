@@ -558,6 +558,20 @@
     <div class="empty" id="campEmpty">No campaigns recorded yet. Add each one and mark it active or not — a paused campaign nobody knows about is exactly the gap this audit is for.</div>
   </section>
 
+  <section class="sec tabpanel" data-tab="fixes" role="tabpanel" hidden aria-labelledby="fixH">
+    <div class="sechead">
+      <h2 id="fixH">Fixes</h2>
+      <div class="note">Everything the audit found, as work rather than prose — each item with a severity, an owner and a state. Blockers sort to the top. This is the list Cherry can watch close out.</div>
+    </div>
+    <div class="rstats" id="fixStats"></div>
+    <div class="acct-add">
+      <input type="text" id="fixNew" placeholder="What needs fixing" autocomplete="off">
+      <button type="button" class="post" id="fixAddBtn">Add fix</button>
+    </div>
+    <div id="fixList"></div>
+    <div class="empty" id="fixEmpty">No fixes recorded yet.</div>
+  </section>
+
   <section class="sec tabpanel" data-tab="templates" role="tabpanel" hidden aria-labelledby="tplH">
     <div class="sechead">
       <h2 id="tplH">Email Templates</h2>
@@ -631,7 +645,7 @@
       { id:"p1t2", text:"Get a live walkthrough (not just a description) from Lawrence and Seth of what they've actually been monitoring, and how often", ask:"Lawrence · Seth",
         note:"What they check, where they check it, how often" },
       { id:"p1t3", text:"Write down current state: active campaigns, sending accounts, deliverability health, known gaps or complaints",
-        note:"Known gaps, complaints, anything unexplained", block:"state", links:["accounts","campaigns"] }
+        note:"Known gaps, complaints, anything unexplained", block:"state", links:["fixes","accounts","campaigns"] }
     ]},
     { id:"p2", n:2, title:"Define “Working Fine”", target:"Target: hour 2", tasks:[
       { id:"p2t1", text:"List the daily checks Jonathan will run: sequences firing on schedule, no paused or errored campaigns, replies routed with none sitting unread, CRM sync accurate",
@@ -969,6 +983,7 @@
     { id:"map",       label:"System Map" },
     { id:"accounts",  label:"Accounts" },
     { id:"campaigns", label:"Campaigns" },
+    { id:"fixes", label:"Fixes" },
     { id:"templates", label:"Templates" },
     { id:"updates",   label:"Updates" },
     { id:"contacts",  label:"Contacts" }
@@ -1768,12 +1783,24 @@
             {key:"opps", ph:"0", label:"Opportunities"}], group:"status",
       rate:{num:"bounced", den:"sent", label:"bounce rate", thr:"bounce", dp:2},
       reportPh:"Report — who it targets, how many steps, why it is paused"
+    },
+    fixes: {
+      doc:"state/fixes", list:"fixList", stats:"fixStats", empty:"fixEmpty",
+      input:"fixNew", add:"fixAddBtn", noun:"fix", nouns:"fixes",
+      statuses:["Open","In progress","Blocked","Done","Won\u0027t do"], initial:"Open",
+      scoreLabel:"severity", fixMode:true,
+      scores:[["1","1 · Blocker"],["2","2 · High"],["3","3 · Medium"],
+              ["4","4 · Low"],["5","5 · Nice to have"]],
+      picks:[{key:"owner", label:"Owner",
+              options:["Unassigned","Jonathan","Carlo","Cherry","Legal","Lawrence & Seth"]}],
+      nums:[], group:"status",
+      reportPh:"The evidence, and what done looks like"
     }
   };
 
-  var roster = { accounts:{}, campaigns:{} };
-  var rosterExists = { accounts:false, campaigns:false };
-  var pendingRoster = { accounts:{}, campaigns:{} };
+  var roster = { accounts:{}, campaigns:{}, fixes:{} };
+  var rosterExists = { accounts:false, campaigns:false, fixes:false };
+  var pendingRoster = { accounts:{}, campaigns:{}, fixes:{} };
 
   function slug(v){
     return String(v).toLowerCase().replace(/[^a-z0-9]+/g,"_").replace(/^_+|_+$/g,"").slice(0,120);
@@ -1936,6 +1963,27 @@
 
     top.appendChild(scorePicker(key, cfg, id, e));
 
+    (cfg.picks || []).forEach(function(pk){
+      var pcol = el("div","numf");
+      var plab = el("span","nlab", pk.label);
+      plab.setAttribute("aria-hidden","true");
+      var psel = document.createElement("select");
+      psel.id = pk.key + "_" + key + "_" + id;
+      psel.setAttribute("aria-label", pk.label + " for " + (e.name || cfg.noun));
+      pk.options.forEach(function(o){
+        var op = document.createElement("option");
+        op.value = o; op.textContent = o;
+        psel.appendChild(op);
+      });
+      psel.value = e[pk.key] || pk.options[0];
+      psel.addEventListener("change", function(){
+        var patch = {}; patch[pk.key] = psel.value; writeRoster(key, id, patch);
+      });
+      pcol.appendChild(plab);
+      pcol.appendChild(psel);
+      top.appendChild(pcol);
+    });
+
     (cfg.nums || []).forEach(function(n){
       var col = el("div","numf");
       var lab = el("span","nlab", n.label);
@@ -2010,6 +2058,14 @@
       lab.textContent = scoreLabelFor(cfg, sn);
       lab.setAttribute("data-t", scoreTier(sn));
     }
+    (cfg.picks || []).forEach(function(pk){
+      var psel = byId(pk.key + "_" + key + "_" + id);
+      if(psel && document.activeElement !== psel){
+        var pv = e[pk.key] || pk.options[0];
+        if(psel.value !== pv) psel.value = pv;
+      }
+    });
+
     (cfg.nums || []).forEach(function(n){
       var f = byId(n.key + "_" + key + "_" + id);
       if(f && document.activeElement !== f){
@@ -2034,6 +2090,24 @@
     var data = roster[key];
     var active = rosterActive(key);
     var st = scoreStats(ids, data);
+
+    if(cfg.fixMode){
+      var fopen = 0, fdone = 0, fblock = 0;
+      ids.forEach(function(id){
+        var e2 = data[id] || {};
+        if(e2.status === "Done") fdone++;
+        else if(e2.status !== "Won't do"){
+          fopen++;
+          var sc = scoreOf(e2);
+          if(sc !== null && sc <= 1) fblock++;   // severity 1 only
+        }
+      });
+      host.appendChild(chip(plural(ids.length, cfg.noun, cfg.nouns), ids.length, null));
+      host.appendChild(chip("still open", fopen, fopen > 0 ? "warn" : "ok"));
+      if(fblock) host.appendChild(chip(plural(fblock, "blocker", "blockers"), fblock, "crit"));
+      host.appendChild(chip("done", fdone, fdone > 0 ? "ok" : null));
+      return;
+    }
 
     host.appendChild(chip(plural(ids.length, cfg.noun, cfg.nouns), ids.length, null));
     host.appendChild(chip("active", active, active > 0 ? "ok" : "warn"));
@@ -2119,7 +2193,16 @@
     }
 
     byId(cfg.empty).hidden = ids.length > 0;
-    tabCount(key === "accounts" ? "accounts" : "campaigns", ids.length || "", null);
+    if(cfg.fixMode){
+      var stillOpen = 0;
+      ids.forEach(function(id){
+        var st = (roster[key][id] || {}).status;
+        if(st !== "Done" && st !== "Won't do") stillOpen++;
+      });
+      tabCount(key, ids.length ? (stillOpen + "/" + ids.length) : "", stillOpen ? "warn" : "ok");
+    } else {
+      tabCount(key, ids.length || "", null);
+    }
     renderRosterStats(key, ids);
     lockRoster(key);
   }
