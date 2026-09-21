@@ -1568,7 +1568,9 @@
       scoreLabel:"performance",
       scores:[["5","5 · Performing"],["4","4 · Acceptable"],["3","3 · Watch"],["2","2 · Underperforming"],["1","1 · Failing"]],
       nums:[{key:"sent", ph:"sent", label:"Emails sent"},
+            {key:"bounced", ph:"bounced", label:"Bounces"},
             {key:"opps", ph:"opps", label:"Opportunities"}], group:"status",
+      rate:{num:"bounced", den:"sent", label:"bounce rate", thr:"bounce", dp:2},
       reportPh:"Report — who it targets, how many steps, why it is paused"
     }
   };
@@ -1841,6 +1843,21 @@
       host.appendChild(chip(plural(nd, "domain", "domains"), nd, null));
     } else {
       host.appendChild(chip("not active", ids.length - active, null));
+    }
+
+    if(cfg.rate){
+      var num = 0, den = 0;
+      ids.forEach(function(id){
+        var e = data[id] || {};
+        var n = parseFloat(e[cfg.rate.num]), d = parseFloat(e[cfg.rate.den]);
+        if(!isNaN(n)) num += n;
+        if(!isNaN(d)) den += d;
+      });
+      if(den > 0){
+        var r = num / den * 100;
+        var v = verdictFor(cfg.rate.thr, r);
+        host.appendChild(chip(cfg.rate.label, r.toFixed(cfg.rate.dp) + "%", v ? v[0] : null));
+      }
     }
 
     if(st.avg !== null){
