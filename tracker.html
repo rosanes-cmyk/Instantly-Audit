@@ -236,6 +236,49 @@
   .diagram input:disabled{opacity:.6;cursor:not-allowed;}
   .diagram a{font-family:var(--f-mono);font-size:11.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;}
 
+  /* ---------- sending accounts ---------- */
+  .acct-add{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px;align-items:center;}
+  .acct-add input{
+    flex:1;min-width:210px;font-family:var(--f-mono);font-size:12.5px;color:var(--ink);
+    background:var(--surface);border:1px solid var(--rule-strong);border-radius:5px;padding:8px 10px;
+  }
+  .acct-add input::placeholder{color:var(--ink-3);}
+  .acct-add input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft);}
+  .acct-add input:disabled,.acct-add button:disabled{opacity:.5;cursor:not-allowed;}
+  .dgroup{margin-top:24px;}
+  .dgroup-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 11px;padding-bottom:7px;border-bottom:1px solid var(--rule-strong);}
+  .dgroup-head .dn{font-family:var(--f-mono);font-size:12.5px;font-weight:600;color:var(--ink);overflow-wrap:anywhere;}
+  .dgroup-head .dc{font-family:var(--f-mono);font-size:9.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);}
+  .acct{padding:12px 0 13px;border-bottom:1px solid var(--rule);}
+  .acct-top{display:flex;flex-wrap:wrap;gap:9px;align-items:center;}
+  .acct .dot{width:7px;height:7px;border-radius:50%;flex:none;background:var(--ink-3);}
+  .acct[data-st="Active"] .dot{background:var(--ok);}
+  .acct[data-st="Warming"] .dot{background:var(--accent);}
+  .acct[data-st="Paused"] .dot{background:var(--warn);}
+  .acct[data-st="Disconnected"] .dot{background:var(--crit);}
+  .acct .addr{flex:1;min-width:150px;font-family:var(--f-mono);font-size:12.5px;font-weight:600;color:var(--ink);overflow-wrap:anywhere;}
+  .acct select,.acct .cap{
+    font-family:var(--f-mono);font-size:11.5px;color:var(--ink);
+    background:var(--surface);border:1px solid var(--rule-strong);border-radius:5px;padding:5px 7px;
+  }
+  .acct select{min-width:118px;}
+  .acct .cap{width:88px;font-variant-numeric:tabular-nums;}
+  .acct select:focus,.acct .cap:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft);}
+  .acct .del{
+    flex:none;width:26px;height:26px;line-height:1;font-size:15px;cursor:pointer;
+    color:var(--ink-3);background:transparent;border:1px solid var(--rule);border-radius:5px;
+  }
+  .acct .del:hover:not(:disabled){color:var(--crit);border-color:var(--crit);}
+  .acct textarea{
+    display:block;margin-top:9px;width:100%;box-sizing:border-box;resize:none;
+    font-family:var(--f-body);font-size:12.5px;line-height:1.55;color:var(--ink);
+    background:transparent;border:0;border-bottom:1px dashed var(--rule-strong);
+    padding:4px 2px;overflow-y:auto;max-height:200px;
+  }
+  .acct textarea::placeholder{color:var(--ink-3);}
+  .acct textarea:focus{outline:none;border-bottom-color:var(--accent);}
+  .acct select:disabled,.acct .cap:disabled,.acct textarea:disabled,.acct .del:disabled{opacity:.6;cursor:not-allowed;}
+
   /* ---------- log ---------- */
   .cadence{display:inline-flex;align-items:center;gap:7px;font-family:var(--f-mono);font-size:11px;font-weight:600;letter-spacing:.05em;padding:4px 9px;border-radius:5px;border:1px solid var(--rule-strong);background:var(--surface);color:var(--ink-2);}
   .cadence[data-c="ok"]{color:var(--ok);border-color:var(--ok);background:var(--ok-soft);}
@@ -355,6 +398,32 @@
     </div>
   </section>
 
+  <section class="sec" aria-labelledby="acctH">
+    <div class="sechead">
+      <h2 id="acctH">Sending Accounts</h2>
+      <span class="cadence" id="acctSummary" data-c="none">Nothing recorded</span>
+    </div>
+    <div class="acct-add">
+      <input type="email" id="acctNew" placeholder="name@domain.com" autocomplete="off">
+      <button type="button" class="post" id="acctAddBtn">Add account</button>
+    </div>
+    <div id="acctList"></div>
+    <div class="empty" id="acctEmpty">No sending accounts recorded yet. Add each inbox Instantly sends from — every one gets a status, a daily cap and room for its own report.</div>
+  </section>
+
+  <section class="sec" aria-labelledby="campH">
+    <div class="sechead">
+      <h2 id="campH">Campaigns</h2>
+      <span class="cadence" id="campSummary" data-c="none">Nothing recorded</span>
+    </div>
+    <div class="acct-add">
+      <input type="text" id="campNew" placeholder="Campaign name as it appears in Instantly" autocomplete="off">
+      <button type="button" class="post" id="campAddBtn">Add campaign</button>
+    </div>
+    <div id="campList"></div>
+    <div class="empty" id="campEmpty">No campaigns recorded yet. Add each one and mark it active or not — a paused campaign nobody knows about is exactly the gap this audit is for.</div>
+  </section>
+
   <section class="sec" aria-labelledby="logH">
     <div class="sechead">
       <h2 id="logH">Update Log</h2>
@@ -453,9 +522,7 @@
       { id:"cs_window", label:"Window these cover", type:"text", ph:"e.g. 1\u201315 Sep" },
       { id:"cs_sent", label:"Emails sent in window", type:"number", ph:"0" },
       { id:"cs_bounces", label:"Bounces in window", type:"number", ph:"0" },
-      { id:"cs_complaints", label:"Spam complaints in window", type:"number", ph:"0" },
-      { id:"cs_accounts", label:"Active sending accounts \u2014 one address per line", type:"textarea", full:true,
-        ph:"victoria@metrixgenerate.com\nchristopher@metrixgenerate.com\npenelope@metrixgenerate.com" }
+      { id:"cs_complaints", label:"Spam complaints in window", type:"number", ph:"0" }
     ]},
     nothing:{ label:"“Nothing left behind”, in numbers", fields:[
       { id:"nb_reply", label:"Reply response target (hours)", type:"number", step:"0.5", ph:"4" },
@@ -607,6 +674,7 @@
     d.appendChild(derivedRow("derivedBounce","Bounce rate","target < 2%"));
     d.appendChild(derivedRow("derivedSpam","Complaint rate","target < 0.1%"));
     d.appendChild(derivedRow("derivedAccounts","Accounts named","against the count"));
+    d.appendChild(derivedRow("derivedCampaigns","Campaigns active","against the count"));
     return d;
   }
 
@@ -811,15 +879,11 @@
     e.style.height = e.scrollHeight + "px";
   }
 
-  function renderAccounts(){
-    var host = byId("derivedAccounts");
+  function reconcile(rowId, declared, listed, missingWord){
+    var host = byId(rowId);
     if(!host) return;
     var val = host.querySelector('[data-role="val"]');
     var vd = host.querySelector(".verdict");
-    var ta = byId("f_cs_accounts");
-    var declared = numOf("cs_inboxes");
-    var listed = ta ? ta.value.split("\n").map(function(x){ return x.trim(); }).filter(Boolean).length : 0;
-
     if(!listed && declared === null){
       val.textContent = "\u2014";
       val.removeAttribute("data-t");
@@ -827,15 +891,26 @@
       return;
     }
     val.textContent = (declared === null) ? String(listed) : (listed + " of " + declared);
-    if(declared !== null && listed > 0 && listed !== declared){
+    if(declared !== null && listed !== declared){
       val.setAttribute("data-t","warn");
       vd.hidden = false;
       vd.setAttribute("data-v","warn");
-      vd.textContent = (listed < declared) ? (declared - listed) + " not named" : "more than counted";
+      vd.textContent = (listed < declared) ? (declared - listed) + " " + missingWord : "more than counted";
     } else {
       val.removeAttribute("data-t");
       vd.hidden = true;
     }
+  }
+
+  function rosterActive(key){
+    var d = roster[key], n = 0;
+    Object.keys(d).forEach(function(id){ if((d[id]||{}).status === "Active") n++; });
+    return n;
+  }
+
+  function renderRosterCounts(){
+    reconcile("derivedAccounts", numOf("cs_inboxes"), Object.keys(roster.accounts).length, "not named");
+    reconcile("derivedCampaigns", numOf("cs_campaigns"), rosterActive("campaigns"), "not listed");
   }
 
   function numOf(id){
@@ -874,9 +949,22 @@
     var b = numOf("cs_bounces");
     var c = numOf("cs_complaints");
     var ok = (sent !== null && sent > 0);
-    setRate("derivedBounce", (ok && b !== null) ? (b / sent * 100) : null, "bounce", 2);
+    if(ok && b !== null && b > sent){
+      // More bounces than sends cannot be one window: show the mismatch,
+      // not an impossible percentage.
+      var host = byId("derivedBounce");
+      var val = host.querySelector('[data-role="val"]');
+      var vd = host.querySelector(".verdict");
+      val.textContent = "\u2014";
+      val.setAttribute("data-t","crit");
+      vd.hidden = false;
+      vd.setAttribute("data-v","crit");
+      vd.textContent = "bounces exceed sends";
+    } else {
+      setRate("derivedBounce", (ok && b !== null) ? (b / sent * 100) : null, "bounce", 2);
+    }
     setRate("derivedSpam",   (ok && c !== null) ? (c / sent * 100) : null, "spam", 3);
-    renderAccounts();
+    renderRosterCounts();
   }
 
   function renderFields(){
@@ -1002,7 +1090,7 @@
 
   function mirrorSave(){
     try{
-      localStorage.setItem(MIRROR_KEY, JSON.stringify({ tasks:tasks, fields:fields, posts:pendingPosts }));
+      localStorage.setItem(MIRROR_KEY, JSON.stringify({ tasks:tasks, fields:fields, posts:pendingPosts, roster:roster }));
     }catch(e){}
   }
 
@@ -1020,6 +1108,13 @@
         Object.keys(m.fields).forEach(function(k){ pendingFields[k] = m.fields[k]; });
       }
       if(m.posts && m.posts.length) pendingPosts = m.posts.slice();
+      if(m.roster){
+        Object.keys(ROSTERS).forEach(function(k){
+          if(!m.roster[k]) return;
+          roster[k] = m.roster[k];
+          Object.keys(m.roster[k]).forEach(function(id){ pendingRoster[k][id] = m.roster[k][id]; });
+        });
+      }
     }catch(e){}
   }
 
@@ -1095,6 +1190,22 @@
     });
     pendingFields = {};
     if(fAny) pushFields(fPatch).catch(onWriteError);
+
+    Object.keys(ROSTERS).forEach(function(k){
+      var patch = {}, any = false;
+      Object.keys(pendingRoster[k]).forEach(function(id){
+        if(!roster[k][id]){ patch[id] = pendingRoster[k][id]; roster[k][id] = pendingRoster[k][id]; any = true; }
+      });
+      pendingRoster[k] = {};
+      if(any){
+        enqueue(k, function(){
+          var ref = db.doc(ROSTERS[k].doc);
+          if(rosterExists[k]) return ref.update(patch);
+          return ref.set(patch).then(function(){ rosterExists[k] = true; });
+        }).catch(onWriteError);
+      }
+      renderRoster(k);
+    });
 
     var posts = pendingPosts.slice();
     pendingPosts = [];
@@ -1196,6 +1307,7 @@
   function applyEditable(){
     document.querySelectorAll("[data-field]").forEach(function(i){ i.disabled = readOnly; });
     document.querySelectorAll('.task input[type="checkbox"]').forEach(function(i){ i.disabled = readOnly; });
+    Object.keys(ROSTERS).forEach(lockRoster);
     syncComposer();
     var hint = byId("composerHint");
     if(readOnly) hint.textContent = "Read-only access — you'll need edit access to post here.";
@@ -1232,18 +1344,325 @@
     applyEditable();
   }
 
+  /* ---------------- rosters: sending accounts & campaigns ---------------- */
+
+  // One engine, two sections: both are named things carrying a status and a
+  // report, differing only in how they group and whether they have a cap.
+  var ROSTERS = {
+    accounts: {
+      doc:"state/accounts", list:"acctList", empty:"acctEmpty", summary:"acctSummary",
+      input:"acctNew", add:"acctAddBtn", noun:"account", nouns:"accounts",
+      statuses:["Active","Warming","Paused","Disconnected","Unknown"], initial:"Active",
+      cap:true, capPh:"cap/day", group:"domain",
+      reportPh:"Report — warmup state, reputation, what this inbox sends"
+    },
+    campaigns: {
+      doc:"state/campaigns", list:"campList", empty:"campEmpty", summary:"campSummary",
+      input:"campNew", add:"campAddBtn", noun:"campaign", nouns:"campaigns",
+      statuses:["Active","Not active"], initial:"Active",
+      cap:false, group:"status",
+      reportPh:"Report — who it targets, how many steps, why it is paused"
+    }
+  };
+
+  var roster = { accounts:{}, campaigns:{} };
+  var rosterExists = { accounts:false, campaigns:false };
+  var pendingRoster = { accounts:{}, campaigns:{} };
+
+  function slug(v){
+    return String(v).toLowerCase().replace(/[^a-z0-9]+/g,"_").replace(/^_+|_+$/g,"").slice(0,120);
+  }
+
+  function domainOf(v){
+    var i = String(v == null ? "" : v).indexOf("@");
+    return i < 0 ? "(no domain)" : String(v).slice(i+1).toLowerCase();
+  }
+
+  function groupKey(cfg, e){
+    return cfg.group === "domain" ? domainOf(e.name) : (e.status || "Unknown");
+  }
+
+  function rosterOrder(key){
+    var cfg = ROSTERS[key], data = roster[key];
+    return Object.keys(data).sort(function(a,b){
+      var ea = data[a] || {}, eb = data[b] || {};
+      var ga = groupKey(cfg, ea), gb = groupKey(cfg, eb);
+      if(ga !== gb){
+        if(cfg.group === "status"){
+          var ia = cfg.statuses.indexOf(ga), ib = cfg.statuses.indexOf(gb);
+          return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib);
+        }
+        return ga < gb ? -1 : 1;
+      }
+      var na = String(ea.name || ""), nb = String(eb.name || "");
+      return na < nb ? -1 : na > nb ? 1 : 0;
+    });
+  }
+
+  function bindRosterField(elm, key, id, field){
+    var tk = "r_" + key + "_" + id + "_" + field;
+    elm.addEventListener("input", function(){
+      if(timers[tk]) clearTimeout(timers[tk]);
+      timers[tk] = setTimeout(function(){
+        var p = {}; p[field] = elm.value; writeRoster(key, id, p);
+      }, 700);
+      if(elm.hasAttribute("data-autosize")) autosize(elm);
+    });
+    elm.addEventListener("blur", function(){
+      if(timers[tk]){ clearTimeout(timers[tk]); timers[tk] = null; }
+      var cur = (roster[key][id] || {})[field];
+      if((cur == null ? "" : String(cur)) !== elm.value){
+        var p = {}; p[field] = elm.value; writeRoster(key, id, p);
+      }
+    });
+  }
+
+  function rosterRow(key, cfg, id, e){
+    var row = el("div","acct");
+    row.id = key + "_" + id;
+    row.setAttribute("data-st", e.status || "Unknown");
+
+    var top = el("div","acct-top");
+    top.appendChild(el("span","dot"));
+    top.appendChild(el("span","addr", e.name || "(unnamed)"));
+
+    var sel = document.createElement("select");
+    sel.id = "st_" + key + "_" + id;
+    sel.setAttribute("aria-label","Status for " + (e.name || cfg.noun));
+    cfg.statuses.forEach(function(st){
+      var o = document.createElement("option");
+      o.value = st; o.textContent = st;
+      sel.appendChild(o);
+    });
+    sel.value = e.status || cfg.initial;
+    sel.addEventListener("change", function(){ writeRoster(key, id, { status: sel.value }); });
+    top.appendChild(sel);
+
+    if(cfg.cap){
+      var cap = document.createElement("input");
+      cap.type = "number"; cap.min = "0"; cap.className = "cap";
+      cap.id = "cap_" + key + "_" + id;
+      cap.placeholder = cfg.capPh;
+      cap.setAttribute("aria-label","Daily send cap for " + (e.name || cfg.noun));
+      cap.value = (e.cap == null ? "" : e.cap);
+      bindRosterField(cap, key, id, "cap");
+      top.appendChild(cap);
+    }
+
+    // Two-step delete: no modal, and no single click that loses a report.
+    var del = document.createElement("button");
+    del.type = "button"; del.className = "del"; del.textContent = "×";
+    del.setAttribute("aria-label","Remove " + (e.name || cfg.noun));
+    del.addEventListener("click", function(){
+      if(del.getAttribute("data-armed") === "1"){ removeRoster(key, id); return; }
+      del.setAttribute("data-armed","1");
+      del.textContent = "remove?";
+      del.style.width = "auto";
+      setTimeout(function(){
+        if(del.getAttribute("data-armed") === "1"){
+          del.removeAttribute("data-armed");
+          del.textContent = "×";
+          del.style.width = "";
+        }
+      }, 3500);
+    });
+    top.appendChild(del);
+    row.appendChild(top);
+
+    var rep = document.createElement("textarea");
+    rep.rows = 1;
+    rep.id = "rep_" + key + "_" + id;
+    rep.setAttribute("data-autosize","1");
+    rep.setAttribute("aria-label","Report for " + (e.name || cfg.noun));
+    rep.placeholder = cfg.reportPh;
+    rep.value = e.report || "";
+    bindRosterField(rep, key, id, "report");
+    row.appendChild(rep);
+    return row;
+  }
+
+  function syncRosterRow(key, cfg, id){
+    var e = roster[key][id] || {};
+    var row = byId(key + "_" + id);
+    if(!row) return;
+    row.setAttribute("data-st", e.status || "Unknown");
+    var addr = row.querySelector(".addr");
+    if(addr) addr.textContent = e.name || "(unnamed)";
+    var sel = byId("st_" + key + "_" + id);
+    if(sel && document.activeElement !== sel){
+      var sv = e.status || cfg.initial;
+      if(sel.value !== sv) sel.value = sv;
+    }
+    var cap = byId("cap_" + key + "_" + id);
+    if(cap && document.activeElement !== cap){
+      var cv = (e.cap == null ? "" : String(e.cap));
+      if(cap.value !== cv) cap.value = cv;
+    }
+    var rep = byId("rep_" + key + "_" + id);
+    if(rep && document.activeElement !== rep){
+      var rv = e.report || "";
+      if(rep.value !== rv){ rep.value = rv; autosize(rep); }
+    }
+  }
+
+  function renderRosterSummary(key, ids){
+    var cfg = ROSTERS[key];
+    var pill = byId(cfg.summary);
+    if(!pill) return;
+    if(!ids.length){
+      pill.setAttribute("data-c","none");
+      pill.textContent = "Nothing recorded";
+      return;
+    }
+    var active = rosterActive(key);
+    var text = ids.length + " " + plural(ids.length, cfg.noun, cfg.nouns) + " · " + active + " active";
+    if(cfg.group === "domain"){
+      var doms = {};
+      ids.forEach(function(id){ doms[domainOf((roster[key][id]||{}).name)] = 1; });
+      var nd = Object.keys(doms).length;
+      text += " · " + nd + " " + plural(nd, "domain", "domains");
+    }
+    pill.textContent = text;
+    pill.setAttribute("data-c", active > 0 ? "ok" : "due");
+  }
+
+  function renderRoster(key){
+    var cfg = ROSTERS[key];
+    var host = byId(cfg.list);
+    if(!host) return;
+    var ids = rosterOrder(key);
+
+    // Rebuild only when the rows or their grouping change, so a snapshot
+    // arriving mid-sentence cannot tear down the field being typed in.
+    var sig = ids.join("|") + "#" + ids.map(function(i){ return groupKey(cfg, roster[key][i] || {}); }).join("|");
+    if(host.getAttribute("data-sig") !== sig){
+      host.setAttribute("data-sig", sig);
+      host.innerHTML = "";
+      var counts = {};
+      ids.forEach(function(id){
+        var g = groupKey(cfg, roster[key][id] || {});
+        counts[g] = (counts[g] || 0) + 1;
+      });
+      var lastGroup = null, groupHost = null;
+      ids.forEach(function(id){
+        var e = roster[key][id] || {};
+        var g = groupKey(cfg, e);
+        if(g !== lastGroup){
+          lastGroup = g;
+          groupHost = el("div","dgroup");
+          var gh = el("div","dgroup-head");
+          gh.appendChild(el("span","dn", g));
+          gh.appendChild(el("span","dc", counts[g] + " " + plural(counts[g], cfg.noun, cfg.nouns)));
+          groupHost.appendChild(gh);
+          host.appendChild(groupHost);
+        }
+        groupHost.appendChild(rosterRow(key, cfg, id, e));
+      });
+      host.querySelectorAll("textarea[data-autosize]").forEach(autosize);
+    } else {
+      ids.forEach(function(id){ syncRosterRow(key, cfg, id); });
+    }
+
+    byId(cfg.empty).hidden = ids.length > 0;
+    renderRosterSummary(key, ids);
+    lockRoster(key);
+  }
+
+  function lockRoster(key){
+    var host = byId(ROSTERS[key].list);
+    if(host) host.querySelectorAll("select,textarea,input,button").forEach(function(c){ c.disabled = readOnly; });
+    var inp = byId(ROSTERS[key].input), add = byId(ROSTERS[key].add);
+    if(inp) inp.disabled = readOnly;
+    if(add) add.disabled = readOnly || !inp || !inp.value.trim();
+  }
+
+  function writeRoster(key, id, patch){
+    var cur = roster[key][id] || {};
+    var next = {};
+    Object.keys(cur).forEach(function(k){ next[k] = cur[k]; });
+    Object.keys(patch).forEach(function(k){ next[k] = patch[k]; });
+    roster[key][id] = next;
+    renderRoster(key);
+    renderDerived();
+    if(canWrite()){
+      // Write the whole entry, not just the changed field: merging a partial
+      // entry would depend on the store's merge depth to keep the name.
+      var p = {}; p[id] = next;
+      enqueue(key, function(){
+        var ref = db.doc(ROSTERS[key].doc);
+        if(rosterExists[key]) return ref.update(p);
+        return ref.set(p).then(function(){ rosterExists[key] = true; });
+      }).catch(onWriteError);
+    } else {
+      pendingRoster[key][id] = next;
+    }
+    mirrorSave();
+  }
+
+  function removeRoster(key, id){
+    if(readOnly) return;
+    delete roster[key][id];
+    delete pendingRoster[key][id];
+    renderRoster(key);
+    renderDerived();
+    mirrorSave();
+    if(canWrite()){
+      // No per-key delete in the store, so the remaining set is rewritten.
+      var whole = {};
+      Object.keys(roster[key]).forEach(function(k){ whole[k] = roster[key][k]; });
+      enqueue(key, function(){
+        return db.doc(ROSTERS[key].doc).set(whole).then(function(){ rosterExists[key] = true; });
+      }).catch(onWriteError);
+    }
+  }
+
+  function addRoster(key){
+    var cfg = ROSTERS[key];
+    var inp = byId(cfg.input);
+    var name = inp.value.trim();
+    if(!name || readOnly) return;
+    var id = slug(name);
+    if(!id) return;
+    inp.value = "";
+    lockRoster(key);
+    if(roster[key][id]){
+      var existing = byId("rep_" + key + "_" + id);
+      if(existing) existing.focus();
+      return;
+    }
+    writeRoster(key, id, { name: name, status: cfg.initial, report: "", cap: "" });
+    var rep = byId("rep_" + key + "_" + id);
+    if(rep) rep.focus();
+  }
+
+  function bindRosterControls(){
+    Object.keys(ROSTERS).forEach(function(key){
+      var cfg = ROSTERS[key];
+      var inp = byId(cfg.input), add = byId(cfg.add);
+      if(add) add.addEventListener("click", function(){ addRoster(key); });
+      if(inp){
+        inp.addEventListener("input", function(){ lockRoster(key); });
+        inp.addEventListener("keydown", function(e){
+          if(e.key === "Enter"){ e.preventDefault(); addRoster(key); }
+        });
+      }
+    });
+  }
+
   /* ---------------- boot ---------------- */
 
   buildPhases();
   buildBar();
   buildFlow();
   bindFieldInputs();
+  bindRosterControls();
   mirrorLoad();
   loadDraft();
   recomputeUpdates();
   renderTasks();
   renderFields();
   renderLog();
+  Object.keys(ROSTERS).forEach(renderRoster);
   renderClock();
   renderStamp();
   setSync("boot");
@@ -1309,6 +1728,16 @@
       renderFields();
       flushPending();
     }, function(e){ onWriteError(e); });
+
+    Object.keys(ROSTERS).forEach(function(k){
+      d.doc(ROSTERS[k].doc).onSnapshot(function(snap){
+        rosterExists[k] = snap.exists;
+        var data = snap.data();
+        if(data) roster[k] = thaw(data);
+        renderRoster(k);
+        renderDerived();
+      }, function(e){ onWriteError(e); });
+    });
 
     d.collection("updates").orderBy("at","desc").limit(50).onSnapshot(function(snap){
       shared = snap.docs.map(function(doc){
