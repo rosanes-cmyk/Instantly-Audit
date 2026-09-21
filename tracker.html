@@ -236,6 +236,34 @@
   .diagram input:disabled{opacity:.6;cursor:not-allowed;}
   .diagram a{font-family:var(--f-mono);font-size:11.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;}
 
+  /* ---------- roster stats & scores ---------- */
+  .rstats{display:flex;flex-wrap:wrap;gap:7px;margin-top:13px;}
+  .chip{
+    display:inline-flex;align-items:center;gap:6px;
+    font-family:var(--f-mono);font-size:10.5px;font-weight:600;
+    letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;
+    padding:4px 9px;border-radius:5px;
+    border:1px solid var(--rule);background:var(--surface);color:var(--ink-3);
+  }
+  .chip b{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums;}
+  .chip[data-t="ok"]{color:var(--ok);border-color:var(--ok);background:var(--ok-soft);}
+  .chip[data-t="ok"] b{color:var(--ok);}
+  .chip[data-t="warn"]{color:var(--warn);border-color:var(--warn);background:var(--warn-soft);}
+  .chip[data-t="warn"] b{color:var(--warn);}
+  .chip[data-t="crit"]{color:var(--crit);border-color:var(--crit);background:var(--crit-soft);}
+  .chip[data-t="crit"] b{color:var(--crit);}
+  .sbar{display:inline-flex;gap:2px;align-items:center;flex:none;}
+  .sbar i{display:block;width:5px;height:13px;border-radius:1px;background:var(--rule);}
+  .sbar[data-t="ok"] i.on{background:var(--ok);}
+  .sbar[data-t="warn"] i.on{background:var(--warn);}
+  .sbar[data-t="crit"] i.on{background:var(--crit);}
+  .acct select.score{min-width:112px;}
+  .dgroup-head .davg{font-family:var(--f-mono);font-size:9.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-left:auto;}
+  .dgroup-head .davg[data-t="ok"]{color:var(--ok);}
+  .dgroup-head .davg[data-t="warn"]{color:var(--warn);}
+  .dgroup-head .davg[data-t="crit"]{color:var(--crit);}
+  .dgroup-head .davg[data-t="none"]{color:var(--ink-3);}
+
   /* ---------- sending accounts ---------- */
   .acct-add{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px;align-items:center;}
   .acct-add input{
@@ -401,8 +429,9 @@
   <section class="sec" aria-labelledby="acctH">
     <div class="sechead">
       <h2 id="acctH">Sending Accounts</h2>
-      <span class="cadence" id="acctSummary" data-c="none">Nothing recorded</span>
+      <div class="note">Score each inbox on deliverability health. Worst scores sort to the top of their domain, so the inboxes dragging the setup down are the ones you read first.</div>
     </div>
+    <div class="rstats" id="acctStats"></div>
     <div class="acct-add">
       <input type="email" id="acctNew" placeholder="name@domain.com" autocomplete="off">
       <button type="button" class="post" id="acctAddBtn">Add account</button>
@@ -414,8 +443,9 @@
   <section class="sec" aria-labelledby="campH">
     <div class="sechead">
       <h2 id="campH">Campaigns</h2>
-      <span class="cadence" id="campSummary" data-c="none">Nothing recorded</span>
+      <div class="note">Score each campaign on how it is performing. Active campaigns come first, worst score at the top.</div>
     </div>
+    <div class="rstats" id="campStats"></div>
     <div class="acct-add">
       <input type="text" id="campNew" placeholder="Campaign name as it appears in Instantly" autocomplete="off">
       <button type="button" class="post" id="campAddBtn">Add campaign</button>
@@ -517,8 +547,6 @@
 
   var BLOCKS = {
     state:{ label:"Current state, measured", derived:true, fields:[
-      { id:"cs_campaigns", label:"Active campaigns", type:"number", ph:"0" },
-      { id:"cs_inboxes", label:"Sending accounts", type:"number", ph:"0" },
       { id:"cs_window", label:"Window these cover", type:"text", ph:"e.g. 1\u201315 Sep" },
       { id:"cs_sent", label:"Emails sent in window", type:"number", ph:"0" },
       { id:"cs_bounces", label:"Bounces in window", type:"number", ph:"0" },
@@ -673,8 +701,8 @@
     var d = el("div","derived");
     d.appendChild(derivedRow("derivedBounce","Bounce rate","target < 2%"));
     d.appendChild(derivedRow("derivedSpam","Complaint rate","target < 0.1%"));
-    d.appendChild(derivedRow("derivedAccounts","Accounts named","against the count"));
-    d.appendChild(derivedRow("derivedCampaigns","Campaigns active","against the count"));
+    d.appendChild(derivedRow("derivedAccounts","Sending accounts",""));
+    d.appendChild(derivedRow("derivedCampaigns","Active campaigns",""));
     return d;
   }
 
@@ -876,30 +904,23 @@
   function autosize(e){
     if(!e || e.tagName !== "TEXTAREA") return;
     e.style.height = "auto";
-    e.style.height = e.scrollHeight + "px";
+    // scrollHeight covers padding but not borders; with border-box a height
+    // set to it alone lands a border short and the box scrolls forever.
+    var cs = window.getComputedStyle(e);
+    var border = (parseFloat(cs.borderTopWidth) || 0) + (parseFloat(cs.borderBottomWidth) || 0);
+    e.style.height = (e.scrollHeight + border) + "px";
   }
 
-  function reconcile(rowId, declared, listed, missingWord){
+  function setStat(rowId, value, tier, tail){
     var host = byId(rowId);
     if(!host) return;
     var val = host.querySelector('[data-role="val"]');
     var vd = host.querySelector(".verdict");
-    if(!listed && declared === null){
-      val.textContent = "\u2014";
-      val.removeAttribute("data-t");
-      vd.hidden = true;
-      return;
-    }
-    val.textContent = (declared === null) ? String(listed) : (listed + " of " + declared);
-    if(declared !== null && listed !== declared){
-      val.setAttribute("data-t","warn");
-      vd.hidden = false;
-      vd.setAttribute("data-v","warn");
-      vd.textContent = (listed < declared) ? (declared - listed) + " " + missingWord : "more than counted";
-    } else {
-      val.removeAttribute("data-t");
-      vd.hidden = true;
-    }
+    var dt = host.querySelector(".dt");
+    val.textContent = String(value);
+    if(tier) val.setAttribute("data-t", tier); else val.removeAttribute("data-t");
+    vd.hidden = true;
+    if(dt) dt.textContent = tail || "";
   }
 
   function rosterActive(key){
@@ -908,9 +929,33 @@
     return n;
   }
 
+  // Both counts are read off the rosters below, so there is no hand-kept
+  // number that can disagree with the list.
   function renderRosterCounts(){
-    reconcile("derivedAccounts", numOf("cs_inboxes"), Object.keys(roster.accounts).length, "not named");
-    reconcile("derivedCampaigns", numOf("cs_campaigns"), rosterActive("campaigns"), "not listed");
+    var accIds = Object.keys(roster.accounts);
+    if(!accIds.length){
+      setStat("derivedAccounts", "—", null, "none recorded");
+    } else {
+      var doms = {};
+      accIds.forEach(function(id){ doms[domainOf((roster.accounts[id]||{}).name)] = 1; });
+      var nd = Object.keys(doms).length;
+      var ast = scoreStats(accIds, roster.accounts);
+      var tail = nd + " " + plural(nd, "domain", "domains");
+      if(ast.avg !== null) tail += " · avg " + ast.avg.toFixed(1) + " / 5";
+      if(ast.unscored) tail += " · " + ast.unscored + " unscored";
+      setStat("derivedAccounts", accIds.length, ast.avg === null ? null : scoreTier(ast.avg), tail);
+    }
+
+    var campIds = Object.keys(roster.campaigns);
+    if(!campIds.length){
+      setStat("derivedCampaigns", "—", null, "none recorded");
+    } else {
+      var active = rosterActive("campaigns");
+      var cst = scoreStats(campIds, roster.campaigns);
+      var ctail = campIds.length + " recorded";
+      if(cst.avg !== null) ctail += " · avg " + cst.avg.toFixed(1) + " / 5";
+      setStat("derivedCampaigns", active, active > 0 ? "ok" : "warn", ctail);
+    }
   }
 
   function numOf(id){
@@ -1350,16 +1395,20 @@
   // report, differing only in how they group and whether they have a cap.
   var ROSTERS = {
     accounts: {
-      doc:"state/accounts", list:"acctList", empty:"acctEmpty", summary:"acctSummary",
+      doc:"state/accounts", list:"acctList", stats:"acctStats", empty:"acctEmpty",
       input:"acctNew", add:"acctAddBtn", noun:"account", nouns:"accounts",
       statuses:["Active","Warming","Paused","Disconnected","Unknown"], initial:"Active",
+      scoreLabel:"deliverability",
+      scores:[["5","5 · Healthy"],["4","4 · Minor issues"],["3","3 · Watch"],["2","2 · At risk"],["1","1 · Burned"]],
       cap:true, capPh:"cap/day", group:"domain",
       reportPh:"Report — warmup state, reputation, what this inbox sends"
     },
     campaigns: {
-      doc:"state/campaigns", list:"campList", empty:"campEmpty", summary:"campSummary",
+      doc:"state/campaigns", list:"campList", stats:"campStats", empty:"campEmpty",
       input:"campNew", add:"campAddBtn", noun:"campaign", nouns:"campaigns",
       statuses:["Active","Not active"], initial:"Active",
+      scoreLabel:"performance",
+      scores:[["5","5 · Performing"],["4","4 · Acceptable"],["3","3 · Watch"],["2","2 · Underperforming"],["1","1 · Failing"]],
       cap:false, group:"status",
       reportPh:"Report — who it targets, how many steps, why it is paused"
     }
@@ -1378,6 +1427,46 @@
     return i < 0 ? "(no domain)" : String(v).slice(i+1).toLowerCase();
   }
 
+  function scoreOf(e){
+    var n = parseFloat(e && e.score);
+    return isNaN(n) ? null : n;
+  }
+
+  function scoreTier(n){
+    if(n === null) return "none";
+    return n >= 4 ? "ok" : n >= 3 ? "warn" : "crit";
+  }
+
+  // Mean over the entries actually scored, plus how many are not.
+  function scoreStats(ids, data){
+    var sum = 0, n = 0, unscored = 0;
+    ids.forEach(function(id){
+      var v = scoreOf(data[id] || {});
+      if(v === null) unscored++; else { sum += v; n += 1; }
+    });
+    return { avg: n ? (sum / n) : null, scored: n, unscored: unscored };
+  }
+
+  function scoreBar(n){
+    var bar = el("span","sbar");
+    bar.setAttribute("data-t", scoreTier(n));
+    bar.setAttribute("aria-hidden","true");
+    for(var i = 1; i <= 5; i++){
+      var seg = document.createElement("i");
+      if(n !== null && i <= n) seg.className = "on";
+      bar.appendChild(seg);
+    }
+    return bar;
+  }
+
+  function chip(label, value, tier){
+    var c = el("div","chip");
+    if(tier) c.setAttribute("data-t", tier);
+    c.appendChild(el("b", null, String(value)));
+    c.appendChild(document.createTextNode(" " + label));
+    return c;
+  }
+
   function groupKey(cfg, e){
     return cfg.group === "domain" ? domainOf(e.name) : (e.status || "Unknown");
   }
@@ -1393,6 +1482,12 @@
           return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib);
         }
         return ga < gb ? -1 : 1;
+      }
+      var sa = scoreOf(ea), sb = scoreOf(eb);
+      if(sa !== sb){
+        if(sa === null) return 1;      // unscored trails
+        if(sb === null) return -1;
+        return sa - sb;                // worst first
       }
       var na = String(ea.name || ""), nb = String(eb.name || "");
       return na < nb ? -1 : na > nb ? 1 : 0;
@@ -1437,6 +1532,23 @@
     sel.value = e.status || cfg.initial;
     sel.addEventListener("change", function(){ writeRoster(key, id, { status: sel.value }); });
     top.appendChild(sel);
+
+    var sc = document.createElement("select");
+    sc.className = "score";
+    sc.id = "sc_" + key + "_" + id;
+    sc.setAttribute("aria-label", cfg.scoreLabel + " score for " + (e.name || cfg.noun));
+    var none = document.createElement("option");
+    none.value = ""; none.textContent = "— not scored";
+    sc.appendChild(none);
+    cfg.scores.forEach(function(pair){
+      var o = document.createElement("option");
+      o.value = pair[0]; o.textContent = pair[1];
+      sc.appendChild(o);
+    });
+    sc.value = (e.score == null ? "" : String(e.score));
+    sc.addEventListener("change", function(){ writeRoster(key, id, { score: sc.value }); });
+    top.appendChild(sc);
+    top.appendChild(scoreBar(scoreOf(e)));
 
     if(cfg.cap){
       var cap = document.createElement("input");
@@ -1493,6 +1605,19 @@
       var sv = e.status || cfg.initial;
       if(sel.value !== sv) sel.value = sv;
     }
+    var sc = byId("sc_" + key + "_" + id);
+    if(sc && document.activeElement !== sc){
+      var scv = (e.score == null ? "" : String(e.score));
+      if(sc.value !== scv) sc.value = scv;
+    }
+    var bar = row.querySelector(".sbar");
+    if(bar){
+      var sn = scoreOf(e);
+      bar.setAttribute("data-t", scoreTier(sn));
+      [].forEach.call(bar.children, function(seg, i){
+        seg.className = (sn !== null && (i + 1) <= sn) ? "on" : "";
+      });
+    }
     var cap = byId("cap_" + key + "_" + id);
     if(cap && document.activeElement !== cap){
       var cv = (e.cap == null ? "" : String(e.cap));
@@ -1505,25 +1630,38 @@
     }
   }
 
-  function renderRosterSummary(key, ids){
+  function renderRosterStats(key, ids){
     var cfg = ROSTERS[key];
-    var pill = byId(cfg.summary);
-    if(!pill) return;
-    if(!ids.length){
-      pill.setAttribute("data-c","none");
-      pill.textContent = "Nothing recorded";
-      return;
-    }
+    var host = byId(cfg.stats);
+    if(!host) return;
+    host.innerHTML = "";
+    if(!ids.length) return;
+
+    var data = roster[key];
     var active = rosterActive(key);
-    var text = ids.length + " " + plural(ids.length, cfg.noun, cfg.nouns) + " · " + active + " active";
+    var st = scoreStats(ids, data);
+
+    host.appendChild(chip(plural(ids.length, cfg.noun, cfg.nouns), ids.length, null));
+    host.appendChild(chip("active", active, active > 0 ? "ok" : "warn"));
+
     if(cfg.group === "domain"){
       var doms = {};
-      ids.forEach(function(id){ doms[domainOf((roster[key][id]||{}).name)] = 1; });
+      ids.forEach(function(id){ doms[domainOf((data[id]||{}).name)] = 1; });
       var nd = Object.keys(doms).length;
-      text += " · " + nd + " " + plural(nd, "domain", "domains");
+      host.appendChild(chip(plural(nd, "domain", "domains"), nd, null));
+    } else {
+      host.appendChild(chip("not active", ids.length - active, null));
     }
-    pill.textContent = text;
-    pill.setAttribute("data-c", active > 0 ? "ok" : "due");
+
+    if(st.avg !== null){
+      var c = el("div","chip");
+      c.setAttribute("data-t", scoreTier(st.avg));
+      c.appendChild(el("b", null, st.avg.toFixed(1)));
+      c.appendChild(document.createTextNode(" / 5 " + cfg.scoreLabel));
+      c.appendChild(scoreBar(Math.round(st.avg)));
+      host.appendChild(c);
+    }
+    if(st.unscored) host.appendChild(chip("not scored", st.unscored, "warn"));
   }
 
   function renderRoster(key){
@@ -1534,7 +1672,10 @@
 
     // Rebuild only when the rows or their grouping change, so a snapshot
     // arriving mid-sentence cannot tear down the field being typed in.
-    var sig = ids.join("|") + "#" + ids.map(function(i){ return groupKey(cfg, roster[key][i] || {}); }).join("|");
+    var sig = ids.join("|") + "#" + ids.map(function(i){
+      var e = roster[key][i] || {};
+      return groupKey(cfg, e) + ":" + (e.score == null ? "" : e.score);
+    }).join("|");
     if(host.getAttribute("data-sig") !== sig){
       host.setAttribute("data-sig", sig);
       host.innerHTML = "";
@@ -1553,6 +1694,11 @@
           var gh = el("div","dgroup-head");
           gh.appendChild(el("span","dn", g));
           gh.appendChild(el("span","dc", counts[g] + " " + plural(counts[g], cfg.noun, cfg.nouns)));
+          var inGroup = ids.filter(function(x){ return groupKey(cfg, roster[key][x] || {}) === g; });
+          var gst = scoreStats(inGroup, roster[key]);
+          var avg = el("span","davg", gst.avg === null ? "not scored" : ("avg " + gst.avg.toFixed(1) + " / 5"));
+          avg.setAttribute("data-t", gst.avg === null ? "none" : scoreTier(gst.avg));
+          gh.appendChild(avg);
           groupHost.appendChild(gh);
           host.appendChild(groupHost);
         }
@@ -1564,7 +1710,7 @@
     }
 
     byId(cfg.empty).hidden = ids.length > 0;
-    renderRosterSummary(key, ids);
+    renderRosterStats(key, ids);
     lockRoster(key);
   }
 
