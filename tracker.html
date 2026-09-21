@@ -120,6 +120,8 @@
   .pill[data-s="live"] .dot{background:var(--ok);animation:blip 2.6s ease-in-out infinite;}
   .pill[data-s="ro"]{color:var(--warn);border-color:var(--warn);background:var(--warn-soft);}
   .pill[data-s="ro"] .dot{background:var(--warn);}
+  .pill[data-s="local"]{color:var(--warn);border-color:var(--warn);background:var(--warn-soft);}
+  .pill[data-s="local"] .dot{background:var(--warn);}
   .pill[data-s="off"]{color:var(--crit);border-color:var(--crit);background:var(--crit-soft);}
   .pill[data-s="off"] .dot{background:var(--crit);}
   @keyframes blip{0%,100%{opacity:1}50%{opacity:.35}}
@@ -370,7 +372,7 @@
     <div class="flow" id="flow"></div>
     <div class="diagram">
       <label for="f_map_diagram">Full diagram link</label>
-      <input type="url" id="f_map_diagram" data-field="map_diagram" placeholder="https://… (Miro, Whimsical, Lucid — optional)" disabled>
+      <input type="url" id="f_map_diagram" data-field="map_diagram" placeholder="https://… (Miro, Whimsical, Lucid — optional)">
       <a id="diagramOpen" href="#" target="_blank" rel="noopener" hidden>Open ↗</a>
     </div>
   </section>
@@ -382,7 +384,7 @@
     </div>
     <div class="composer">
       <label for="composerText" class="eyebrow" style="display:block;margin-bottom:7px">Post an update</label>
-      <textarea id="composerText" placeholder="What moved, what is blocked, what you need from Carlo, Lawrence or Seth." disabled></textarea>
+      <textarea id="composerText" placeholder="What moved, what is blocked, what you need from Carlo, Lawrence or Seth."></textarea>
       <div class="crow">
         <span class="chint" id="composerHint">Connecting to the shared log…</span>
         <button type="button" class="post" id="postBtn" disabled>Post update</button>
@@ -502,9 +504,12 @@
   /* ---------------- state ---------------- */
 
   var db=null, userNs=null, myId=null;
-  var tasks={}, fields={}, updates=[];
+  var tasks={}, fields={}, updates=[], shared=[];
   var tasksExists=false, fieldsExists=false;
-  var readOnly=true, connected=false, sawGrant=false;
+  var readOnly=false;                     // only an explicit platform "no" locks the page
+  var mode="boot";                        // boot | live | local | ro
+  var gotTasks=false, gotFields=false, flushed=false;
+  var pendingTasks={}, pendingFields={}, pendingPosts=[];
   var chains={};
   var timers={};
 
@@ -530,8 +535,7 @@
     if(code==="invalid_argument" || code==="not_granted" || code==="revoked" ||
        code==="capability_disabled" || code==="capability_removed" || code==="transform_error"){
       readOnly = true;
-      applyEditable();
-      setSync("ro","Read-only");
+      setSync("ro");
     }
   }
 
@@ -572,7 +576,6 @@
     if(f.step) inp.step = f.step;
     if(f.ph) inp.placeholder = f.ph;
     if(f.type==="number") inp.min = "0";
-    inp.disabled = true;
     wrap.appendChild(lab);
     wrap.appendChild(inp);
     if(f.thr){
@@ -618,7 +621,6 @@
         var cb = document.createElement("input");
         cb.type = "checkbox";
         cb.id = "cb_"+t.id;
-        cb.disabled = true;
         cb.addEventListener("change", function(){ toggleTask(t.id, cb.checked); });
         row.appendChild(cb);
 
@@ -650,7 +652,6 @@
         note.id = "f_note_"+t.id;
         note.setAttribute("data-field","note_"+t.id);
         note.placeholder = t.note;
-        note.disabled = true;
         li.appendChild(note);
 
         ul.appendChild(li);
@@ -689,7 +690,6 @@
       ta.id = "f_map_"+s.id;
       ta.setAttribute("data-field","map_"+s.id);
       ta.placeholder = s.ph;
-      ta.disabled = true;
       ta.setAttribute("aria-label", s.name);
       box.appendChild(ta);
       host.appendChild(box);
@@ -827,7 +827,7 @@
         var body = el("div","ebody");
         var head = el("div","ehead");
         head.appendChild(el("span","who", p ? (p.name || "Someone") : "Someone"));
-        head.appendChild(el("span","when", relTime(u.at) + " · " + clockTime(u.at)));
+        head.appendChild(el("span","when", relTime(u.at) + " · " + clockTime(u.at) + (u.local ? " · not shared yet" : "")));
         body.appendChild(head);
         body.appendChild(el("div","etext", u.body || ""));
         li.appendChild(body);
@@ -896,30 +896,120 @@
     byId("footStamp").textContent = "Viewed " + new Date().toLocaleString([], {month:"short", day:"numeric", hour:"numeric", minute:"2-digit"});
   }
 
+  /* ---------------- local mirror ---------------- */
+
+  var MIRROR_KEY = "instantly-tracker-mirror";
+
+  function mirrorSave(){
+    try{
+      localStorage.setItem(MIRROR_KEY, JSON.stringify({ tasks:tasks, fields:fields, posts:pendingPosts }));
+    }catch(e){}
+  }
+
+  function mirrorLoad(){
+    try{
+      var raw = localStorage.getItem(MIRROR_KEY);
+      if(!raw) return;
+      var m = JSON.parse(raw) || {};
+      if(m.tasks){
+        tasks = m.tasks;
+        Object.keys(m.tasks).forEach(function(k){ pendingTasks[k] = m.tasks[k]; });
+      }
+      if(m.fields){
+        fields = m.fields;
+        Object.keys(m.fields).forEach(function(k){ pendingFields[k] = m.fields[k]; });
+      }
+      if(m.posts && m.posts.length) pendingPosts = m.posts.slice();
+    }catch(e){}
+  }
+
+  function recomputeUpdates(){
+    var local = pendingPosts.map(function(p){
+      return { body:p.body, at:p.at, by:p.by, local:true };
+    });
+    updates = shared.concat(local).sort(function(a,b){ return Date.parse(b.at) - Date.parse(a.at); });
+  }
+
   /* ---------------- writes ---------------- */
+
+  function canWrite(){ return !!db && !readOnly; }
+
+  function pushTasks(patch){
+    return enqueue("tasks", function(){
+      var ref = db.doc("state/tasks");
+      if(tasksExists) return ref.update(patch);
+      return ref.set(patch).then(function(){ tasksExists = true; });
+    });
+  }
+
+  function pushFields(patch){
+    return enqueue("fields", function(){
+      var ref = db.doc("state/fields");
+      if(fieldsExists) return ref.update(patch);
+      return ref.set(patch).then(function(){ fieldsExists = true; });
+    });
+  }
 
   function toggleTask(id, done){
     var rec = { done: !!done, at: new Date().toISOString(), by: myId || null };
     tasks[id] = rec;
     renderTasks();
-    if(!db || readOnly) return;
-    var patch = {}; patch[id] = rec;
-    enqueue("tasks", function(){
-      var ref = db.doc("state/tasks");
-      if(tasksExists) return ref.update(patch);
-      return ref.set(patch).then(function(){ tasksExists = true; });
-    }).catch(onWriteError);
+    if(canWrite()){
+      var patch = {}; patch[id] = rec;
+      pushTasks(patch).catch(onWriteError);
+    } else {
+      pendingTasks[id] = rec;
+    }
+    mirrorSave();
   }
 
   function writeField(key, value){
     fields[key] = value;
-    if(!db || readOnly) return;
-    var patch = {}; patch[key] = value;
-    enqueue("fields", function(){
-      var ref = db.doc("state/fields");
-      if(fieldsExists) return ref.update(patch);
-      return ref.set(patch).then(function(){ fieldsExists = true; });
-    }).catch(onWriteError);
+    if(canWrite()){
+      var patch = {}; patch[key] = value;
+      pushFields(patch).catch(onWriteError);
+    } else {
+      pendingFields[key] = value;
+    }
+    mirrorSave();
+  }
+
+  // Carry edits made before the store answered (or while offline) upward,
+  // filling only what shared state has no value for — never clobbering it.
+  function flushPending(){
+    if(flushed || !canWrite() || !gotTasks || !gotFields) return;
+    flushed = true;
+
+    var tPatch = {}, tAny = false;
+    Object.keys(pendingTasks).forEach(function(id){
+      if(!tasks[id]){ tPatch[id] = pendingTasks[id]; tasks[id] = pendingTasks[id]; tAny = true; }
+    });
+    pendingTasks = {};
+    if(tAny) pushTasks(tPatch).catch(onWriteError);
+
+    var fPatch = {}, fAny = false;
+    Object.keys(pendingFields).forEach(function(k){
+      var cur = fields[k], local = pendingFields[k];
+      var curEmpty = (cur == null || String(cur).trim() === "");
+      if(curEmpty && String(local).trim() !== ""){ fPatch[k] = local; fields[k] = local; fAny = true; }
+    });
+    pendingFields = {};
+    if(fAny) pushFields(fPatch).catch(onWriteError);
+
+    var posts = pendingPosts.slice();
+    pendingPosts = [];
+    posts.forEach(function(p){
+      enqueue("updates", function(){
+        return db.collection("updates").add({ body:p.body, at:p.at, by: myId || p.by || null });
+      }).catch(function(e){
+        pendingPosts.push(p);
+        mirrorSave(); recomputeUpdates(); renderLog();
+        onWriteError(e);
+      });
+    });
+
+    mirrorSave();
+    renderTasks(); renderFields(); recomputeUpdates(); renderLog();
   }
 
   function bindFieldInputs(){
@@ -964,7 +1054,16 @@
   function postUpdate(){
     var ta = byId("composerText");
     var body = ta.value.trim();
-    if(!body || !db || readOnly) return;
+    if(!body || readOnly) return;
+
+    if(!db){
+      pendingPosts.push({ body: body, at: new Date().toISOString(), by: myId || null });
+      ta.value = ""; saveDraft("");
+      mirrorSave(); recomputeUpdates(); renderLog(); syncComposer();
+      byId("composerHint").textContent = "Saved on this device — it posts to the shared log once this page connects.";
+      return;
+    }
+
     var btn = byId("postBtn");
     btn.disabled = true;
     btn.textContent = "Posting…";
@@ -988,37 +1087,47 @@
   function syncComposer(){
     var ta = byId("composerText");
     var btn = byId("postBtn");
-    var can = !!db && !readOnly;
-    ta.disabled = !can;
-    btn.disabled = !can || !ta.value.trim();
+    ta.disabled = readOnly;
+    btn.disabled = readOnly || !ta.value.trim();
   }
 
   function applyEditable(){
-    var can = !!db && !readOnly;
-    document.querySelectorAll("[data-field]").forEach(function(i){ i.disabled = !can; });
-    document.querySelectorAll('.task input[type="checkbox"]').forEach(function(i){ i.disabled = !can; });
+    document.querySelectorAll("[data-field]").forEach(function(i){ i.disabled = readOnly; });
+    document.querySelectorAll('.task input[type="checkbox"]').forEach(function(i){ i.disabled = readOnly; });
     syncComposer();
     var hint = byId("composerHint");
-    if(!db) hint.textContent = "Not connected — open this from claude.ai to post.";
-    else if(readOnly) hint.textContent = "You have read-only access to this tracker.";
-    else if(hint.textContent.indexOf("Connecting")===0) hint.textContent = "Posts to the shared log, visible to everyone with the link.";
+    if(readOnly) hint.textContent = "Read-only access — you'll need edit access to post here.";
+    else if(db) hint.textContent = "Posts to the shared log — everyone with access sees it.";
+    else if(mode==="boot") hint.textContent = "Connecting to the shared log…";
+    else hint.textContent = "Saved on this device until this tracker connects.";
   }
 
-  function setSync(state, text){
-    byId("syncPill").setAttribute("data-s", state);
-    byId("syncText").textContent = text;
+  function setSync(state){
+    mode = state;
+    var pill = byId("syncPill");
     var b = byId("banner");
-    if(state==="off"){
-      b.className = "banner";
-      b.textContent = "This view isn't connected to the shared tracker, so nothing you type here is saved. Open the artifact from claude.ai to edit it.";
-      b.hidden = false;
+    if(state==="live"){
+      pill.setAttribute("data-s","live");
+      byId("syncText").textContent = "Live · shared";
+      b.hidden = true;
     } else if(state==="ro"){
+      pill.setAttribute("data-s","ro");
+      byId("syncText").textContent = "Read-only";
       b.className = "banner";
-      b.textContent = "Read-only access: you can see everything, but checking a task or posting an update needs edit access from Jonathan.";
+      b.textContent = "You can read everything here, but ticking a task or posting an update needs edit access — ask Jonathan to share it as \u201Ccan edit\u201D.";
+      b.hidden = false;
+    } else if(state==="local"){
+      pill.setAttribute("data-s","local");
+      byId("syncText").textContent = "This device only";
+      b.className = "banner";
+      b.textContent = "Edits are being kept in this browser only — nobody else sees them yet. Open the tracker from claude.ai to sync; anything you type here is carried up when it connects.";
       b.hidden = false;
     } else {
+      pill.setAttribute("data-s","wait");
+      byId("syncText").textContent = "Connecting";
       b.hidden = true;
     }
+    applyEditable();
   }
 
   /* ---------------- boot ---------------- */
@@ -1027,13 +1136,15 @@
   buildBar();
   buildFlow();
   bindFieldInputs();
+  mirrorLoad();
   loadDraft();
+  recomputeUpdates();
   renderTasks();
   renderFields();
   renderLog();
   renderClock();
   renderStamp();
-  applyEditable();
+  setSync("boot");
 
   byId("postBtn").addEventListener("click", postUpdate);
   byId("composerText").addEventListener("input", function(){
@@ -1047,9 +1158,10 @@
   setInterval(function(){ renderClock(); renderCadence(); renderStamp(); }, 30000);
   setInterval(function(){ renderTasks(); }, 60000);
 
+  // The page is fully usable before any of this resolves; edits made in the
+  // meantime queue up and are carried to the shared store on connect.
   if(!window.claude || !window.claude.use){
-    setSync("off","Not connected");
-    applyEditable();
+    setSync("local");
     return;
   }
 
@@ -1063,48 +1175,49 @@
       else who.innerHTML = "&nbsp;";
       return u.can("data.write");
     }).then(function(w){
-      if(w === false) readOnly = true;
-      else if(w === true) readOnly = false;
-      else readOnly = false; // null: keep inputs live, let a refused write decide
+      // Only an explicit "no" locks the page; null means the platform said
+      // nothing, so keep the inputs live and let a refused write decide.
+      readOnly = (w === false);
       return null;
     });
   }).catch(function(){}).then(function(){
     return Promise.resolve(window.claude.use("db"));
   }).then(function(d){
     if(!d){
-      setSync("off","Not connected");
-      applyEditable();
+      setSync("local");
       return;
     }
     db = d;
-    connected = true;
-    setSync(readOnly ? "ro" : "live", readOnly ? "Read-only" : "Live");
-    applyEditable();
+    setSync(readOnly ? "ro" : "live");
 
     d.doc("state/tasks").onSnapshot(function(snap){
       tasksExists = snap.exists;
       var data = snap.data();
       if(data) tasks = data;
+      gotTasks = true;
       renderTasks();
+      flushPending();
     }, function(e){ onWriteError(e); });
 
     d.doc("state/fields").onSnapshot(function(snap){
       fieldsExists = snap.exists;
       var data = snap.data();
       if(data) fields = data;
+      gotFields = true;
       renderFields();
+      flushPending();
     }, function(e){ onWriteError(e); });
 
     d.collection("updates").orderBy("at","desc").limit(50).onSnapshot(function(snap){
-      updates = snap.docs.map(function(doc){
+      shared = snap.docs.map(function(doc){
         var v = doc.data() || {};
         return { id: doc.id, body: v.body, at: v.at, by: v.by };
       }).filter(function(u){ return u.at; });
+      recomputeUpdates();
       renderLog();
     }, function(e){ onWriteError(e); });
   }).catch(function(){
-    setSync("off","Not connected");
-    applyEditable();
+    setSync("local");
   });
 
 })();
