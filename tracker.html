@@ -203,6 +203,8 @@
   /* ---------- data blocks ---------- */
   .block{margin:12px 0 2px 28px;padding:13px 14px;background:var(--surface-2);border:1px solid var(--rule);border-radius:7px;}
   .block .blab{font-family:var(--f-mono);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:10px;}
+  .block .bhint{font-size:11.5px;line-height:1.5;color:var(--ink-2);margin-top:11px;padding-top:10px;border-top:1px dashed var(--rule-strong);}
+  .block .bhint b{color:var(--ink);font-weight:600;}
   .fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(138px,1fr));gap:12px;}
   .f{display:flex;flex-direction:column;gap:4px;min-width:0;}
   .f label{font-size:11.5px;color:var(--ink-2);font-weight:500;line-height:1.3;}
@@ -600,7 +602,14 @@
   ];
 
   var BLOCKS = {
-    state:{ label:"Current state, measured", derived:true, fields:[
+    state:{ label:"Current state, measured", derived:true,
+      hint:"Where to get these: open <b>one campaign's analytics in Instantly</b> and read " +
+           "<b>sent</b> and <b>bounced</b> off the same screen for the same date range " +
+           "— that way the two numbers are guaranteed to cover the same window. " +
+           "The account-wide Analytics view works too, as long as its date filter matches " +
+           "the bounce report exactly. If the bounce report is a custom export, ask Carlo " +
+           "to add a sent count to it.",
+      fields:[
       { id:"cs_window", label:"Window these cover", type:"text", ph:"e.g. 1\u201315 Sep" },
       { id:"cs_sent", label:"Emails sent in window", type:"number", ph:"0" },
       { id:"cs_bounces", label:"Bounces in window", type:"number", ph:"0" },
@@ -885,6 +894,11 @@
           b.fields.forEach(function(f){ grid.appendChild(fieldInput(f)); });
           blk.appendChild(grid);
           if(b.derived) blk.appendChild(derivedBlock());
+          if(b.hint){
+            var hint = el("div","bhint");
+            hint.innerHTML = b.hint;   // fixed authored copy, no user input
+            blk.appendChild(hint);
+          }
           li.appendChild(blk);
         }
 
