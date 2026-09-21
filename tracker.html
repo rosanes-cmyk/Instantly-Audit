@@ -113,6 +113,40 @@
   @media (max-width:760px){.tiles{grid-template-columns:repeat(2,1fr);}}
   @media (max-width:380px){.tiles{grid-template-columns:1fr;}}
 
+  /* ---------- tabs ---------- */
+  .tabs{
+    display:flex;gap:2px;margin-top:30px;
+    border-bottom:1px solid var(--rule-strong);
+    overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;
+  }
+  .tabs::-webkit-scrollbar{display:none;}
+  .tab{
+    flex:none;display:inline-flex;align-items:center;gap:7px;
+    font-family:var(--f-display);font-size:13px;font-weight:600;letter-spacing:-.005em;
+    color:var(--ink-2);background:transparent;
+    border:0;border-bottom:2px solid transparent;
+    padding:10px 13px;cursor:pointer;white-space:nowrap;
+  }
+  .tab:hover{color:var(--ink);}
+  .tab[aria-selected="true"]{color:var(--accent-ink);border-bottom-color:var(--accent);}
+  .tab .tc{
+    font-family:var(--f-mono);font-size:9.5px;font-weight:600;letter-spacing:.05em;
+    padding:2px 5px;border-radius:3px;background:var(--surface-2);color:var(--ink-3);
+    font-variant-numeric:tabular-nums;
+  }
+  .tab[aria-selected="true"] .tc{background:var(--accent-soft);color:var(--accent-ink);}
+  .tab .tc[data-t="warn"]{color:var(--warn);}
+  .tab .tc[data-t="crit"]{color:var(--crit);}
+
+  /* a task points at the tab where its work actually happens */
+  .tlinks{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0 0 28px;}
+  .tlink{
+    font-family:var(--f-mono);font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;
+    color:var(--accent-ink);background:var(--accent-soft);
+    border:1px solid var(--accent);border-radius:4px;padding:4px 9px;cursor:pointer;
+  }
+  .tlink:hover{filter:brightness(1.18);}
+
   /* ---------- sections ---------- */
   .sec{margin-top:46px;}
   .sechead{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 14px;justify-content:space-between;border-bottom:1px solid var(--ink);padding-bottom:8px;}
@@ -257,7 +291,25 @@
   .sbar[data-t="ok"] i.on{background:var(--ok);}
   .sbar[data-t="warn"] i.on{background:var(--warn);}
   .sbar[data-t="crit"] i.on{background:var(--crit);}
-  .acct select.score{min-width:112px;}
+
+  /* one click sets a score; clicking the current one clears it */
+  .spick{display:inline-flex;gap:2px;align-items:center;flex:none;}
+  .spick button{
+    display:block;width:15px;height:19px;padding:0;border-radius:2px;
+    background:var(--rule);border:1px solid transparent;cursor:pointer;
+  }
+  .spick button:hover{border-color:var(--ink-3);}
+  .spick[data-t="ok"] button.on{background:var(--ok);}
+  .spick[data-t="warn"] button.on{background:var(--warn);}
+  .spick[data-t="crit"] button.on{background:var(--crit);}
+  .spick button:disabled{cursor:not-allowed;opacity:.6;}
+  .slab{
+    font-family:var(--f-mono);font-size:10.5px;font-weight:600;letter-spacing:.05em;
+    text-transform:uppercase;min-width:92px;color:var(--ink-3);
+  }
+  .slab[data-t="ok"]{color:var(--ok);}
+  .slab[data-t="warn"]{color:var(--warn);}
+  .slab[data-t="crit"]{color:var(--crit);}
   .dgroup-head .davg{font-family:var(--f-mono);font-size:9.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-left:auto;}
   .dgroup-head .davg[data-t="ok"]{color:var(--ok);}
   .dgroup-head .davg[data-t="warn"]{color:var(--warn);}
@@ -405,7 +457,9 @@
     </div>
   </section>
 
-  <section class="sec" aria-labelledby="phasesH">
+  <div class="tabs" id="tabs" role="tablist" aria-label="Tracker sections"></div>
+
+  <section class="sec tabpanel" data-tab="phases" role="tabpanel" aria-labelledby="phasesH">
     <div class="sechead">
       <h2 id="phasesH">The Handoff, Phase by Phase</h2>
       <div class="note">Check a task when it is genuinely done — not when it is scheduled. Notes are what Cherry reads if she opens this.</div>
@@ -413,7 +467,7 @@
     <div id="phases"></div>
   </section>
 
-  <section class="sec" aria-labelledby="mapH">
+  <section class="sec tabpanel" data-tab="map" role="tabpanel" hidden aria-labelledby="mapH">
     <div class="sechead">
       <h2 id="mapH">System Map — How Instantly Actually Works</h2>
       <div class="note">Fill in each stage with what is really happening today, not what was intended. This is what gives Cherry visibility into the setup.</div>
@@ -426,7 +480,7 @@
     </div>
   </section>
 
-  <section class="sec" aria-labelledby="acctH">
+  <section class="sec tabpanel" data-tab="accounts" role="tabpanel" hidden aria-labelledby="acctH">
     <div class="sechead">
       <h2 id="acctH">Sending Accounts</h2>
       <div class="note">Score each inbox on deliverability health. Worst scores sort to the top of their domain, so the inboxes dragging the setup down are the ones you read first.</div>
@@ -440,7 +494,7 @@
     <div class="empty" id="acctEmpty">No sending accounts recorded yet. Add each inbox Instantly sends from — every one gets a status, a daily cap and room for its own report.</div>
   </section>
 
-  <section class="sec" aria-labelledby="campH">
+  <section class="sec tabpanel" data-tab="campaigns" role="tabpanel" hidden aria-labelledby="campH">
     <div class="sechead">
       <h2 id="campH">Campaigns</h2>
       <div class="note">Score each campaign on how it is performing. Active campaigns come first, worst score at the top.</div>
@@ -454,7 +508,7 @@
     <div class="empty" id="campEmpty">No campaigns recorded yet. Add each one and mark it active or not — a paused campaign nobody knows about is exactly the gap this audit is for.</div>
   </section>
 
-  <section class="sec" aria-labelledby="logH">
+  <section class="sec tabpanel" data-tab="updates" role="tabpanel" hidden aria-labelledby="logH">
     <div class="sechead">
       <h2 id="logH">Update Log</h2>
       <span class="cadence" id="cadence" data-c="none">No update posted yet</span>
@@ -471,7 +525,7 @@
     <div class="empty" id="logEmpty">No updates yet. The first one is due within the hour — say where the audit stands, even if the answer is "waiting on Carlo".</div>
   </section>
 
-  <section class="sec" aria-labelledby="peopleH">
+  <section class="sec tabpanel" data-tab="contacts" role="tabpanel" hidden aria-labelledby="peopleH">
     <div class="sechead">
       <h2 id="peopleH">Who To Contact</h2>
       <div class="note">The escalation path this SOP hands over. If sending breaks, this is the order to work down.</div>
@@ -515,15 +569,15 @@
   var PHASES = [
     { id:"p1", n:1, title:"Audit the Current Setup", target:"Target: first hour", tasks:[
       { id:"p1t1", text:"Get a walkthrough from Carlo on the original Instantly configuration — campaigns, sequences, sending domains/inboxes, integrations/webhooks", ask:"Carlo",
-        note:"When it happened, and what surprised you" },
+        note:"When it happened, and what surprised you", links:["map","accounts"] },
       { id:"p1t2", text:"Get a live walkthrough (not just a description) from Lawrence and Seth of what they've actually been monitoring, and how often", ask:"Lawrence · Seth",
         note:"What they check, where they check it, how often" },
       { id:"p1t3", text:"Write down current state: active campaigns, sending accounts, deliverability health, known gaps or complaints",
-        note:"Known gaps, complaints, anything unexplained", block:"state" }
+        note:"Known gaps, complaints, anything unexplained", block:"state", links:["accounts","campaigns"] }
     ]},
     { id:"p2", n:2, title:"Define “Working Fine”", target:"Target: hour 2", tasks:[
       { id:"p2t1", text:"List the daily checks Jonathan will run: sequences firing on schedule, no paused or errored campaigns, replies routed with none sitting unread, CRM sync accurate",
-        note:"Where each check happens — Instantly dashboard, inbox, CRM" },
+        note:"Where each check happens — Instantly dashboard, inbox, CRM", links:["campaigns"] },
       { id:"p2t2", text:"Set up daily and weekly KPI reporting: emails sent, open rate, reply rate, bounce rate, leads advanced to next stage — pulled the same way each day",
         note:"Where the numbers come from and who pulls them" },
       { id:"p2t3", text:"Define “nothing left behind” in concrete terms — reply response time target, time-to-sequence for a new contact",
@@ -541,7 +595,7 @@
       { id:"p4t2", text:"Confirm the weekly summary format for realtor lead throughput and process gaps",
         note:"What the weekly summary covers" },
       { id:"p4t3", text:"Write a short SOP: how Instantly is configured, what gets checked daily, who to contact if something breaks",
-        note:"Where the SOP lives" }
+        note:"Where the SOP lives", links:["contacts","map"] }
     ]}
   ];
 
@@ -706,6 +760,77 @@
     return d;
   }
 
+  var TABS = [
+    { id:"phases",    label:"Phases" },
+    { id:"map",       label:"System Map" },
+    { id:"accounts",  label:"Accounts" },
+    { id:"campaigns", label:"Campaigns" },
+    { id:"updates",   label:"Updates" },
+    { id:"contacts",  label:"Contacts" }
+  ];
+  var TAB_KEY = "instantly-tracker-tab";
+  var activeTab = TABS[0].id;
+
+  function buildTabs(){
+    var bar = byId("tabs");
+    if(!bar) return;
+    TABS.forEach(function(t){
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "tab";
+      b.id = "tab_" + t.id;
+      b.setAttribute("role","tab");
+      b.setAttribute("aria-selected","false");
+      b.appendChild(document.createTextNode(t.label));
+      var c = el("span","tc","");
+      c.id = "tabc_" + t.id;
+      c.hidden = true;
+      b.appendChild(c);
+      b.addEventListener("click", function(){ showTab(t.id); });
+      b.addEventListener("keydown", function(e){
+        var i = TABS.map(function(x){ return x.id; }).indexOf(t.id);
+        if(e.key === "ArrowRight" || e.key === "ArrowLeft"){
+          e.preventDefault();
+          var n = (i + (e.key === "ArrowRight" ? 1 : TABS.length - 1)) % TABS.length;
+          showTab(TABS[n].id);
+          byId("tab_" + TABS[n].id).focus();
+        }
+      });
+      bar.appendChild(b);
+    });
+    var saved = null;
+    try{ saved = localStorage.getItem(TAB_KEY); }catch(e){}
+    showTab(saved && document.querySelector('[data-tab="' + saved + '"]') ? saved : TABS[0].id, true);
+  }
+
+  function showTab(id, quiet){
+    activeTab = id;
+    TABS.forEach(function(t){
+      var b = byId("tab_" + t.id);
+      if(b) b.setAttribute("aria-selected", t.id === id ? "true" : "false");
+    });
+    document.querySelectorAll(".tabpanel").forEach(function(sec){
+      sec.hidden = sec.getAttribute("data-tab") !== id;
+    });
+    try{ localStorage.setItem(TAB_KEY, id); }catch(e){}
+    // A textarea sized while its panel was hidden measures zero, so the
+    // panel coming into view re-measures its boxes.
+    document.querySelectorAll('.tabpanel:not([hidden]) textarea[data-autosize]').forEach(autosize);
+    if(!quiet){
+      var bar = byId("tabs");
+      if(bar && bar.getBoundingClientRect().top < 0) bar.scrollIntoView({block:"start"});
+    }
+  }
+
+  function tabCount(id, value, tier){
+    var c = byId("tabc_" + id);
+    if(!c) return;
+    if(value === null || value === "" ){ c.hidden = true; return; }
+    c.hidden = false;
+    c.textContent = String(value);
+    if(tier) c.setAttribute("data-t", tier); else c.removeAttribute("data-t");
+  }
+
   function buildPhases(){
     var host = byId("phases");
     PHASES.forEach(function(p){
@@ -761,6 +886,22 @@
           blk.appendChild(grid);
           if(b.derived) blk.appendChild(derivedBlock());
           li.appendChild(blk);
+        }
+
+        if(t.links && t.links.length){
+          var links = el("div","tlinks");
+          t.links.forEach(function(tabId){
+            var meta = null;
+            TABS.forEach(function(x){ if(x.id === tabId) meta = x; });
+            if(!meta) return;
+            var b = document.createElement("button");
+            b.type = "button";
+            b.className = "tlink";
+            b.textContent = meta.label + " →";
+            b.addEventListener("click", function(){ showTab(tabId); });
+            links.appendChild(b);
+          });
+          li.appendChild(links);
         }
 
         var note = document.createElement("textarea");
@@ -853,6 +994,8 @@
         }
       }
     });
+
+    tabCount("phases", done + "/" + TOTAL, done === TOTAL ? "ok" : null);
 
     var pct = Math.round(done/TOTAL*100);
     byId("progCount").textContent = done + " / " + TOTAL;
@@ -1067,6 +1210,7 @@
         host.appendChild(li);
       });
       byId("logEmpty").hidden = updates.length > 0;
+      tabCount("updates", updates.length || "", updates.length ? null : null);
     };
 
     if(userNs && ids.length){
@@ -1459,6 +1603,50 @@
     return bar;
   }
 
+  function scoreLabelFor(cfg, n){
+    if(n === null) return "not scored";
+    var hit = null;
+    cfg.scores.forEach(function(pair){ if(parseFloat(pair[0]) === n) hit = pair[1]; });
+    return hit ? hit.replace(/^\d+\s*.\s*/, "") : String(n);
+  }
+
+  function scorePicker(key, cfg, id, e){
+    var wrap = el("span", null);
+    wrap.style.display = "inline-flex";
+    wrap.style.alignItems = "center";
+    wrap.style.gap = "8px";
+    wrap.style.flex = "none";
+
+    var n = scoreOf(e);
+    var pick = el("span","spick");
+    pick.id = "sp_" + key + "_" + id;
+    pick.setAttribute("data-t", scoreTier(n));
+    pick.setAttribute("role","group");
+    pick.setAttribute("aria-label", cfg.scoreLabel + " score for " + (e.name || cfg.noun));
+
+    var lab = el("span","slab", scoreLabelFor(cfg, n));
+    lab.id = "sl_" + key + "_" + id;
+    lab.setAttribute("data-t", scoreTier(n));
+
+    for(var i = 1; i <= 5; i++){
+      (function(v){
+        var b = document.createElement("button");
+        b.type = "button";
+        if(n !== null && v <= n) b.className = "on";
+        b.setAttribute("aria-label", "Score " + v + " of 5: " + scoreLabelFor(cfg, v));
+        b.title = scoreLabelFor(cfg, v) + " \u2014 click again to clear";
+        b.addEventListener("click", function(){
+          var cur = scoreOf(roster[key][id] || {});
+          writeRoster(key, id, { score: (cur === v) ? "" : String(v) });
+        });
+        pick.appendChild(b);
+      })(i);
+    }
+    wrap.appendChild(pick);
+    wrap.appendChild(lab);
+    return wrap;
+  }
+
   function chip(label, value, tier){
     var c = el("div","chip");
     if(tier) c.setAttribute("data-t", tier);
@@ -1533,22 +1721,7 @@
     sel.addEventListener("change", function(){ writeRoster(key, id, { status: sel.value }); });
     top.appendChild(sel);
 
-    var sc = document.createElement("select");
-    sc.className = "score";
-    sc.id = "sc_" + key + "_" + id;
-    sc.setAttribute("aria-label", cfg.scoreLabel + " score for " + (e.name || cfg.noun));
-    var none = document.createElement("option");
-    none.value = ""; none.textContent = "— not scored";
-    sc.appendChild(none);
-    cfg.scores.forEach(function(pair){
-      var o = document.createElement("option");
-      o.value = pair[0]; o.textContent = pair[1];
-      sc.appendChild(o);
-    });
-    sc.value = (e.score == null ? "" : String(e.score));
-    sc.addEventListener("change", function(){ writeRoster(key, id, { score: sc.value }); });
-    top.appendChild(sc);
-    top.appendChild(scoreBar(scoreOf(e)));
+    top.appendChild(scorePicker(key, cfg, id, e));
 
     if(cfg.cap){
       var cap = document.createElement("input");
@@ -1605,18 +1778,18 @@
       var sv = e.status || cfg.initial;
       if(sel.value !== sv) sel.value = sv;
     }
-    var sc = byId("sc_" + key + "_" + id);
-    if(sc && document.activeElement !== sc){
-      var scv = (e.score == null ? "" : String(e.score));
-      if(sc.value !== scv) sc.value = scv;
-    }
-    var bar = row.querySelector(".sbar");
-    if(bar){
-      var sn = scoreOf(e);
-      bar.setAttribute("data-t", scoreTier(sn));
-      [].forEach.call(bar.children, function(seg, i){
+    var sn = scoreOf(e);
+    var pick = byId("sp_" + key + "_" + id);
+    if(pick){
+      pick.setAttribute("data-t", scoreTier(sn));
+      [].forEach.call(pick.children, function(seg, i){
         seg.className = (sn !== null && (i + 1) <= sn) ? "on" : "";
       });
+    }
+    var lab = byId("sl_" + key + "_" + id);
+    if(lab){
+      lab.textContent = scoreLabelFor(cfg, sn);
+      lab.setAttribute("data-t", scoreTier(sn));
     }
     var cap = byId("cap_" + key + "_" + id);
     if(cap && document.activeElement !== cap){
@@ -1710,6 +1883,7 @@
     }
 
     byId(cfg.empty).hidden = ids.length > 0;
+    tabCount(key === "accounts" ? "accounts" : "campaigns", ids.length || "", null);
     renderRosterStats(key, ids);
     lockRoster(key);
   }
@@ -1797,6 +1971,7 @@
 
   /* ---------------- boot ---------------- */
 
+  buildTabs();
   buildPhases();
   buildBar();
   buildFlow();
