@@ -157,9 +157,10 @@
 
   .note-in{
     display:block;width:100%;margin-top:9px;margin-left:28px;max-width:calc(100% - 28px);
-    font-family:var(--f-body);font-size:13px;color:var(--ink);
+    box-sizing:border-box;
+    font-family:var(--f-body);font-size:13px;line-height:1.55;color:var(--ink);
     background:transparent;border:0;border-bottom:1px dashed var(--rule-strong);
-    padding:4px 2px;
+    padding:4px 2px;resize:none;overflow-y:auto;max-height:200px;
   }
   .note-in::placeholder{color:var(--ink-3);}
   .note-in:focus{outline:none;border-bottom-color:var(--accent);}
@@ -177,6 +178,16 @@
     padding:6px 8px;width:100%;min-width:0;font-variant-numeric:tabular-nums;
   }
   .f input[type="text"]{font-family:var(--f-body);font-size:13px;font-weight:400;}
+  .f.full{grid-column:1/-1;}
+  .f textarea{
+    font-family:var(--f-mono);font-size:12.5px;line-height:1.6;color:var(--ink);
+    background:var(--surface);border:1px solid var(--rule-strong);border-radius:5px;
+    padding:7px 9px;width:100%;box-sizing:border-box;resize:none;
+    overflow-y:auto;max-height:380px;min-height:62px;
+  }
+  .f textarea::placeholder{color:var(--ink-3);}
+  .f textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft);}
+  .f textarea:disabled{opacity:.6;cursor:not-allowed;}
   .f input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft);}
   .f input:disabled{opacity:.6;cursor:not-allowed;}
   .f .thr{font-family:var(--f-mono);font-size:10px;letter-spacing:.05em;color:var(--ink-3);display:flex;gap:6px;align-items:center;flex-wrap:wrap;}
@@ -442,7 +453,9 @@
       { id:"cs_window", label:"Window these cover", type:"text", ph:"e.g. 1\u201315 Sep" },
       { id:"cs_sent", label:"Emails sent in window", type:"number", ph:"0" },
       { id:"cs_bounces", label:"Bounces in window", type:"number", ph:"0" },
-      { id:"cs_complaints", label:"Spam complaints in window", type:"number", ph:"0" }
+      { id:"cs_complaints", label:"Spam complaints in window", type:"number", ph:"0" },
+      { id:"cs_accounts", label:"Active sending accounts \u2014 one address per line", type:"textarea", full:true,
+        ph:"victoria@metrixgenerate.com\nchristopher@metrixgenerate.com\npenelope@metrixgenerate.com" }
     ]},
     nothing:{ label:"“Nothing left behind”, in numbers", fields:[
       { id:"nb_reply", label:"Reply response target (hours)", type:"number", step:"0.5", ph:"4" },
@@ -542,16 +555,23 @@
   /* ---------------- build: phases ---------------- */
 
   function fieldInput(f){
-    var wrap = el("div","f");
+    var wrap = el("div", f.full ? "f full" : "f");
     var lab = el("label", null, f.label);
     lab.setAttribute("for","f_"+f.id);
-    var inp = document.createElement("input");
-    inp.type = f.type;
+    var inp;
+    if(f.type === "textarea"){
+      inp = document.createElement("textarea");
+      inp.rows = 3;
+      inp.setAttribute("data-autosize","1");
+    } else {
+      inp = document.createElement("input");
+      inp.type = f.type;
+      if(f.step) inp.step = f.step;
+      if(f.type==="number") inp.min = "0";
+    }
     inp.id = "f_"+f.id;
     inp.setAttribute("data-field", f.id);
-    if(f.step) inp.step = f.step;
     if(f.ph) inp.placeholder = f.ph;
-    if(f.type==="number") inp.min = "0";
     wrap.appendChild(lab);
     wrap.appendChild(inp);
     if(f.thr){
@@ -586,6 +606,7 @@
     var d = el("div","derived");
     d.appendChild(derivedRow("derivedBounce","Bounce rate","target < 2%"));
     d.appendChild(derivedRow("derivedSpam","Complaint rate","target < 0.1%"));
+    d.appendChild(derivedRow("derivedAccounts","Accounts named","against the count"));
     return d;
   }
 
@@ -646,11 +667,13 @@
           li.appendChild(blk);
         }
 
-        var note = document.createElement("input");
-        note.type = "text";
+        var note = document.createElement("textarea");
+        note.rows = 1;
         note.className = "note-in";
         note.id = "f_note_"+t.id;
         note.setAttribute("data-field","note_"+t.id);
+        note.setAttribute("data-autosize","1");
+        note.setAttribute("aria-label","Notes");
         note.placeholder = t.note;
         li.appendChild(note);
 
@@ -782,6 +805,39 @@
     return null;
   }
 
+  function autosize(e){
+    if(!e || e.tagName !== "TEXTAREA") return;
+    e.style.height = "auto";
+    e.style.height = e.scrollHeight + "px";
+  }
+
+  function renderAccounts(){
+    var host = byId("derivedAccounts");
+    if(!host) return;
+    var val = host.querySelector('[data-role="val"]');
+    var vd = host.querySelector(".verdict");
+    var ta = byId("f_cs_accounts");
+    var declared = numOf("cs_inboxes");
+    var listed = ta ? ta.value.split("\n").map(function(x){ return x.trim(); }).filter(Boolean).length : 0;
+
+    if(!listed && declared === null){
+      val.textContent = "\u2014";
+      val.removeAttribute("data-t");
+      vd.hidden = true;
+      return;
+    }
+    val.textContent = (declared === null) ? String(listed) : (listed + " of " + declared);
+    if(declared !== null && listed > 0 && listed !== declared){
+      val.setAttribute("data-t","warn");
+      vd.hidden = false;
+      vd.setAttribute("data-v","warn");
+      vd.textContent = (listed < declared) ? (declared - listed) + " not named" : "more than counted";
+    } else {
+      val.removeAttribute("data-t");
+      vd.hidden = true;
+    }
+  }
+
   function numOf(id){
     var e = byId("f_"+id);
     if(!e) return null;
@@ -820,6 +876,7 @@
     var ok = (sent !== null && sent > 0);
     setRate("derivedBounce", (ok && b !== null) ? (b / sent * 100) : null, "bounce", 2);
     setRate("derivedSpam",   (ok && c !== null) ? (c / sent * 100) : null, "spam", 3);
+    renderAccounts();
   }
 
   function renderFields(){
@@ -828,6 +885,7 @@
       var val = fields[key];
       if(val==null) val = "";
       if(document.activeElement !== inp && inp.value !== String(val)) inp.value = val;
+      if(inp.hasAttribute("data-autosize")) autosize(inp);
 
       var f = inp.closest(".f");
       if(f){
@@ -1072,6 +1130,7 @@
             else { vd.hidden=true; }
           }
         }
+        if(inp.hasAttribute("data-autosize")) autosize(inp);
         if(key.indexOf("cs_") === 0) renderDerived();
         if(key==="map_diagram"){
           var open = byId("diagramOpen");
