@@ -1,0 +1,1111 @@
+<title>Instantly Handoff Tracker</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Asap:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+  :root{
+    --ground:#f7f8f7;
+    --surface:#ffffff;
+    --surface-2:#f1f4f3;
+    --ink:#141b1a;
+    --ink-2:#5a6664;
+    --ink-3:#8b9795;
+    --rule:#dde3e1;
+    --rule-strong:#c3cdcb;
+    --accent:#0b5f5c;
+    --accent-ink:#0b5f5c;
+    --accent-soft:#e3efed;
+    --ok:#1e7a47;
+    --ok-soft:#e4f2ea;
+    --warn:#8f6200;
+    --warn-soft:#faf0d9;
+    --crit:#a8261c;
+    --crit-soft:#fbe8e5;
+    --shadow:0 1px 2px rgba(20,27,26,.06), 0 8px 24px -16px rgba(20,27,26,.18);
+
+    --f-display:"Archivo","Helvetica Neue",Arial,sans-serif;
+    --f-body:"Asap","Segoe UI",Helvetica,Arial,sans-serif;
+    --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --ground:#0e1413;
+      --surface:#161e1d;
+      --surface-2:#1c2625;
+      --ink:#e8edeb;
+      --ink-2:#98a6a3;
+      --ink-3:#74827f;
+      --rule:#26302e;
+      --rule-strong:#39443f;
+      --accent:#4fbdb4;
+      --accent-ink:#77d2ca;
+      --accent-soft:#12302e;
+      --ok:#4bbe7c;
+      --ok-soft:#122c1f;
+      --warn:#d9a427;
+      --warn-soft:#2e2411;
+      --crit:#e8776c;
+      --crit-soft:#331916;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.6);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#0e1413;
+    --surface:#161e1d;
+    --surface-2:#1c2625;
+    --ink:#e8edeb;
+    --ink-2:#98a6a3;
+    --ink-3:#74827f;
+    --rule:#26302e;
+    --rule-strong:#39443f;
+    --accent:#4fbdb4;
+    --accent-ink:#77d2ca;
+    --accent-soft:#12302e;
+    --ok:#4bbe7c;
+    --ok-soft:#122c1f;
+    --warn:#d9a427;
+    --warn-soft:#2e2411;
+    --crit:#e8776c;
+    --crit-soft:#331916;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.6);
+  }
+
+  body{
+    background:var(--ground);
+    color:var(--ink);
+    font-family:var(--f-body);
+    font-size:15px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{
+    max-width:1060px;
+    margin:0 auto;
+    padding-left:18px;
+    padding-right:18px;
+    padding-block:28px 64px;
+  }
+  h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;}
+  .mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums;}
+  .eyebrow{
+    font-family:var(--f-mono);
+    font-size:10.5px;
+    font-weight:600;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--ink-3);
+  }
+  a{color:var(--accent-ink);}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px;}
+
+  /* ---------- masthead ---------- */
+  .mast{
+    display:flex;flex-wrap:wrap;gap:16px 24px;
+    align-items:flex-end;justify-content:space-between;
+    padding-bottom:18px;border-bottom:2px solid var(--ink);
+  }
+  .mast h1{font-size:clamp(25px,4.4vw,36px);font-weight:700;letter-spacing:-.022em;line-height:1.08;}
+  .mast .sub{color:var(--ink-2);font-size:13.5px;margin-top:6px;}
+  .mast .sub b{color:var(--ink);font-weight:600;}
+  .syncrow{display:flex;flex-direction:column;align-items:flex-start;gap:7px;}
+  .pill{
+    display:inline-flex;align-items:center;gap:6px;
+    font-family:var(--f-mono);font-size:10.5px;font-weight:600;
+    letter-spacing:.07em;text-transform:uppercase;
+    padding:4px 9px;border-radius:999px;
+    border:1px solid var(--rule-strong);color:var(--ink-2);background:var(--surface);
+    white-space:nowrap;
+  }
+  .pill .dot{width:6px;height:6px;border-radius:50%;background:var(--ink-3);flex:none;}
+  .pill[data-s="live"]{color:var(--ok);border-color:var(--ok);background:var(--ok-soft);}
+  .pill[data-s="live"] .dot{background:var(--ok);animation:blip 2.6s ease-in-out infinite;}
+  .pill[data-s="ro"]{color:var(--warn);border-color:var(--warn);background:var(--warn-soft);}
+  .pill[data-s="ro"] .dot{background:var(--warn);}
+  .pill[data-s="off"]{color:var(--crit);border-color:var(--crit);background:var(--crit-soft);}
+  .pill[data-s="off"] .dot{background:var(--crit);}
+  @keyframes blip{0%,100%{opacity:1}50%{opacity:.35}}
+  @media (prefers-reduced-motion:reduce){.pill .dot{animation:none!important}}
+
+  /* ---------- progress ---------- */
+  .prog{margin-top:22px;}
+  .prog-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 14px;justify-content:space-between;}
+  .prog-count{font-family:var(--f-mono);font-size:14px;font-weight:600;font-variant-numeric:tabular-nums;}
+  .prog-count span{color:var(--ink-3);font-weight:500;}
+  .bar{display:flex;gap:11px;margin-top:9px;}
+  .bargrp{display:flex;gap:3px;flex:var(--n);}
+  .seg{flex:1;height:9px;border-radius:2px;background:var(--rule);transition:background .18s ease;}
+  .seg[data-done="1"]{background:var(--accent);}
+  @media (prefers-reduced-motion:reduce){.seg{transition:none}}
+  .barkey{display:flex;gap:11px;margin-top:6px;}
+  .barkey span{flex:var(--n);font-family:var(--f-mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);}
+
+  /* ---------- tiles ---------- */
+  .tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:26px;background:var(--rule);border:1px solid var(--rule);border-radius:8px;overflow:hidden;}
+  .tile{background:var(--surface);padding:14px 15px 15px;}
+  .tile .k{font-family:var(--f-mono);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);}
+  .tile .v{font-family:var(--f-mono);font-size:23px;font-weight:600;letter-spacing:-.02em;margin-top:5px;font-variant-numeric:tabular-nums;line-height:1.15;}
+  .tile .n{font-size:11.5px;color:var(--ink-2);margin-top:3px;line-height:1.35;}
+  .tile .v[data-t="ok"]{color:var(--ok);}
+  .tile .v[data-t="warn"]{color:var(--warn);}
+  .tile .v[data-t="crit"]{color:var(--crit);}
+  @media (max-width:760px){.tiles{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:380px){.tiles{grid-template-columns:1fr;}}
+
+  /* ---------- sections ---------- */
+  .sec{margin-top:46px;}
+  .sechead{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 14px;justify-content:space-between;border-bottom:1px solid var(--ink);padding-bottom:8px;}
+  .sechead h2{font-size:19px;font-weight:700;letter-spacing:-.015em;}
+  .sechead .note{font-size:12.5px;color:var(--ink-2);max-width:62ch;}
+
+  /* ---------- phases ---------- */
+  .phase{display:flex;gap:0;margin-top:26px;}
+  .stripe{flex:none;width:3px;border-radius:2px;background:var(--rule-strong);margin-right:16px;}
+  .phase[data-st="flight"] .stripe{background:var(--accent);}
+  .phase[data-st="done"] .stripe{background:var(--ok);}
+  .pbody{flex:1;min-width:0;}
+  .phead{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 12px;}
+  .phead h3{font-size:16.5px;font-weight:600;letter-spacing:-.01em;}
+  .phead .num{font-family:var(--f-mono);font-size:11px;font-weight:600;color:var(--ink-3);letter-spacing:.06em;}
+  .pmeta{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px;align-items:center;}
+  .st{font-family:var(--f-mono);font-size:10px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;padding:3px 8px;border-radius:4px;background:var(--surface-2);color:var(--ink-2);border:1px solid var(--rule);}
+  .phase[data-st="flight"] .st{background:var(--accent-soft);color:var(--accent-ink);border-color:var(--accent);}
+  .phase[data-st="done"] .st{background:var(--ok-soft);color:var(--ok);border-color:var(--ok);}
+  .target{font-family:var(--f-mono);font-size:10.5px;color:var(--ink-3);letter-spacing:.04em;}
+
+  .tasks{list-style:none;margin:14px 0 0;padding:0;border-top:1px solid var(--rule);}
+  .task{border-bottom:1px solid var(--rule);padding:12px 0 13px;}
+  .trow{display:flex;gap:11px;align-items:flex-start;}
+  .task input[type="checkbox"]{
+    flex:none;appearance:none;-webkit-appearance:none;
+    width:17px;height:17px;margin:2px 0 0;border:1.5px solid var(--rule-strong);
+    border-radius:4px;background:var(--surface);cursor:pointer;position:relative;
+  }
+  .task input[type="checkbox"]:hover:not(:disabled){border-color:var(--accent);}
+  .task input[type="checkbox"]:checked{background:var(--accent);border-color:var(--accent);}
+  .task input[type="checkbox"]:checked::after{
+    content:"";position:absolute;left:4.5px;top:1.5px;width:5px;height:9px;
+    border:solid var(--surface);border-width:0 2px 2px 0;transform:rotate(43deg);
+  }
+  .task input[type="checkbox"]:disabled{cursor:not-allowed;opacity:.5;}
+  .tlabel{flex:1;min-width:0;font-size:14.5px;line-height:1.5;cursor:pointer;}
+  .task[data-done="1"] .tlabel{color:var(--ink-2);}
+  .task[data-done="1"] .tlabel .tt{text-decoration:line-through;text-decoration-color:var(--ink-3);}
+  .ask{display:inline-flex;align-items:center;gap:4px;margin-left:7px;font-family:var(--f-mono);font-size:10px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--accent-ink);background:var(--accent-soft);border-radius:4px;padding:2px 6px;white-space:nowrap;vertical-align:1px;}
+  .tdone{font-family:var(--f-mono);font-size:10.5px;color:var(--ink-3);margin-top:5px;}
+
+  .note-in{
+    display:block;width:100%;margin-top:9px;margin-left:28px;max-width:calc(100% - 28px);
+    font-family:var(--f-body);font-size:13px;color:var(--ink);
+    background:transparent;border:0;border-bottom:1px dashed var(--rule-strong);
+    padding:4px 2px;
+  }
+  .note-in::placeholder{color:var(--ink-3);}
+  .note-in:focus{outline:none;border-bottom-color:var(--accent);}
+  .note-in:disabled{opacity:.6;cursor:not-allowed;}
+
+  /* ---------- data blocks ---------- */
+  .block{margin:12px 0 2px 28px;padding:13px 14px;background:var(--surface-2);border:1px solid var(--rule);border-radius:7px;}
+  .block .blab{font-family:var(--f-mono);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:10px;}
+  .fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(138px,1fr));gap:12px;}
+  .f{display:flex;flex-direction:column;gap:4px;min-width:0;}
+  .f label{font-size:11.5px;color:var(--ink-2);font-weight:500;line-height:1.3;}
+  .f input{
+    font-family:var(--f-mono);font-size:14px;font-weight:600;color:var(--ink);
+    background:var(--surface);border:1px solid var(--rule-strong);border-radius:5px;
+    padding:6px 8px;width:100%;min-width:0;font-variant-numeric:tabular-nums;
+  }
+  .f input[type="text"]{font-family:var(--f-body);font-size:13px;font-weight:400;}
+  .f input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft);}
+  .f input:disabled{opacity:.6;cursor:not-allowed;}
+  .f .thr{font-family:var(--f-mono);font-size:10px;letter-spacing:.05em;color:var(--ink-3);display:flex;gap:6px;align-items:center;flex-wrap:wrap;}
+  .f .thr b{font-weight:600;}
+  .verdict{padding:1px 5px;border-radius:3px;text-transform:uppercase;font-weight:600;letter-spacing:.07em;}
+  .verdict[data-v="ok"]{color:var(--ok);background:var(--ok-soft);}
+  .verdict[data-v="warn"]{color:var(--warn);background:var(--warn-soft);}
+  .verdict[data-v="crit"]{color:var(--crit);background:var(--crit-soft);}
+
+  /* ---------- map ---------- */
+  .flow{display:flex;align-items:stretch;gap:7px;margin-top:20px;}
+  .stage{flex:1 1 0;min-width:0;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--rule);border-radius:8px;padding:11px 11px 11px;box-shadow:var(--shadow);}
+  .stage .sn{font-family:var(--f-mono);font-size:9.5px;font-weight:600;letter-spacing:.1em;color:var(--ink-3);}
+  .stage h3{font-size:13px;font-weight:600;letter-spacing:-.005em;margin-top:2px;line-height:1.25;}
+  .stage textarea{
+    margin-top:9px;flex:1;min-height:104px;width:100%;box-sizing:border-box;resize:vertical;
+    font-family:var(--f-body);font-size:12.5px;line-height:1.5;color:var(--ink);
+    background:var(--surface-2);border:1px solid var(--rule);border-radius:5px;padding:7px 8px;
+  }
+  .stage textarea::placeholder{color:var(--ink-3);}
+  .stage textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft);}
+  .stage textarea:disabled{opacity:.6;cursor:not-allowed;}
+  .stage[data-filled="1"]{border-color:var(--accent);}
+  .arrow{flex:none;align-self:center;color:var(--rule-strong);font-size:15px;line-height:1;user-select:none;}
+  @media (max-width:900px){
+    .flow{flex-direction:column;gap:5px;}
+    .arrow{transform:rotate(90deg);align-self:center;}
+    .stage textarea{min-height:76px;}
+  }
+  .diagram{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin-top:16px;}
+  .diagram label{font-size:12.5px;color:var(--ink-2);}
+  .diagram input{
+    flex:1;min-width:190px;font-family:var(--f-mono);font-size:12.5px;color:var(--ink);
+    background:var(--surface);border:1px solid var(--rule-strong);border-radius:5px;padding:7px 9px;
+  }
+  .diagram input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft);}
+  .diagram input:disabled{opacity:.6;cursor:not-allowed;}
+  .diagram a{font-family:var(--f-mono);font-size:11.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;}
+
+  /* ---------- log ---------- */
+  .cadence{display:inline-flex;align-items:center;gap:7px;font-family:var(--f-mono);font-size:11px;font-weight:600;letter-spacing:.05em;padding:4px 9px;border-radius:5px;border:1px solid var(--rule-strong);background:var(--surface);color:var(--ink-2);}
+  .cadence[data-c="ok"]{color:var(--ok);border-color:var(--ok);background:var(--ok-soft);}
+  .cadence[data-c="due"]{color:var(--warn);border-color:var(--warn);background:var(--warn-soft);}
+  .cadence[data-c="late"]{color:var(--crit);border-color:var(--crit);background:var(--crit-soft);}
+  .composer{margin-top:18px;background:var(--surface);border:1px solid var(--rule);border-radius:8px;padding:12px;box-shadow:var(--shadow);}
+  .composer textarea{
+    width:100%;box-sizing:border-box;min-height:70px;resize:vertical;
+    font-family:var(--f-body);font-size:13.5px;line-height:1.5;color:var(--ink);
+    background:var(--surface-2);border:1px solid var(--rule);border-radius:6px;padding:9px 10px;
+  }
+  .composer textarea::placeholder{color:var(--ink-3);}
+  .composer textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft);}
+  .composer textarea:disabled{opacity:.6;cursor:not-allowed;}
+  .crow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-top:10px;}
+  .chint{font-size:11.5px;color:var(--ink-3);}
+  button.post{
+    font-family:var(--f-display);font-size:13px;font-weight:600;letter-spacing:.01em;
+    color:#fff;background:var(--accent);border:1px solid var(--accent);border-radius:6px;
+    padding:7px 16px;cursor:pointer;
+  }
+  :root[data-theme="dark"] button.post,
+  :root:not([data-theme="light"]) button.post{color:#08201f;}
+  @media (prefers-color-scheme:light){:root:not([data-theme="dark"]) button.post{color:#fff;}}
+  button.post:hover:not(:disabled){filter:brightness(1.08);}
+  button.post:disabled{opacity:.45;cursor:not-allowed;}
+  .log{list-style:none;margin:20px 0 0;padding:0;}
+  .entry{display:flex;gap:11px;padding:13px 0;border-bottom:1px solid var(--rule);}
+  .entry:first-child{border-top:1px solid var(--rule);}
+  .av{flex:none;width:26px;height:26px;border-radius:50%;background:var(--surface-2);border:1px solid var(--rule);object-fit:cover;}
+  .ebody{flex:1;min-width:0;}
+  .ehead{display:flex;flex-wrap:wrap;gap:4px 9px;align-items:baseline;}
+  .ehead .who{font-size:13px;font-weight:600;}
+  .ehead .when{font-family:var(--f-mono);font-size:10.5px;color:var(--ink-3);letter-spacing:.03em;}
+  .etext{font-size:13.5px;line-height:1.55;margin-top:3px;white-space:pre-wrap;overflow-wrap:anywhere;}
+  .empty{font-size:13px;color:var(--ink-2);padding:16px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);margin-top:20px;}
+
+  /* ---------- contacts ---------- */
+  .people{display:grid;grid-template-columns:repeat(auto-fit,minmax(196px,1fr));gap:1px;margin-top:20px;background:var(--rule);border:1px solid var(--rule);border-radius:8px;overflow:hidden;}
+  .person{background:var(--surface);padding:13px 14px;}
+  .person .pn{font-family:var(--f-display);font-size:14px;font-weight:600;}
+  .person .pr{font-family:var(--f-mono);font-size:9.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-top:3px;}
+  .person .pd{font-size:12px;color:var(--ink-2);margin-top:5px;line-height:1.4;}
+
+  .foot{margin-top:44px;padding-top:14px;border-top:1px solid var(--rule);font-size:11.5px;color:var(--ink-3);display:flex;flex-wrap:wrap;gap:6px 16px;justify-content:space-between;}
+  .banner{margin-top:18px;padding:10px 13px;border-radius:7px;border:1px solid var(--warn);background:var(--warn-soft);color:var(--warn);font-size:12.5px;}
+</style>
+
+<div class="wrap">
+
+  <header class="mast">
+    <div>
+      <div class="eyebrow">Outbound operations · handoff in progress</div>
+      <h1>Instantly Audit &amp; Handoff</h1>
+      <div class="sub">Owner <b>Jonathan</b> · reporting to <b>Cherry</b> · deadline <b>end of day today</b> · update posted at least hourly</div>
+    </div>
+    <div class="syncrow">
+      <span class="pill" id="syncPill" data-s="wait"><span class="dot"></span><span id="syncText">Connecting</span></span>
+      <span class="eyebrow" id="whoami">&nbsp;</span>
+    </div>
+  </header>
+
+  <div id="banner" hidden></div>
+
+  <section class="prog" aria-label="Overall progress">
+    <div class="prog-head">
+      <div class="prog-count"><span id="progCount">0 / 11</span> <span>tasks complete · <span id="progPct">0%</span></span></div>
+      <div class="eyebrow" id="progPhase">Phase 1 in flight</div>
+    </div>
+    <div class="bar" id="bar" role="img" aria-label="Task completion by phase"></div>
+    <div class="barkey">
+      <span style="--n:3">1 · Audit</span>
+      <span style="--n:3">2 · Define</span>
+      <span style="--n:2">3 · SLA</span>
+      <span style="--n:3">4 · Reporting</span>
+    </div>
+  </section>
+
+  <section class="tiles" aria-label="Status summary">
+    <div class="tile">
+      <div class="k">Complete</div>
+      <div class="v" id="tileDone">0<span style="font-size:15px;color:var(--ink-3)">/11</span></div>
+      <div class="n" id="tileDoneNote">Nothing checked off yet</div>
+    </div>
+    <div class="tile">
+      <div class="k">Current phase</div>
+      <div class="v" id="tilePhase" style="font-size:19px">1</div>
+      <div class="n" id="tilePhaseNote">Audit the current setup</div>
+    </div>
+    <div class="tile">
+      <div class="k">Left today</div>
+      <div class="v mono" id="tileClock">—</div>
+      <div class="n" id="tileClockNote">Until end of day</div>
+    </div>
+    <div class="tile">
+      <div class="k">Last update</div>
+      <div class="v" id="tileUpd" style="font-size:19px">None</div>
+      <div class="n" id="tileUpdNote">First update due within the hour</div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="phasesH">
+    <div class="sechead">
+      <h2 id="phasesH">The Handoff, Phase by Phase</h2>
+      <div class="note">Check a task when it is genuinely done — not when it is scheduled. Notes are what Cherry reads if she opens this.</div>
+    </div>
+    <div id="phases"></div>
+  </section>
+
+  <section class="sec" aria-labelledby="mapH">
+    <div class="sechead">
+      <h2 id="mapH">System Map — How Instantly Actually Works</h2>
+      <div class="note">Fill in each stage with what is really happening today, not what was intended. This is what gives Cherry visibility into the setup.</div>
+    </div>
+    <div class="flow" id="flow"></div>
+    <div class="diagram">
+      <label for="f_map_diagram">Full diagram link</label>
+      <input type="url" id="f_map_diagram" data-field="map_diagram" placeholder="https://… (Miro, Whimsical, Lucid — optional)" disabled>
+      <a id="diagramOpen" href="#" target="_blank" rel="noopener" hidden>Open ↗</a>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="logH">
+    <div class="sechead">
+      <h2 id="logH">Update Log</h2>
+      <span class="cadence" id="cadence" data-c="none">No update posted yet</span>
+    </div>
+    <div class="composer">
+      <label for="composerText" class="eyebrow" style="display:block;margin-bottom:7px">Post an update</label>
+      <textarea id="composerText" placeholder="What moved, what is blocked, what you need from Carlo, Lawrence or Seth." disabled></textarea>
+      <div class="crow">
+        <span class="chint" id="composerHint">Connecting to the shared log…</span>
+        <button type="button" class="post" id="postBtn" disabled>Post update</button>
+      </div>
+    </div>
+    <ul class="log" id="log"></ul>
+    <div class="empty" id="logEmpty">No updates yet. The first one is due within the hour — say where the audit stands, even if the answer is "waiting on Carlo".</div>
+  </section>
+
+  <section class="sec" aria-labelledby="peopleH">
+    <div class="sechead">
+      <h2 id="peopleH">Who To Contact</h2>
+      <div class="note">The escalation path this SOP hands over. If sending breaks, this is the order to work down.</div>
+    </div>
+    <div class="people">
+      <div class="person">
+        <div class="pn">Carlo</div>
+        <div class="pr">Original configuration</div>
+        <div class="pd">Built the Instantly setup — campaigns, sequences, sending domains and inboxes, integrations and webhooks.</div>
+      </div>
+      <div class="person">
+        <div class="pn">Lawrence &amp; Seth</div>
+        <div class="pr">Day-to-day monitoring</div>
+        <div class="pd">Have been watching it in practice. Ask what they check, where, and how often — live, not described.</div>
+      </div>
+      <div class="person">
+        <div class="pn">Jonathan</div>
+        <div class="pr">Owner after handoff</div>
+        <div class="pd">Runs the daily checks, holds the realtor lead SLA, sends the reports.</div>
+      </div>
+      <div class="person">
+        <div class="pn">Cherry</div>
+        <div class="pr">Reporting recipient</div>
+        <div class="pd">Gets the daily KPI snapshot and the weekly realtor throughput summary.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="foot">
+    <span>Deliverability thresholds shown are the standard limits cold-email sending is judged against: bounce under 2%, spam complaints under 0.1%.</span>
+    <span class="mono" id="footStamp"></span>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------------- content ---------------- */
+
+  var PHASES = [
+    { id:"p1", n:1, title:"Audit the Current Setup", target:"Target: first hour", tasks:[
+      { id:"p1t1", text:"Get a walkthrough from Carlo on the original Instantly configuration — campaigns, sequences, sending domains/inboxes, integrations/webhooks", ask:"Carlo",
+        note:"When it happened, and what surprised you" },
+      { id:"p1t2", text:"Get a live walkthrough (not just a description) from Lawrence and Seth of what they've actually been monitoring, and how often", ask:"Lawrence · Seth",
+        note:"What they check, where they check it, how often" },
+      { id:"p1t3", text:"Write down current state: active campaigns, sending accounts, deliverability health, known gaps or complaints",
+        note:"Known gaps, complaints, anything unexplained", block:"state" }
+    ]},
+    { id:"p2", n:2, title:"Define “Working Fine”", target:"Target: hour 2", tasks:[
+      { id:"p2t1", text:"List the daily checks Jonathan will run: sequences firing on schedule, no paused or errored campaigns, replies routed with none sitting unread, CRM sync accurate",
+        note:"Where each check happens — Instantly dashboard, inbox, CRM" },
+      { id:"p2t2", text:"Set up daily and weekly KPI reporting: emails sent, open rate, reply rate, bounce rate, leads advanced to next stage — pulled the same way each day",
+        note:"Where the numbers come from and who pulls them" },
+      { id:"p2t3", text:"Define “nothing left behind” in concrete terms — reply response time target, time-to-sequence for a new contact",
+        note:"Reply response target, and time-to-sequence for a new contact", block:"nothing" }
+    ]},
+    { id:"p3", n:3, title:"Realtor Lead SLA", target:"Target: hour 3", tasks:[
+      { id:"p3t1", text:"Set a first-touch turnaround target for realtor leads, aligned with the realtor relationship program",
+        note:"Who agreed to the target", block:"sla" },
+      { id:"p3t2", text:"Build a way to flag any realtor lead stalled past the SLA so it doesn't sit silently",
+        note:"How a stalled lead surfaces — filter, tag, alert, daily sweep" }
+    ]},
+    { id:"p4", n:4, title:"Reporting Cadence to Cherry", target:"Target: hour 4, then ongoing", tasks:[
+      { id:"p4t1", text:"Confirm the daily KPI snapshot format and delivery time",
+        note:"Confirmed with Cherry on…", block:"cadence" },
+      { id:"p4t2", text:"Confirm the weekly summary format for realtor lead throughput and process gaps",
+        note:"What the weekly summary covers" },
+      { id:"p4t3", text:"Write a short SOP: how Instantly is configured, what gets checked daily, who to contact if something breaks",
+        note:"Where the SOP lives" }
+    ]}
+  ];
+
+  var BLOCKS = {
+    state:{ label:"Current state, measured", fields:[
+      { id:"cs_campaigns", label:"Active campaigns", type:"number", ph:"0" },
+      { id:"cs_inboxes", label:"Sending accounts", type:"number", ph:"0" },
+      { id:"cs_bounce", label:"Bounce rate %", type:"number", step:"0.1", ph:"0.0", thr:"bounce" },
+      { id:"cs_spam", label:"Spam complaints %", type:"number", step:"0.01", ph:"0.00", thr:"spam" }
+    ]},
+    nothing:{ label:"“Nothing left behind”, in numbers", fields:[
+      { id:"nb_reply", label:"Reply response target (hours)", type:"number", step:"0.5", ph:"4" },
+      { id:"nb_seq", label:"Time-to-sequence, new contact (hours)", type:"number", step:"0.5", ph:"24" }
+    ]},
+    sla:{ label:"Realtor lead SLA", fields:[
+      { id:"sla_hours", label:"First-touch target (hours)", type:"number", step:"1", ph:"24", thr:"sla" },
+      { id:"sla_program", label:"Program it aligns with", type:"text", ph:"Realtor relationship program" }
+    ]},
+    cadence:{ label:"Daily snapshot to Cherry", fields:[
+      { id:"kpi_time", label:"Delivery time", type:"time" },
+      { id:"kpi_channel", label:"How it reaches her", type:"text", ph:"Email, Slack, shared doc" }
+    ]}
+  };
+
+  var STAGES = [
+    { id:"s1", name:"Lead Source", ph:"Where do leads enter? List pull, scrape, CSV upload, form, partner feed — and who loads them." },
+    { id:"s2", name:"Campaign / Sequence", ph:"Which campaigns are live, how many steps, what the sending schedule and daily cap are." },
+    { id:"s3", name:"Send & Follow-up", ph:"Sending domains and inboxes, warmup state, follow-up spacing, what stops a sequence." },
+    { id:"s4", name:"Reply Handling", ph:"Where replies land, who reads them, how fast, how a positive reply is marked." },
+    { id:"s5", name:"CRM Handoff", ph:"What pushes into the CRM, automatic or manual, which fields, and how a miss gets caught." }
+  ];
+
+  var TOTAL = 11;
+  var GROUPS = [3,3,2,3];
+  var UPDATE_WINDOW_MS = 60*60*1000;
+
+  /* ---------------- state ---------------- */
+
+  var db=null, userNs=null, myId=null;
+  var tasks={}, fields={}, updates=[];
+  var tasksExists=false, fieldsExists=false;
+  var readOnly=true, connected=false, sawGrant=false;
+  var chains={};
+  var timers={};
+
+  /* ---------------- helpers ---------------- */
+
+  function el(tag, cls, text){
+    var e=document.createElement(tag);
+    if(cls) e.className=cls;
+    if(text!=null) e.textContent=text;
+    return e;
+  }
+  function byId(id){ return document.getElementById(id); }
+
+  function enqueue(key, fn){
+    var prev = chains[key] || Promise.resolve();
+    var next = prev.catch(function(){}).then(fn);
+    chains[key] = next.catch(function(){});
+    return next;
+  }
+
+  function onWriteError(e){
+    var code = e && e.code;
+    if(code==="invalid_argument" || code==="not_granted" || code==="revoked" ||
+       code==="capability_disabled" || code==="capability_removed" || code==="transform_error"){
+      readOnly = true;
+      applyEditable();
+      setSync("ro","Read-only");
+    }
+  }
+
+  function plural(n, one, many){ return n===1 ? one : many; }
+
+  function relTime(iso){
+    var t = Date.parse(iso);
+    if(isNaN(t)) return "";
+    var mins = Math.round((Date.now()-t)/60000);
+    if(mins < 1) return "just now";
+    if(mins < 60) return mins+"m ago";
+    var hrs = Math.floor(mins/60);
+    if(hrs < 24) return hrs+"h "+(mins%60)+"m ago";
+    return Math.floor(hrs/24)+"d ago";
+  }
+  function clockTime(iso){
+    var d = new Date(iso);
+    if(isNaN(d.getTime())) return "";
+    return d.toLocaleTimeString([], {hour:"numeric", minute:"2-digit"});
+  }
+  function dur(ms){
+    if(ms<0) ms=0;
+    var m = Math.floor(ms/60000);
+    var h = Math.floor(m/60);
+    return h+"h "+String(m%60).padStart(2,"0")+"m";
+  }
+
+  /* ---------------- build: phases ---------------- */
+
+  function fieldInput(f){
+    var wrap = el("div","f");
+    var lab = el("label", null, f.label);
+    lab.setAttribute("for","f_"+f.id);
+    var inp = document.createElement("input");
+    inp.type = f.type;
+    inp.id = "f_"+f.id;
+    inp.setAttribute("data-field", f.id);
+    if(f.step) inp.step = f.step;
+    if(f.ph) inp.placeholder = f.ph;
+    if(f.type==="number") inp.min = "0";
+    inp.disabled = true;
+    wrap.appendChild(lab);
+    wrap.appendChild(inp);
+    if(f.thr){
+      var thr = el("div","thr");
+      thr.setAttribute("data-thr", f.thr);
+      thr.appendChild(el("span", null, f.thr==="bounce" ? "Target < 2%" : f.thr==="spam" ? "Target < 0.1%" : "Industry norm 24h"));
+      var v = el("span","verdict");
+      v.hidden = true;
+      thr.appendChild(v);
+      wrap.appendChild(thr);
+    }
+    return wrap;
+  }
+
+  function buildPhases(){
+    var host = byId("phases");
+    PHASES.forEach(function(p){
+      var sec = el("div","phase");
+      sec.id = "phase-"+p.id;
+      sec.setAttribute("data-st","none");
+      sec.appendChild(el("div","stripe"));
+
+      var body = el("div","pbody");
+      var head = el("div","phead");
+      head.appendChild(el("span","num eyebrow","Phase "+p.n));
+      head.appendChild(el("h3", null, p.title));
+      body.appendChild(head);
+
+      var meta = el("div","pmeta");
+      var st = el("span","st","Not started");
+      st.setAttribute("data-role","status");
+      meta.appendChild(st);
+      meta.appendChild(el("span","target",p.target));
+      body.appendChild(meta);
+
+      var ul = el("ul","tasks");
+      p.tasks.forEach(function(t){
+        var li = el("li","task");
+        li.id = "task-"+t.id;
+        li.setAttribute("data-done","0");
+
+        var row = el("div","trow");
+        var cb = document.createElement("input");
+        cb.type = "checkbox";
+        cb.id = "cb_"+t.id;
+        cb.disabled = true;
+        cb.addEventListener("change", function(){ toggleTask(t.id, cb.checked); });
+        row.appendChild(cb);
+
+        var lab = el("label","tlabel");
+        lab.setAttribute("for","cb_"+t.id);
+        lab.appendChild(el("span","tt",t.text));
+        if(t.ask) lab.appendChild(el("span","ask","Ask "+t.ask));
+        row.appendChild(lab);
+        li.appendChild(row);
+
+        var stamp = el("div","tdone");
+        stamp.setAttribute("data-role","stamp");
+        stamp.hidden = true;
+        li.appendChild(stamp);
+
+        if(t.block && BLOCKS[t.block]){
+          var b = BLOCKS[t.block];
+          var blk = el("div","block");
+          blk.appendChild(el("div","blab",b.label));
+          var grid = el("div","fields");
+          b.fields.forEach(function(f){ grid.appendChild(fieldInput(f)); });
+          blk.appendChild(grid);
+          li.appendChild(blk);
+        }
+
+        var note = document.createElement("input");
+        note.type = "text";
+        note.className = "note-in";
+        note.id = "f_note_"+t.id;
+        note.setAttribute("data-field","note_"+t.id);
+        note.placeholder = t.note;
+        note.disabled = true;
+        li.appendChild(note);
+
+        ul.appendChild(li);
+      });
+      body.appendChild(ul);
+      sec.appendChild(body);
+      host.appendChild(sec);
+    });
+  }
+
+  function buildBar(){
+    var bar = byId("bar");
+    var i = 0;
+    GROUPS.forEach(function(n, gi){
+      var g = el("div","bargrp");
+      g.style.setProperty("--n", n);
+      for(var k=0;k<n;k++){
+        var s = el("div","seg");
+        s.setAttribute("data-i", i++);
+        s.setAttribute("data-done","0");
+        g.appendChild(s);
+      }
+      bar.appendChild(g);
+    });
+  }
+
+  function buildFlow(){
+    var host = byId("flow");
+    STAGES.forEach(function(s, i){
+      var box = el("div","stage");
+      box.id = "stage-"+s.id;
+      box.setAttribute("data-filled","0");
+      box.appendChild(el("div","sn","Stage "+(i+1)));
+      box.appendChild(el("h3", null, s.name));
+      var ta = document.createElement("textarea");
+      ta.id = "f_map_"+s.id;
+      ta.setAttribute("data-field","map_"+s.id);
+      ta.placeholder = s.ph;
+      ta.disabled = true;
+      ta.setAttribute("aria-label", s.name);
+      box.appendChild(ta);
+      host.appendChild(box);
+      if(i < STAGES.length-1){
+        var a = el("div","arrow","→");
+        a.setAttribute("aria-hidden","true");
+        host.appendChild(a);
+      }
+    });
+  }
+
+  /* ---------------- ordered task ids ---------------- */
+
+  var ORDER = [];
+  PHASES.forEach(function(p){ p.tasks.forEach(function(t){ ORDER.push(t.id); }); });
+
+  /* ---------------- render ---------------- */
+
+  function isDone(id){ var t = tasks[id]; return !!(t && t.done); }
+
+  function renderTasks(){
+    var done = 0;
+    ORDER.forEach(function(id, i){
+      var d = isDone(id);
+      if(d) done++;
+      var cb = byId("cb_"+id);
+      if(cb && cb.checked !== d) cb.checked = d;
+      var li = byId("task-"+id);
+      if(li) li.setAttribute("data-done", d ? "1" : "0");
+      var seg = byId("bar").querySelector('.seg[data-i="'+i+'"]');
+      if(seg) seg.setAttribute("data-done", d ? "1" : "0");
+      if(li){
+        var stamp = li.querySelector('[data-role="stamp"]');
+        var rec = tasks[id];
+        if(stamp){
+          if(d && rec && rec.at){
+            stamp.hidden = false;
+            stamp.textContent = "Checked off " + relTime(rec.at) + " · " + clockTime(rec.at);
+          } else {
+            stamp.hidden = true;
+          }
+        }
+      }
+    });
+
+    var pct = Math.round(done/TOTAL*100);
+    byId("progCount").textContent = done + " / " + TOTAL;
+    byId("progPct").textContent = pct + "%";
+    byId("tileDone").innerHTML = "";
+    byId("tileDone").appendChild(document.createTextNode(String(done)));
+    var small = el("span", null, "/"+TOTAL);
+    small.style.fontSize = "15px";
+    small.style.color = "var(--ink-3)";
+    byId("tileDone").appendChild(small);
+    byId("tileDone").setAttribute("data-t", done===TOTAL ? "ok" : "");
+    byId("tileDoneNote").textContent = done===0 ? "Nothing checked off yet"
+      : done===TOTAL ? "Handoff complete"
+      : (TOTAL-done) + " " + plural(TOTAL-done,"task","tasks") + " left";
+
+    // phase states
+    var cursor = null;
+    PHASES.forEach(function(p){
+      var n = p.tasks.length;
+      var d = p.tasks.filter(function(t){ return isDone(t.id); }).length;
+      var st = d===0 ? "none" : d===n ? "done" : "flight";
+      var sec = byId("phase-"+p.id);
+      sec.setAttribute("data-st", st);
+      var badge = sec.querySelector('[data-role="status"]');
+      badge.textContent = st==="done" ? "Complete" : st==="flight" ? (d+" of "+n+" done") : "Not started";
+      if(cursor===null && d<n) cursor = p;
+    });
+    if(cursor){
+      byId("progPhase").textContent = "Phase " + cursor.n + " in flight";
+      byId("tilePhase").textContent = String(cursor.n);
+      byId("tilePhaseNote").textContent = cursor.title;
+    } else {
+      byId("progPhase").textContent = "All phases complete";
+      byId("tilePhase").textContent = "Done";
+      byId("tilePhase").setAttribute("data-t","ok");
+      byId("tilePhaseNote").textContent = "Handoff ready for Cherry";
+    }
+  }
+
+  function verdictFor(kind, raw){
+    var v = parseFloat(raw);
+    if(isNaN(v)) return null;
+    if(kind==="bounce") return v < 2 ? ["ok","healthy"] : v <= 5 ? ["warn","watch"] : ["crit","at risk"];
+    if(kind==="spam")   return v < 0.1 ? ["ok","healthy"] : v <= 0.3 ? ["warn","watch"] : ["crit","at risk"];
+    if(kind==="sla")    return v <= 24 ? ["ok","tight"] : v <= 48 ? ["warn","loose"] : ["crit","too slow"];
+    return null;
+  }
+
+  function renderFields(){
+    document.querySelectorAll("[data-field]").forEach(function(inp){
+      var key = inp.getAttribute("data-field");
+      var val = fields[key];
+      if(val==null) val = "";
+      if(document.activeElement !== inp && inp.value !== String(val)) inp.value = val;
+
+      var f = inp.closest(".f");
+      if(f){
+        var thr = f.querySelector("[data-thr]");
+        if(thr){
+          var vd = thr.querySelector(".verdict");
+          var res = verdictFor(thr.getAttribute("data-thr"), inp.value);
+          if(res){ vd.hidden=false; vd.setAttribute("data-v",res[0]); vd.textContent=res[1]; }
+          else { vd.hidden=true; }
+        }
+      }
+      var stage = inp.closest(".stage");
+      if(stage) stage.setAttribute("data-filled", String(inp.value).trim() ? "1" : "0");
+    });
+
+    var link = byId("f_map_diagram").value.trim();
+    var open = byId("diagramOpen");
+    if(/^https?:\/\//i.test(link)){ open.hidden=false; open.href=link; }
+    else { open.hidden=true; open.removeAttribute("href"); }
+  }
+
+  function renderLog(){
+    var host = byId("log");
+    var ids = [];
+    updates.forEach(function(u){ if(u.by && ids.indexOf(u.by)<0) ids.push(u.by); });
+
+    var paint = function(profiles){
+      host.innerHTML = "";
+      updates.forEach(function(u){
+        var li = el("li","entry");
+        var p = profiles && u.by ? profiles[u.by] : null;
+        var img = document.createElement("img");
+        img.className = "av";
+        img.alt = "";
+        if(p && p.avatarUrl) img.src = p.avatarUrl;
+        li.appendChild(img);
+        var body = el("div","ebody");
+        var head = el("div","ehead");
+        head.appendChild(el("span","who", p ? (p.name || "Someone") : "Someone"));
+        head.appendChild(el("span","when", relTime(u.at) + " · " + clockTime(u.at)));
+        body.appendChild(head);
+        body.appendChild(el("div","etext", u.body || ""));
+        li.appendChild(body);
+        host.appendChild(li);
+      });
+      byId("logEmpty").hidden = updates.length > 0;
+    };
+
+    if(userNs && ids.length){
+      userNs.profiles(ids).then(paint, function(){ paint(null); });
+    } else {
+      paint(null);
+    }
+    renderCadence();
+  }
+
+  function renderCadence(){
+    var pill = byId("cadence");
+    var tile = byId("tileUpd");
+    var note = byId("tileUpdNote");
+    if(!updates.length){
+      pill.setAttribute("data-c","none");
+      pill.textContent = "No update posted yet";
+      tile.textContent = "None";
+      tile.removeAttribute("data-t");
+      note.textContent = "First update due within the hour";
+      return;
+    }
+    var last = Date.parse(updates[0].at);
+    var age = Date.now() - last;
+    var left = UPDATE_WINDOW_MS - age;
+    tile.textContent = relTime(updates[0].at).replace(" ago","");
+    note.textContent = updates.length + " " + plural(updates.length,"update","updates") + " posted today";
+    if(left > 15*60*1000){
+      pill.setAttribute("data-c","ok");
+      pill.textContent = "On cadence · next due in " + dur(left);
+      tile.setAttribute("data-t","ok");
+    } else if(left > 0){
+      pill.setAttribute("data-c","due");
+      pill.textContent = "Next update due in " + dur(left);
+      tile.setAttribute("data-t","warn");
+    } else {
+      pill.setAttribute("data-c","late");
+      pill.textContent = "Update overdue by " + dur(-left);
+      tile.setAttribute("data-t","crit");
+    }
+  }
+
+  function renderClock(){
+    var eod = new Date();
+    eod.setHours(23,59,59,999);
+    var left = eod.getTime() - Date.now();
+    var tile = byId("tileClock");
+    if(left <= 0){
+      tile.textContent = "0h 00m";
+      tile.setAttribute("data-t","crit");
+      byId("tileClockNote").textContent = "Past end of day";
+      return;
+    }
+    tile.textContent = dur(left);
+    tile.setAttribute("data-t", left < 2*3600*1000 ? "crit" : left < 4*3600*1000 ? "warn" : "");
+    byId("tileClockNote").textContent = "Until end of day";
+  }
+
+  function renderStamp(){
+    byId("footStamp").textContent = "Viewed " + new Date().toLocaleString([], {month:"short", day:"numeric", hour:"numeric", minute:"2-digit"});
+  }
+
+  /* ---------------- writes ---------------- */
+
+  function toggleTask(id, done){
+    var rec = { done: !!done, at: new Date().toISOString(), by: myId || null };
+    tasks[id] = rec;
+    renderTasks();
+    if(!db || readOnly) return;
+    var patch = {}; patch[id] = rec;
+    enqueue("tasks", function(){
+      var ref = db.doc("state/tasks");
+      if(tasksExists) return ref.update(patch);
+      return ref.set(patch).then(function(){ tasksExists = true; });
+    }).catch(onWriteError);
+  }
+
+  function writeField(key, value){
+    fields[key] = value;
+    if(!db || readOnly) return;
+    var patch = {}; patch[key] = value;
+    enqueue("fields", function(){
+      var ref = db.doc("state/fields");
+      if(fieldsExists) return ref.update(patch);
+      return ref.set(patch).then(function(){ fieldsExists = true; });
+    }).catch(onWriteError);
+  }
+
+  function bindFieldInputs(){
+    document.querySelectorAll("[data-field]").forEach(function(inp){
+      var key = inp.getAttribute("data-field");
+      inp.addEventListener("input", function(){
+        if(timers[key]) clearTimeout(timers[key]);
+        timers[key] = setTimeout(function(){ writeField(key, inp.value); }, 700);
+        var stage = inp.closest(".stage");
+        if(stage) stage.setAttribute("data-filled", inp.value.trim() ? "1" : "0");
+        var f = inp.closest(".f");
+        if(f){
+          var thr = f.querySelector("[data-thr]");
+          if(thr){
+            var vd = thr.querySelector(".verdict");
+            var res = verdictFor(thr.getAttribute("data-thr"), inp.value);
+            if(res){ vd.hidden=false; vd.setAttribute("data-v",res[0]); vd.textContent=res[1]; }
+            else { vd.hidden=true; }
+          }
+        }
+        if(key==="map_diagram"){
+          var open = byId("diagramOpen");
+          if(/^https?:\/\//i.test(inp.value.trim())){ open.hidden=false; open.href=inp.value.trim(); }
+          else { open.hidden=true; }
+        }
+      });
+      inp.addEventListener("blur", function(){
+        if(timers[key]){ clearTimeout(timers[key]); timers[key]=null; }
+        if(fields[key] !== inp.value) writeField(key, inp.value);
+      });
+    });
+  }
+
+  var DRAFT_KEY = "instantly-tracker-draft";
+  function loadDraft(){
+    try{ var d = localStorage.getItem(DRAFT_KEY); if(d) byId("composerText").value = d; }catch(e){}
+  }
+  function saveDraft(v){
+    try{ if(v) localStorage.setItem(DRAFT_KEY, v); else localStorage.removeItem(DRAFT_KEY); }catch(e){}
+  }
+
+  function postUpdate(){
+    var ta = byId("composerText");
+    var body = ta.value.trim();
+    if(!body || !db || readOnly) return;
+    var btn = byId("postBtn");
+    btn.disabled = true;
+    btn.textContent = "Posting…";
+    enqueue("updates", function(){
+      return db.collection("updates").add({ body: body, at: new Date().toISOString(), by: myId || null });
+    }).then(function(){
+      ta.value = "";
+      saveDraft("");
+      byId("composerHint").textContent = "Posted. Next one due within the hour.";
+    }, function(e){
+      onWriteError(e);
+      byId("composerHint").textContent = (e && e.code==="quota_exceeded")
+        ? "The log is full — delete older updates before posting again."
+        : "That didn't post. Try again in a moment.";
+    }).then(function(){
+      btn.textContent = "Post update";
+      syncComposer();
+    });
+  }
+
+  function syncComposer(){
+    var ta = byId("composerText");
+    var btn = byId("postBtn");
+    var can = !!db && !readOnly;
+    ta.disabled = !can;
+    btn.disabled = !can || !ta.value.trim();
+  }
+
+  function applyEditable(){
+    var can = !!db && !readOnly;
+    document.querySelectorAll("[data-field]").forEach(function(i){ i.disabled = !can; });
+    document.querySelectorAll('.task input[type="checkbox"]').forEach(function(i){ i.disabled = !can; });
+    syncComposer();
+    var hint = byId("composerHint");
+    if(!db) hint.textContent = "Not connected — open this from claude.ai to post.";
+    else if(readOnly) hint.textContent = "You have read-only access to this tracker.";
+    else if(hint.textContent.indexOf("Connecting")===0) hint.textContent = "Posts to the shared log, visible to everyone with the link.";
+  }
+
+  function setSync(state, text){
+    byId("syncPill").setAttribute("data-s", state);
+    byId("syncText").textContent = text;
+    var b = byId("banner");
+    if(state==="off"){
+      b.className = "banner";
+      b.textContent = "This view isn't connected to the shared tracker, so nothing you type here is saved. Open the artifact from claude.ai to edit it.";
+      b.hidden = false;
+    } else if(state==="ro"){
+      b.className = "banner";
+      b.textContent = "Read-only access: you can see everything, but checking a task or posting an update needs edit access from Jonathan.";
+      b.hidden = false;
+    } else {
+      b.hidden = true;
+    }
+  }
+
+  /* ---------------- boot ---------------- */
+
+  buildPhases();
+  buildBar();
+  buildFlow();
+  bindFieldInputs();
+  loadDraft();
+  renderTasks();
+  renderFields();
+  renderLog();
+  renderClock();
+  renderStamp();
+  applyEditable();
+
+  byId("postBtn").addEventListener("click", postUpdate);
+  byId("composerText").addEventListener("input", function(){
+    saveDraft(this.value);
+    syncComposer();
+  });
+  byId("composerText").addEventListener("keydown", function(e){
+    if((e.metaKey||e.ctrlKey) && e.key==="Enter"){ e.preventDefault(); postUpdate(); }
+  });
+
+  setInterval(function(){ renderClock(); renderCadence(); renderStamp(); }, 30000);
+  setInterval(function(){ renderTasks(); }, 60000);
+
+  if(!window.claude || !window.claude.use){
+    setSync("off","Not connected");
+    applyEditable();
+    return;
+  }
+
+  Promise.resolve(window.claude.use("user")).then(function(u){
+    userNs = u;
+    if(!u) return null;
+    return u.me().then(function(me){
+      myId = me.id;
+      var who = byId("whoami");
+      if(me.name) who.textContent = "Signed in as " + me.name;
+      else who.innerHTML = "&nbsp;";
+      return u.can("data.write");
+    }).then(function(w){
+      if(w === false) readOnly = true;
+      else if(w === true) readOnly = false;
+      else readOnly = false; // null: keep inputs live, let a refused write decide
+      return null;
+    });
+  }).catch(function(){}).then(function(){
+    return Promise.resolve(window.claude.use("db"));
+  }).then(function(d){
+    if(!d){
+      setSync("off","Not connected");
+      applyEditable();
+      return;
+    }
+    db = d;
+    connected = true;
+    setSync(readOnly ? "ro" : "live", readOnly ? "Read-only" : "Live");
+    applyEditable();
+
+    d.doc("state/tasks").onSnapshot(function(snap){
+      tasksExists = snap.exists;
+      var data = snap.data();
+      if(data) tasks = data;
+      renderTasks();
+    }, function(e){ onWriteError(e); });
+
+    d.doc("state/fields").onSnapshot(function(snap){
+      fieldsExists = snap.exists;
+      var data = snap.data();
+      if(data) fields = data;
+      renderFields();
+    }, function(e){ onWriteError(e); });
+
+    d.collection("updates").orderBy("at","desc").limit(50).onSnapshot(function(snap){
+      updates = snap.docs.map(function(doc){
+        var v = doc.data() || {};
+        return { id: doc.id, body: v.body, at: v.at, by: v.by };
+      }).filter(function(u){ return u.at; });
+      renderLog();
+    }, function(e){ onWriteError(e); });
+  }).catch(function(){
+    setSync("off","Not connected");
+    applyEditable();
+  });
+
+})();
+</script>
