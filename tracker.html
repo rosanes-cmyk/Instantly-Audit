@@ -272,6 +272,48 @@
   .diagram input:disabled{opacity:.6;cursor:not-allowed;}
   .diagram a{font-family:var(--f-mono);font-size:11.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;}
 
+  /* ---------- templates ---------- */
+  .tplmeta{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.05em;color:var(--ink-3);margin-top:12px;}
+  .tscroll{overflow-x:auto;margin-top:16px;border:1px solid var(--rule);border-radius:8px;}
+  table.tpltbl{width:100%;border-collapse:collapse;min-width:820px;font-size:12px;}
+  table.tpltbl th{
+    text-align:left;font-family:var(--f-mono);font-size:9.5px;font-weight:600;letter-spacing:.09em;
+    text-transform:uppercase;color:var(--ink-3);padding:9px 11px;border-bottom:1px solid var(--rule-strong);
+    background:var(--surface-2);white-space:nowrap;
+  }
+  table.tpltbl td{padding:9px 11px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink-2);}
+  table.tpltbl tr:last-child td{border-bottom:0;}
+  table.tpltbl td.nm{color:var(--ink);font-weight:600;}
+  table.tpltbl td.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap;}
+  table.tpltbl td.snd{font-family:var(--f-mono);font-size:11px;min-width:210px;}
+  .flag{display:flex;gap:11px;padding:12px 13px;border-radius:7px;border:1px solid var(--rule);background:var(--surface);margin-top:9px;}
+  .flag .fb{flex:none;width:3px;border-radius:2px;background:var(--ink-3);}
+  .flag[data-s="crit"]{border-color:var(--crit);background:var(--crit-soft);}
+  .flag[data-s="crit"] .fb{background:var(--crit);}
+  .flag[data-s="warn"]{border-color:var(--warn);background:var(--warn-soft);}
+  .flag[data-s="warn"] .fb{background:var(--warn);}
+  .flag .ft{font-family:var(--f-display);font-size:13.5px;font-weight:600;color:var(--ink);}
+  .flag .fd{font-size:12.5px;line-height:1.55;color:var(--ink-2);margin-top:4px;}
+  .flag[data-s="crit"] .ft{color:var(--crit);}
+  .flag[data-s="warn"] .ft{color:var(--warn);}
+  details.tplstep{border:1px solid var(--rule);border-radius:7px;margin-top:8px;background:var(--surface);}
+  details.tplstep summary{
+    cursor:pointer;padding:11px 13px;display:flex;flex-wrap:wrap;gap:6px 11px;align-items:baseline;
+    font-size:13.5px;color:var(--ink);
+  }
+  details.tplstep summary::-webkit-details-marker{display:none;}
+  details.tplstep summary::marker{content:"";}
+  details.tplstep summary .sn{font-family:var(--f-mono);font-size:9.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);}
+  details.tplstep summary .ss{font-weight:600;}
+  details.tplstep summary .sv{font-family:var(--f-mono);font-size:9.5px;color:var(--ink-3);letter-spacing:.06em;margin-left:auto;}
+  details.tplstep[open] summary{border-bottom:1px solid var(--rule);}
+  pre.tplbody{
+    margin:0;padding:13px;white-space:pre-wrap;overflow-wrap:anywhere;
+    font-family:var(--f-body);font-size:12.5px;line-height:1.6;color:var(--ink-2);
+  }
+  pre.tplbody + pre.tplbody{border-top:1px dashed var(--rule);}
+  .tplsub{font-family:var(--f-mono);font-size:11px;color:var(--accent-ink);padding:11px 13px 0;letter-spacing:.02em;}
+
   /* ---------- roster stats & scores ---------- */
   .rstats{display:flex;flex-wrap:wrap;gap:7px;margin-top:13px;}
   .chip{
@@ -514,6 +556,14 @@
     </div>
     <div id="campList"></div>
     <div class="empty" id="campEmpty">No campaigns recorded yet. Add each one and mark it active or not — a paused campaign nobody knows about is exactly the gap this audit is for.</div>
+  </section>
+
+  <section class="sec tabpanel" data-tab="templates" role="tabpanel" hidden aria-labelledby="tplH">
+    <div class="sechead">
+      <h2 id="tplH">Email Templates</h2>
+      <div class="note">What each campaign actually sends. Instantly stays the source of truth — this is the archive as pulled, so re-pull it if a sequence is edited.</div>
+    </div>
+    <div id="tplBody"></div>
   </section>
 
   <section class="sec tabpanel" data-tab="updates" role="tabpanel" hidden aria-labelledby="logH">
@@ -775,11 +825,151 @@
     return d;
   }
 
+  var TPL_PULLED = "21 September 2026";
+  var TPL_CONFIG = [{"name": "Realtors July 2026", "status": "Paused", "steps": 8, "variants": 5, "senders": "bryan, carlo, juan, lawrence, rosanes, seth @twinhomebuyer.com", "format": "Text only", "limit": "500", "stop": "Yes", "unsub": false, "copy": "shared"}, {"name": "Oakland Realtor Campaign", "status": "Paused", "steps": 8, "variants": 5, "senders": "bryan, carlo, juan, lawrence, rosanes, seth @twinhomebuyer.com", "format": "Text only", "limit": "500", "stop": "Yes", "unsub": false, "copy": "shared, Step 2 subject lower-cased"}, {"name": "San Francisco County Realtor", "status": "Paused", "steps": 8, "variants": 5, "senders": "bryan, carlo, juan, rosanes, seth @twinhomebuyer.com", "format": "HTML", "limit": "150", "stop": "Yes", "unsub": false, "copy": "shared, Step 4 subject reads 'A second opinion before you advise the seller'"}, {"name": "Phase 1 – Peninsula Listing Agents", "status": "Completed", "steps": 7, "variants": 5, "senders": "ariana, christopher, isabella, penelope, victoria @metrixgenerate.com", "format": "HTML", "limit": "200", "stop": "Yes", "unsub": true, "copy": "shared, plus a postal address and unsubscribe footer on every step"}, {"name": "27 Prague St, San Mateo, CA 94401", "status": "Completed", "steps": 1, "variants": 1, "senders": "ariana, christopher, isabella, penelope, victoria @metrixgenerate.com", "format": "HTML", "limit": "30", "stop": "Yes", "unsub": true, "copy": "its own single email"}, {"name": "TEST CAMPAIGN REPLY", "status": "Paused", "steps": 1, "variants": 1, "senders": "victoria @metrixgenerate.com", "format": "HTML", "limit": "4", "stop": "Yes", "unsub": true, "copy": "a one-word test"}];
+  var TPL_STEPS = [{"n": 1, "label": "Step 1", "day": "Day 1", "variants": [{"label": "Variant A", "subject": "When the deal falls apart late", "body": "Hi {{firstName}},\n\nI'm Juan Diaz, founder of Twin Home Buyer — a direct Bay Area buyer and licensed California General Contractor (CA GC Lic. #1066892). I buy with my own funds, through the listing agent.\n\nAppraisal short, insurance falls through, lender balks at the condition — usually at the worst time, and now you're the one telling the seller.\n\nSend me the address and the problem. I'll tell you if we can buy it, the terms, and how fast we close. Straight answer, same day.\n\nYour client stays yours. I'm the call you make when the first buyer can't perform.\n\nJuan Diaz\nTwin Home Buyer\nCA GC Lic. #1066892\n(650) 844-3415"}, {"label": "Variant B", "subject": "A contractor's read before you negotiate credits", "body": "Hi {{firstName}},\n\nJuan Diaz here with Twin Home Buyer — a direct Bay Area buyer and a licensed California General Contractor (CSLB #1066892).\n\nWhen an inspection turns up foundation, sewer, electrical, drainage, or dry rot, I'll help you read the real scope: what's serious, what's overstated, and what it actually costs to fix — before you negotiate credits or tell the seller to start over.\n\nI won't price it off a photo or step on your inspector. And if an as-is sale makes more sense, I'll tell you that too.\n\nJuan Diaz\nTwin Home Buyer\nCA GC Lic. #1066892\n(650) 844-3415"}, {"label": "Variant C", "subject": "A quiet option for the seller who wants privacy", "body": "Hi {{firstName}},\n\nJuan Diaz, Twin Home Buyer. Not every seller wants staging, open houses, photos online, and strangers walking the house.\n\nEstate, tenants in place, a sensitive family situation, or they just want discretion — for those, I can give you a private, as-is option with you involved start to finish.\n\nI buy directly, cash, through the agent. Most homes should still hit the market — but when privacy matters more than max exposure, it helps to have a real alternative ready.\n\nJuan Diaz\nTwin Home Buyer\nCA GC Lic. #1066892\n(650) 844-3415"}, {"label": "Variant D", "subject": "The second opinion (trusted advisor angle)", "body": "Hi {{firstName}},\n\nJuan Diaz here — 25+ years buying and building Bay Area property, always through the listing agent.\n\nSometimes the hard part isn't the buyer — it's what you recommend. Repair first? List as-is? Pull permits? Look at an ADU? Take a direct offer?\n\nRun it by me and I'll give you a straight second opinion from both the investment and construction sides. No expectation we buy it — if listing it normally is the play, I'll tell you.\n\nCall me when the right answer isn't obvious.\n\nJuan Diaz\nTwin Home Buyer\nCA GC Lic. #1066892\n(650) 844-3415"}, {"label": "Variant E", "subject": "When you just need a buyer who performs", "body": "Hi {{firstName}},\n\nJuan Diaz with Twin Home Buyer. When a deal gets messy, speed only helps if the answer's reliable.\n\nCan the buyer perform? What are the real terms? How fast can they close? Will they tell you the second something changes? With me, yes — a clear offer and an honest timeline if it fits, and a fast no if it doesn't.\n\nI buy directly, cash, as-is, through the agent. Keep my number for the deal where uncertainty has become the biggest problem.\n\nJuan Diaz\nTwin Home Buyer\nCA GC Lic. #1066892\n(650) 844-3415"}]}, {"n": 2, "label": "Step 2", "day": "Day 2", "subject": "After the Buyer Walks", "body": "Hi {{firstName}},\n\nJuan Diaz here. I buy Bay Area properties directly, through the listing agent, for cash and as-is.\n\nThe buyer canceling isn't always the hardest part. The hard part is deciding what to tell the seller next.\n\nShould they relist, lower the price, repair the inspection items, or find a buyer who will take the property exactly as it sits?\n\nSend me the situation, and I'll give you a real second option before you make that call. Sometimes relisting is still the right move, and I'll tell you that. Other times, the seller is out of patience and wants a more certain closing.\n\nEither way, you can walk into the conversation with an answer instead of a guess.\n\nJuan Diaz\nTwin Home Buyer\nCA GC Lic. #1066892\n(650) 844-3415"}, {"n": 3, "label": "Step 3", "day": "Day 3", "subject": "When the Inspection Blows Up the Deal", "body": "Hi {{firstName}},\n\nJuan Diaz here with Twin Home Buyer. I'm a direct Bay Area buyer and a licensed California General Contractor (CA GC Lic. #1066892).\n\nFoundation problems, sewer lines, outdated electrical systems, drainage issues, and dry rot — one inspection report can change the entire deal overnight.\n\nBefore you negotiate credits or tell the seller to start over, I can help you understand the real scope: what's serious, what's being overstated, and what the repairs may realistically cost.\n\nI won't price a project from a photo or interfere with your inspector. I'll help you separate the major problems from the noise. If an as-is sale makes more sense, I'll tell you that too.\n\nKeep me in mind when an inspection report raises more questions than answers.\n\nJuan Diaz\nTwin Home Buyer\nCA GC Lic. #1066892\n(650) 844-3415"}, {"n": 4, "label": "Step 4", "day": "Day 4", "subject": "When the Seller Wants It Quiet", "body": "Hi {{firstName}},\n\nJuan Diaz here. I buy properties directly through the listing agent, for cash and as-is. I can also keep the process private when the seller needs discretion.\n\nNot every seller wants staging, professional photos, open houses, online exposure, and strangers walking through the property.\n\nIt may be an estate, a sensitive family situation, tenants in place, a house full of belongings, or simply a seller who values privacy.\n\nWhen that happens, I can provide a private as-is option while keeping you involved from start to finish. Most homes should still be exposed to the open market, and I'll never tell a seller otherwise. But when privacy and simplicity matter more than maximum exposure, it helps to have a real alternative ready.\n\nKeep me in mind for the seller who wants a quiet and straightforward closing.\n\nJuan Diaz\nTwin Home Buyer\nCA GC Lic. #1066892\n(650) 844-3415"}, {"n": 5, "label": "Step 5", "day": "Day 5", "subject": "Before You Advise the Seller", "body": "Hi {{firstName}},\n\nJuan Diaz here with Twin Home Buyer. I've spent more than 25 years buying, building, and evaluating Bay Area properties, always working through the listing agent.\n\nSometimes the difficult part isn't finding a buyer. It's deciding what to recommend to the seller.\n\nShould they make repairs, list the property as-is, investigate the permit history, explore an ADU opportunity, or consider a direct offer?\n\nRun the situation by me, and I'll give you a straightforward second opinion from both the investment and construction sides. There's no expectation that we buy it. If a traditional listing is the best option, I'll tell you.\n\nMy value is helping you understand the potential costs, risks, and options before you make your recommendation.\n\nCall me when the right answer isn't obvious.\n\nJuan Diaz\nTwin Home Buyer\nCA GC Lic. #1066892\n(650) 844-3415"}, {"n": 6, "label": "Step 6", "day": "Day 6", "subject": "When the Property Doesn't Match the Records", "body": "Hi {{firstName}},\n\nJuan Diaz here. I'm a direct Bay Area buyer with a contractor background, and I work through the listing agent.\n\nGarage conversions, unpermitted additions, older second units, unfinished remodels, or square footage that doesn't match the public record can make a property difficult to price and finance.\n\nThe seller may see additional value. The appraiser, lender, and insurance company may see additional risk.\n\nWith my contractor background and California General Contractor license, I can help identify the important construction questions before anyone makes promises about permits, value, or ADU potential.\n\nI can't speak for the city or guarantee an approval, but I can help identify the likely risks and determine whether the property still makes sense as an as-is purchase.\n\nOne call upfront can prevent weeks of confusion later.\n\nJuan Diaz\nTwin Home Buyer\nCA GC Lic. #1066892\n(650) 844-3415"}, {"n": 7, "label": "Step 7", "day": "Day 7", "subject": "When You Just Need a Straight Answer", "body": "Hi {{firstName}},\n\nJuan Diaz here with Twin Home Buyer. I buy properties directly through the listing agent when a deal needs a reliable closing.\n\nWhen a transaction becomes complicated, speed only matters when the answer is dependable.\n\nWhat you really need to know is whether the buyer can perform, what the actual terms are, how quickly they can close, and whether they'll communicate immediately when something changes.\n\nIf the property fits, you'll receive a clear offer and an honest timeline. If it doesn't, I'll tell you quickly so you can move on without wasting time.\n\nI'm not asking to see every listing. Just keep my number for the deal where uncertainty has become the biggest problem.\n\nJuan Diaz\nTwin Home Buyer\nCA GC Lic. #1066892\n(650) 844-3415"}];
+  var TPL_EXTRAS = [{"name": "27 Prague St, San Mateo, CA 94401", "subject": "Just Listed: 27 Prague St, San Mateo", "body": "Hi {{firstName}},\n\nDo you have a buyer looking for a San Mateo property with ADU or renovation potential? 27 Prague St, San Mateo, CA 94401 just hit the market.\n\nWe have an ADU concept/flyer available that you can send directly to buyers who may be interested in adding space, renovating, or exploring the property's value-add potential. Want the ADU flyer? Just reply ADU and I'll send it over.\n\nFor property details or showings:\nMariaelena Diaz | eXp Realty\nDRE #02034560\n510-376-3634\n\nADU / construction resource: Matrix Group One | CSLB #1066892\n\nP.S. If you ever have a seller who wants an as-is, direct sale instead of listing, our separate company Twin Home Buyer may be able to help."}];
+  var TPL_FOOTER = "Juan Diaz\nTwin Home Buyer\nAffiliated with Matrix Group One Inc., CA GC Lic. #1066892\n(650) 844-3415\n170 Glenn Way, Suite 5, San Carlos, CA 94070\n\nYou are receiving this email because we believe it may be relevant to your work as a real estate professional. If you no longer wish to receive these emails, click here to unsubscribe: [UNSUBSCRIBE]";
+  var TPL_FLAGS = [["crit", "No unsubscribe link and no postal address on three campaigns", "Realtors July 2026, Oakland Realtor and San Francisco County Realtor carry neither an opt-out mechanism nor a physical address — 7,241 commercial emails already sent. US CAN-SPAM requires both in commercial email. Get this reviewed by whoever handles legal before any of the three is resumed. Phase 1 – Peninsula already has the correct footer, so the fix is to copy it across."], ["crit", "Broken unsubscribe link on Phase 1 – Peninsula, Step 2", "The one compliant campaign has an empty href on its Step 2 unsubscribe link, so recipients of that step could not opt out either. Fix before reactivating."], ["warn", "Six inboxes send mail signed by one person", "Every step is signed Juan Diaz, but the three twinhomebuyer campaigns send from bryan@, carlo@, juan@, lawrence@, rosanes@ and seth@. A recipient gets a mail from one name signed by another, and any reply lands in whichever inbox sent it rather than with Juan — which is why replies are scattered and untriaged."], ["warn", "Three campaigns run identical copy", "Realtors July 2026, Oakland and SF County share the same 8-step sequence with only subject-line differences, aimed at overlapping Bay Area realtor audiences from the same domain. Identical bodies at volume is a filtering risk, and it makes it impossible to learn which message works."], ["warn", "Daily limits exceed live capacity", "Realtors July 2026 and Oakland are each set to 500/day, 1,000/day combined, against 400/day of live twinhomebuyer inbox capacity (4 working inboxes at 100). SF County adds another 150. The limits describe volume the account cannot actually send."], ["warn", "The test campaign inflates the reply figures", "TEST CAMPAIGN REPLY has 13 replies tracked against 4 sent. Those 13 sit inside the account's 47 replies, so real outreach replies are nearer 34 — a reply rate around 0.35%, not 0.48%. Archive it."], ["warn", "One step is undocumented", "The campaign index lists 8 steps for the three realtor campaigns, but the export contains 7. Step 8 is not recorded anywhere — pull it before treating this as a complete archive."], ["warn", "A third party's licence appears on a Twin Home Buyer domain", "27 Prague St is sent from metrixgenerate.com but signed Mariaelena Diaz, eXp Realty, DRE #02034560. Confirm that agent has agreed to outreach being sent under their name and licence from a domain they do not control."], ["note", "Only Step 1 is being tested", "Step 1 has five variants; steps 2 through 7 have one version each. Most of the sequence has never been tested."]];
+
+  function buildTemplates(){
+    var host = byId("tplBody");
+    if(!host) return;
+    host.innerHTML = "";
+
+    host.appendChild(el("div","tplmeta", "Pulled " + TPL_PULLED + " \u00b7 signatures shown split across lines for readability"));
+
+    // configuration, campaign by campaign
+    var scroll = el("div","tscroll");
+    var t = document.createElement("table");
+    t.className = "tpltbl";
+    var thead = document.createElement("thead");
+    var hr = document.createElement("tr");
+    ["Campaign","Status","Senders","Format","Steps","Step 1 variants","Daily limit","Stop on reply","Unsubscribe"]
+      .forEach(function(h){ var th = document.createElement("th"); th.textContent = h; hr.appendChild(th); });
+    thead.appendChild(hr);
+    t.appendChild(thead);
+    var tb = document.createElement("tbody");
+    TPL_CONFIG.forEach(function(c){
+      var tr = document.createElement("tr");
+      function cell(text, cls){
+        var td = document.createElement("td");
+        if(cls) td.className = cls;
+        td.textContent = text;
+        return td;
+      }
+      tr.appendChild(cell(c.name, "nm"));
+      tr.appendChild(cell(c.status));
+      tr.appendChild(cell(c.senders, "snd"));
+      tr.appendChild(cell(c.format));
+      tr.appendChild(cell(String(c.steps), "num"));
+      tr.appendChild(cell(String(c.variants), "num"));
+      tr.appendChild(cell(c.limit, "num"));
+      tr.appendChild(cell(c.stop));
+      var td = document.createElement("td");
+      var ch = el("div","chip", null);
+      ch.setAttribute("data-t", c.unsub ? "ok" : "crit");
+      ch.textContent = c.unsub ? "present" : "MISSING";
+      td.appendChild(ch);
+      tr.appendChild(td);
+      tb.appendChild(tr);
+    });
+    t.appendChild(tb);
+    scroll.appendChild(t);
+    host.appendChild(scroll);
+
+    // what the templates themselves show
+    var fh = el("div","eyebrow","What the copy shows");
+    fh.style.marginTop = "30px";
+    host.appendChild(fh);
+    TPL_FLAGS.forEach(function(f){
+      var box = el("div","flag");
+      box.setAttribute("data-s", f[0]);
+      box.appendChild(el("div","fb"));
+      var body = el("div", null);
+      body.appendChild(el("div","ft", f[1]));
+      body.appendChild(el("div","fd", f[2]));
+      box.appendChild(body);
+      host.appendChild(box);
+    });
+
+    // the shared sequence
+    var sh = el("div","eyebrow","The shared 8-step sequence \u00b7 Realtors July 2026, Oakland, SF County, Peninsula");
+    sh.style.marginTop = "30px";
+    host.appendChild(sh);
+
+    TPL_STEPS.forEach(function(st){
+      var d = document.createElement("details");
+      d.className = "tplstep";
+      var sm = document.createElement("summary");
+      sm.appendChild(el("span","sn", st.label + " \u00b7 " + st.day));
+      if(st.variants){
+        sm.appendChild(el("span","ss","5 subject-line variants"));
+        sm.appendChild(el("span","sv", st.variants.length + " emails"));
+        d.appendChild(sm);
+        st.variants.forEach(function(v){
+          d.appendChild(el("div","tplsub", v.label + " \u2014 Subject: " + v.subject));
+          var pre = document.createElement("pre");
+          pre.className = "tplbody";
+          pre.textContent = v.body;
+          d.appendChild(pre);
+        });
+      } else {
+        sm.appendChild(el("span","ss", st.subject));
+        sm.appendChild(el("span","sv","1 email"));
+        d.appendChild(sm);
+        var pre = document.createElement("pre");
+        pre.className = "tplbody";
+        pre.textContent = st.body;
+        d.appendChild(pre);
+      }
+      host.appendChild(d);
+    });
+
+    // the footer only one campaign carries
+    var fd = document.createElement("details");
+    fd.className = "tplstep";
+    var fsm = document.createElement("summary");
+    fsm.appendChild(el("span","sn","Footer"));
+    fsm.appendChild(el("span","ss","On Phase 1 \u2013 Peninsula only \u2014 the compliant version"));
+    fd.appendChild(fsm);
+    var fpre = document.createElement("pre");
+    fpre.className = "tplbody";
+    fpre.textContent = TPL_FOOTER;
+    fd.appendChild(fpre);
+    host.appendChild(fd);
+
+    // one-off campaigns
+    var oh = el("div","eyebrow","Its own email");
+    oh.style.marginTop = "30px";
+    host.appendChild(oh);
+    TPL_EXTRAS.forEach(function(x){
+      var d = document.createElement("details");
+      d.className = "tplstep";
+      var sm = document.createElement("summary");
+      sm.appendChild(el("span","sn","1 step"));
+      sm.appendChild(el("span","ss", x.name));
+      d.appendChild(sm);
+      d.appendChild(el("div","tplsub","Subject: " + x.subject));
+      var pre = document.createElement("pre");
+      pre.className = "tplbody";
+      pre.textContent = x.body;
+      d.appendChild(pre);
+      host.appendChild(d);
+    });
+
+    var n = 0;
+    TPL_STEPS.forEach(function(st){ n += st.variants ? st.variants.length : 1; });
+    n += TPL_EXTRAS.length;
+    tabCount("templates", n, null);
+  }
+
   var TABS = [
     { id:"phases",    label:"Phases" },
     { id:"map",       label:"System Map" },
     { id:"accounts",  label:"Accounts" },
     { id:"campaigns", label:"Campaigns" },
+    { id:"templates", label:"Templates" },
     { id:"updates",   label:"Updates" },
     { id:"contacts",  label:"Contacts" }
   ];
@@ -2018,6 +2208,7 @@
   /* ---------------- boot ---------------- */
 
   buildTabs();
+  buildTemplates();
   buildPhases();
   buildBar();
   buildFlow();
