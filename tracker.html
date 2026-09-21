@@ -344,7 +344,7 @@
     background:var(--surface);border:1px solid var(--rule-strong);border-radius:5px;padding:5px 7px;
   }
   .acct select{min-width:118px;}
-  .acct .cap{width:88px;font-variant-numeric:tabular-nums;}
+  .acct .cap{width:82px;font-variant-numeric:tabular-nums;}
   .acct select:focus,.acct .cap:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft);}
   .acct .del{
     flex:none;width:26px;height:26px;line-height:1;font-size:15px;cursor:pointer;
@@ -1558,16 +1558,17 @@
       statuses:["Active","Warming","Paused","Disconnected","Unknown"], initial:"Active",
       scoreLabel:"deliverability",
       scores:[["5","5 · Healthy"],["4","4 · Minor issues"],["3","3 · Watch"],["2","2 · At risk"],["1","1 · Burned"]],
-      cap:true, capPh:"cap/day", group:"domain",
+      nums:[{key:"cap", ph:"cap/day", label:"Daily send cap"}], group:"domain",
       reportPh:"Report — warmup state, reputation, what this inbox sends"
     },
     campaigns: {
       doc:"state/campaigns", list:"campList", stats:"campStats", empty:"campEmpty",
       input:"campNew", add:"campAddBtn", noun:"campaign", nouns:"campaigns",
-      statuses:["Active","Not active"], initial:"Active",
+      statuses:["Active","Paused","Completed"], initial:"Active",
       scoreLabel:"performance",
       scores:[["5","5 · Performing"],["4","4 · Acceptable"],["3","3 · Watch"],["2","2 · Underperforming"],["1","1 · Failing"]],
-      cap:false, group:"status",
+      nums:[{key:"sent", ph:"sent", label:"Emails sent"},
+            {key:"opps", ph:"opps", label:"Opportunities"}], group:"status",
       reportPh:"Report — who it targets, how many steps, why it is paused"
     }
   };
@@ -1737,16 +1738,16 @@
 
     top.appendChild(scorePicker(key, cfg, id, e));
 
-    if(cfg.cap){
-      var cap = document.createElement("input");
-      cap.type = "number"; cap.min = "0"; cap.className = "cap";
-      cap.id = "cap_" + key + "_" + id;
-      cap.placeholder = cfg.capPh;
-      cap.setAttribute("aria-label","Daily send cap for " + (e.name || cfg.noun));
-      cap.value = (e.cap == null ? "" : e.cap);
-      bindRosterField(cap, key, id, "cap");
-      top.appendChild(cap);
-    }
+    (cfg.nums || []).forEach(function(n){
+      var f = document.createElement("input");
+      f.type = "number"; f.min = "0"; f.className = "cap";
+      f.id = n.key + "_" + key + "_" + id;
+      f.placeholder = n.ph;
+      f.setAttribute("aria-label", n.label + " for " + (e.name || cfg.noun));
+      f.value = (e[n.key] == null ? "" : e[n.key]);
+      bindRosterField(f, key, id, n.key);
+      top.appendChild(f);
+    });
 
     // Two-step delete: no modal, and no single click that loses a report.
     var del = document.createElement("button");
@@ -1805,11 +1806,13 @@
       lab.textContent = scoreLabelFor(cfg, sn);
       lab.setAttribute("data-t", scoreTier(sn));
     }
-    var cap = byId("cap_" + key + "_" + id);
-    if(cap && document.activeElement !== cap){
-      var cv = (e.cap == null ? "" : String(e.cap));
-      if(cap.value !== cv) cap.value = cv;
-    }
+    (cfg.nums || []).forEach(function(n){
+      var f = byId(n.key + "_" + key + "_" + id);
+      if(f && document.activeElement !== f){
+        var fv = (e[n.key] == null ? "" : String(e[n.key]));
+        if(f.value !== fv) f.value = fv;
+      }
+    });
     var rep = byId("rep_" + key + "_" + id);
     if(rep && document.activeElement !== rep){
       var rv = e.report || "";
