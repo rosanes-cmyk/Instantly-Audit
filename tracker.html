@@ -383,6 +383,20 @@
   .acct[data-st="Warming"] .dot{background:var(--accent);}
   .acct[data-st="Paused"] .dot{background:var(--warn);}
   .acct[data-st="Disconnected"] .dot{background:var(--crit);}
+  .acct[data-st="Open"] .dot{background:var(--ink-3);}
+  .acct[data-st="In progress"] .dot{background:var(--accent);}
+  .acct[data-st="Blocked"] .dot{background:var(--crit);}
+  .acct[data-st="Done"] .dot{background:var(--ok);}
+  .acct[data-st="Won\'t do"] .dot{background:var(--rule-strong);}
+
+  /* A closed item keeps its severity on record but stops shouting it:
+     the bar reads green, the label drops to muted. */
+  .acct[data-st="Done"] .addr{color:var(--ok);}
+  .acct[data-st="Done"] .spick button.on{background:var(--ok);}
+  .acct[data-st="Done"] .slab{color:var(--ink-3);}
+  .acct[data-st="Won\'t do"] .addr{color:var(--ink-3);}
+  .acct[data-st="Won\'t do"] .spick button.on{background:var(--rule-strong);}
+  .acct[data-st="Won\'t do"] .slab{color:var(--ink-3);}
   .acct .addr{flex:1;min-width:150px;font-family:var(--f-mono);font-size:12.5px;font-weight:600;color:var(--ink);overflow-wrap:anywhere;}
   .acct select,.acct .cap{
     font-family:var(--f-mono);font-size:11.5px;color:var(--ink);
