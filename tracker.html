@@ -547,6 +547,14 @@
     </div>
   </section>
 
+  <section class="sec tabpanel" data-tab="sop" role="tabpanel" hidden aria-labelledby="sopH">
+    <div class="sechead">
+      <h2 id="sopH">How Instantly Works Here</h2>
+      <div class="note">The standing operating procedure for Twin Realtor Reach, written for whoever runs this next — no technical background assumed. Every term is defined, and the last section says which parts of it are not yet true.</div>
+    </div>
+    <div id="sopBody"></div>
+  </section>
+
   <section class="sec tabpanel" data-tab="accounts" role="tabpanel" hidden aria-labelledby="acctH">
     <div class="sechead">
       <h2 id="acctH">Sending Accounts</h2>
@@ -995,9 +1003,146 @@
     tabCount("templates", n, null);
   }
 
+
+  /* ---------------- SOP ---------------- */
+
+  var SOP_GLOSSARY = [["Instantly.ai", "The software that actually sends the emails and collects the replies. Everything in this SOP happens inside it. app.instantly.ai"], ["Sending account (inbox)", "One email address the system sends from, e.g. rosanes@twinhomebuyer.com. We have several so the volume is spread out instead of coming from one address."], ["Domain", "The part after the @. We use two: twinhomebuyer.com (the real company domain, which also carries contracts and DocuSign) and metrixgenerate.com (a separate domain kept for cold outreach so problems don't touch the real one)."], ["Sequence", "The set of emails one contact receives, spaced over days. Nobody writes them one at a time \u2014 the sequence runs on its own."], ["Step", "One email inside a sequence. Our realtor sequence has 7 steps over 7 days."], ["Variant", "An alternative version of the same step. Instantly rotates between them so not every recipient gets identical wording."], ["Daily cap", "The most emails one inbox is allowed to send in a day. Going over it gets the address flagged as spam."], ["Warmup", "Instantly quietly sending small amounts of mail between its own inboxes to build a new address's reputation before real outreach. Warmup mail is NOT outreach and must never be counted as sent volume."], ["Bounce", "An email that could not be delivered \u2014 usually a dead address. Above roughly 5% bounces, email providers start suspending the sender."], ["Unibox", "The single screen where every reply lands, no matter which inbox it came to. Replies are worked here, not in scattered mailboxes. app.instantly.ai/app/crm"], ["Lead", "One contact \u2014 a realtor we are emailing."], ["Lead list", "A group of leads, loaded together. Always load a list as a NAMED list, never straight into a campaign (see gap 2 below)."], ["Blocklist / suppression", "Addresses the system must never email, whatever list they appear on. This is where opt-outs and existing clients go."], ["Opt-out", "Someone asking to stop receiving our email. By law we must honour it within 10 business days, permanently."], ["Open tracking", "An invisible pixel that reports when someone opens an email. Ours is switched OFF on purpose \u2014 it hurts deliverability and the numbers are unreliable. Do not turn it on, and do not report open rate."]];
+  var SOP_STEPS = [["Build the list", "Assemble the market's active listing agents into a working sheet. For each one capture: First Name, Last Name, Email, Brokerage, City, County.\n\nSources: MLSListings.com, brokerage sites, agent websites, Realtor.com, Zillow, Compass, LinkedIn.\n\nPrioritise agents with RECENT listing activity in the target market. Those are the people bringing sellers to market, and they are the only ones worth the send."], ["Verify every lead", "Never upload an unverified list \u2014 bad data burns the sender's reputation and it does not recover quickly.\n\nFor each agent confirm all five:\n  1. Active \u2014 the agent is currently working.\n  2. Listing-side \u2014 confirmed by recent listing activity, not buyer-side only.\n  3. Email \u2014 a real, deliverable address. This is a SEPARATE check from the two above; an active agent can still have a dead mailbox.\n  4. Verification source \u2014 where you confirmed it.\n  5. Verification date \u2014 when you checked.\n\nSet Final Status to 'Ready for Instantly' only when all five pass. Anything unconfirmed is dropped or held. Nothing else moves forward."], ["Format the columns", "Export to the Instantly-ready format, in this column order:\n\nFirst Name \u00b7 Last Name \u00b7 Email \u00b7 Brokerage \u00b7 City \u00b7 County \u00b7 Active Status \u00b7 Listing-Side Status \u00b7 Verification Source \u00b7 Verification Date \u00b7 Final Status\n\nFirst Name, Brokerage and City are the personalisation variables the sequence uses, so they must be clean and correctly cased. 'JOHN' or 'john' appears in the email exactly as typed.\n\nSave as Instantly_Ready_[Market].csv"], ["Upload and check", "In Instantly: open or create the realtor-outreach campaign, upload the CSV, and map the columns to Instantly's fields.\n\nThen, before launching, confirm four things:\n  - Instantly's duplicate and invalid-email flags are cleared.\n  - The sending accounts on the campaign are the approved ones and are warmed up.\n  - The sequence is the approved copy.\n  - The schedule and daily cap are right."], ["Launch and hold the volume", "Launch at 30\u201350 emails/day across all sending accounts, and hold there until reply rate and deliverability are proven.\n\nKeep warmup enabled on every inbox. Let Instantly spread sends across inboxes and throttle each one \u2014 do not override its limits.\n\nScale only gradually, and only after the numbers justify it. More volume on a weak list produces bounces, not meetings."], ["Work the replies", "Check the Unibox at least once a day. Speed is what turns a reply into a booked meeting.\n\n  - Answer interested replies fast.\n  - Update each lead's status: interested, not interested, meeting booked.\n  - Book meetings promptly and hand off to the right person.\n  - Process opt-outs and bounces the same day. Opt-outs go on the blocklist immediately."], ["Report", "Daily at 4pm: the Realtor Outreach KPI bot posts per-campaign lines into Google Chat by itself. Underneath it, add the one human summary line \u2014 account totals, opportunities and their value, inbox health, and any exception worth flagging. Copy it to Cherry by email, unchanged.\n\nWeekly on Friday at 4pm: realtor leads in, first touch inside 24 hours, SLA breaches, sent, replies, bounce rate, opportunities and value, plus any process gap with a named owner.\n\nReport emails sent, reply rate, bounce rate and meetings booked. Do NOT report open rate \u2014 see the glossary."]];
+  var SOP_SETUP = [["Workspace", "One only \u2014 'My Organization', owned by carlo@twinhomebuyer.com. There is no second workspace."], ["Sending accounts", "9 active. twinhomebuyer.com: bryan@, lawrence@, rosanes@, seth@ (100/day each). metrixgenerate.com: ariana@ (100/day), christopher@, isabella@, penelope@, victoria@ (30/day each)."], ["Deleted accounts", "carlo@, juan@ and accounting@twinhomebuyer.com were removed on 22 Sep to protect those mailboxes' health. Do not re-add them to campaigns."], ["Campaigns", "5 live or completed: Realtors July 2026, Oakland Realtor, San Francisco County Realtor, Phase 1 \u2013 Peninsula Listing Agents, 27 Prague St. All paused or finished."], ["Which domain sends what", "The three realtor campaigns send from twinhomebuyer.com. Peninsula and the property campaigns send from metrixgenerate.com. Whether that stays that way is one of Cherry's open decisions."], ["Sequences", "The three realtor campaigns share one 7-step sequence (5 variants on step 1). Peninsula has its own 5-step sequence. 27 Prague St is a single email."], ["Signature", "Every realtor email is signed Juan Diaz, CA GC Lic. #1066892 \u2014 regardless of which inbox sent it."], ["Reporting", "Realtor Outreach KPI bot \u2192 Google Chat, 4pm daily, one line per campaign. Plus the human summary, copied to Cherry by email. Weekly on Fridays."], ["Bot naming", "The bot posts its own labels, not Instantly's campaign names. 'PHASE 1 \u2014 SAN MATEO/PENINSULA VERIFIED 500' is the bot's name for 'Phase 1 \u2013 Peninsula Listing Agents'. Same campaign."], ["Actual send volume", "The KPI bot\u0027s Google Chat posts show Peninsula sending 100/day through mid-September \u2014 100, 100, 100, 94, 64, 42, 30, 19 as it ran out of leads, about 549 emails over those eight days, every one delivered and none bounced, and no replies. So the 30\u201350/day in step 5 is the target for starting a NEW campaign, not a description of what this account has been doing."], ["Open tracking", "OFF account-wide, on purpose. Leave it off."], ["Lifetime volume", "~11,800 emails sent since 9 July 2026. 17 opportunities worth $17,400. Overall bounce rate 2.9%."]];
+  var SOP_ROUTINE = [["Every campaign", ["Build the market list of active listing agents.", "Verify every lead on all five checks; set Final Status = Ready for Instantly.", "Export to the Instantly-ready columns.", "Upload, clear duplicates and invalids, map fields.", "Confirm approved sending accounts, approved copy, schedule and cap.", "Launch at 30\u201350/day."]], ["Every day", ["Check the Unibox. Answer interested replies fast.", "Update lead statuses.", "Process opt-outs and bounces \u2014 same day, no exceptions.", "Check no campaign has paused or errored on its own.", "Check no inbox has gone into an error state.", "Post the 4pm summary under the bot's lines, and copy it to Cherry."]], ["Every week", ["Pull metrics: sent, reply rate, bounce rate, meetings booked.", "Review deliverability \u2014 bounce and complaint rates per campaign.", "Post the Friday 4pm weekly summary.", "Name any process gap, with an owner. A gap with no owner does not get fixed."]], ["Every 90 days", ["Re-read this SOP against what the system actually does.", "Re-verify the sending domains, inboxes and daily caps.", "Re-confirm the approved sequence copy."]]];
+  var SOP_COMPLIANCE = [["Say who we are, truthfully", "Every email identifies Twin Home Buyer honestly, with a subject line that reflects what the email actually says. No deceptive sender names or headers."], ["Include a real postal address", "Every commercial email needs a valid physical mailing address in it. Ours is 170 Glenn Way, Suite 5, San Carlos, CA 94070."], ["Include a working opt-out", "Every email needs a clear way to unsubscribe, and the link must actually work \u2014 not just be present."], ["Honour opt-outs fast and forever", "Within 10 business days, permanently. Add the address to Instantly's blocklist the same day you see the request. A reply asking to be removed counts as an opt-out even if they did not click anything."], ["Never email a bounce or an opt-out again", "Both go on the blocklist. The blocklist applies across every campaign, which is why it is the safety net."], ["Keep the verification trail", "The list stays to legitimate business contacts, and the record of how each was verified stays intact."], ["If someone objects, stop", "Stop that thread and escalate to ops. Do not argue, and do not keep the sequence running."]];
+  var SOP_ESCALATION = [["Bounce rate climbing", "Pause the campaign. Clean and re-verify the list before sending again. Above 5% risks suspension."], ["Deliverability drop or spam flags", "Pause sending. Check warmup and domain health. Escalate to Carlo."], ["A sending account or domain breaks", "Carlo, or the Instantly admin."], ["A recipient complains, or a compliance question", "Stop the thread. Escalate to ops and ownership the same day."], ["Low reply rate across a full cycle", "Do not send more. Review targeting and copy with the campaign owner."], ["A campaign or list looks wrong or missing", "Do not delete anything. Escalate \u2014 deleting a campaign in Instantly destroys its send record and its leads permanently."]];
+  var SOP_GAPS = [["There is no blocklist of existing clients yet", "This SOP assumes the blocklist protects people we already do business with. It does not yet \u2014 there has never been one. Until it exists, a cold list can contain a current client, a past counterparty, or someone mid-transaction with us. Building it is the single highest-value fix outstanding: one CSV of every address the company has transacted with, uploaded once, applies to every campaign automatically."], ["Leads have been loaded straight into campaigns, not as named lists", "Only one named lead list exists in the whole workspace. Every other campaign's leads sit inside that campaign alone. That means nothing can be de-duplicated across campaigns, a list cannot be cleaned once and re-used, and deleting a campaign deletes its leads for good. From here, load leads as a named list first \u2014 always."], ["Three campaigns have no unsubscribe link or postal address", "Realtors July 2026, Oakland Realtor and San Francisco County Realtor were sent without either \u2014 7,241 emails. None of the three may resume until Legal has cleared the footer. Phase 1 \u2013 Peninsula already carries the correct footer to copy across."]];
+
+  function sopHead(text, top){
+    var h = el("div","eyebrow",text);
+    h.style.marginTop = (top || 30) + "px";
+    return h;
+  }
+
+  function sopPairTable(rows, headA, headB, wideA){
+    var scroll = el("div","tscroll");
+    var t = document.createElement("table");
+    t.className = "tpltbl";
+    t.style.minWidth = "520px";
+    var thead = document.createElement("thead");
+    var hr = document.createElement("tr");
+    [headA, headB].forEach(function(h){
+      var th = document.createElement("th");
+      th.textContent = h;
+      hr.appendChild(th);
+    });
+    thead.appendChild(hr);
+    t.appendChild(thead);
+    var tb = document.createElement("tbody");
+    rows.forEach(function(r){
+      var tr = document.createElement("tr");
+      var a = document.createElement("td");
+      a.className = "nm";
+      a.textContent = r[0];
+      if(wideA) a.style.minWidth = wideA;
+      var b = document.createElement("td");
+      b.textContent = r[1];
+      tr.appendChild(a); tr.appendChild(b);
+      tb.appendChild(tr);
+    });
+    t.appendChild(tb);
+    scroll.appendChild(t);
+    return scroll;
+  }
+
+  function buildSOP(){
+    var host = byId("sopBody");
+    if(!host) return;
+    host.innerHTML = "";
+
+    host.appendChild(el("div","tplmeta",
+      "Twin Realtor Reach \u00b7 v1.0 \u00b7 September 2026 \u00b7 developer Carlo \u00b7 platform Instantly.ai \u00b7 review every 90 days"));
+
+    var intro = el("div","flag");
+    intro.setAttribute("data-s","note");
+    intro.appendChild(el("div","fb"));
+    var ib = el("div", null);
+    ib.appendChild(el("div","ft","What this system is, in one paragraph"));
+    ib.appendChild(el("div","fd",
+      "Twin Realtor Reach sends personalised cold emails to active listing agents \u2014 the agents who bring sellers to market \u2014 so that Twin Home Buyer can build a realtor acquisition pipeline and book conversations. It runs on software called Instantly.ai. You give it a verified list of realtors and an approved set of emails; it sends them on a schedule, spread across several sending addresses, and collects every reply in one place. It replaces sending these emails by hand. Nothing here requires writing code."));
+    intro.appendChild(ib);
+    host.appendChild(intro);
+
+    host.appendChild(sopHead("The words you will keep seeing"));
+    host.appendChild(sopPairTable(SOP_GLOSSARY, "Term", "What it means", "170px"));
+
+    host.appendChild(sopHead("The seven steps, every time"));
+    SOP_STEPS.forEach(function(s, i){
+      var d = document.createElement("details");
+      d.className = "tplstep";
+      if(i === 0) d.open = true;
+      var sm = document.createElement("summary");
+      sm.appendChild(el("span","sn","Step " + (i+1)));
+      sm.appendChild(el("span","ss", s[0]));
+      d.appendChild(sm);
+      var pre = document.createElement("pre");
+      pre.className = "tplbody";
+      pre.textContent = s[1];
+      d.appendChild(pre);
+      host.appendChild(d);
+    });
+
+    host.appendChild(sopHead("Our actual setup, as at 22 September 2026"));
+    host.appendChild(sopPairTable(SOP_SETUP, "What", "How it is configured today", "150px"));
+
+    host.appendChild(sopHead("The routine"));
+    SOP_ROUTINE.forEach(function(g){
+      var d = document.createElement("details");
+      d.className = "tplstep";
+      var sm = document.createElement("summary");
+      sm.appendChild(el("span","sn", g[0]));
+      sm.appendChild(el("span","ss", g[1].length + " " + plural(g[1].length,"item","items")));
+      d.appendChild(sm);
+      var pre = document.createElement("pre");
+      pre.className = "tplbody";
+      pre.textContent = g[1].map(function(x){ return "\u2610  " + x; }).join("\n");
+      d.appendChild(pre);
+      host.appendChild(d);
+    });
+
+    host.appendChild(sopHead("Compliance \u2014 the rules that are actually law"));
+    SOP_COMPLIANCE.forEach(function(c){
+      var box = el("div","flag");
+      box.setAttribute("data-s","note");
+      box.appendChild(el("div","fb"));
+      var b = el("div", null);
+      b.appendChild(el("div","ft", c[0]));
+      b.appendChild(el("div","fd", c[1]));
+      box.appendChild(b);
+      host.appendChild(box);
+    });
+
+    host.appendChild(sopHead("When something goes wrong"));
+    host.appendChild(sopPairTable(SOP_ESCALATION, "Situation", "What to do", "210px"));
+
+    host.appendChild(sopHead("Three things this SOP assumes that are not in place yet"));
+    var warn = el("div","tplmeta",
+      "Read these before following the steps above \u2014 otherwise the SOP describes a safety net that is not there.");
+    host.appendChild(warn);
+    SOP_GAPS.forEach(function(g, i){
+      var box = el("div","flag");
+      box.setAttribute("data-s","crit");
+      box.appendChild(el("div","fb"));
+      var b = el("div", null);
+      b.appendChild(el("div","ft", "Gap " + (i+1) + " \u2014 " + g[0]));
+      b.appendChild(el("div","fd", g[1]));
+      box.appendChild(b);
+      host.appendChild(box);
+    });
+
+    tabCount("sop", SOP_STEPS.length, null);
+  }
+
   var TABS = [
     { id:"phases",    label:"Phases" },
     { id:"map",       label:"System Map" },
+    { id:"sop",       label:"SOP" },
     { id:"accounts",  label:"Accounts" },
     { id:"campaigns", label:"Campaigns" },
     { id:"fixes", label:"Decisions" },
@@ -2341,6 +2486,7 @@
 
   buildTabs();
   buildTemplates();
+  buildSOP();
   buildPhases();
   buildBar();
   buildFlow();
