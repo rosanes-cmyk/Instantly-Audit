@@ -8,7 +8,7 @@ Full detail is in the live tracker if you want it. You don't need it to answer t
 
 ## Where it stands
 
-- **11,800+ emails sent since 9 July**, 17 opportunities worth $17,400, bounce rate 2.9% overall.
+- **9,821 emails sent since 9 July**, 17 opportunities worth $17,400, bounce rate 2.9% overall.
 - **Nothing is sending.** Every campaign is paused or finished.
 - The setup is now fully documented — accounts, campaigns, sequences, lists, reporting — in a tracker anyone can pick up.
 - Daily KPI snapshot at 4pm in Google Chat, copied to you by email. Weekly on Fridays.
@@ -43,7 +43,7 @@ Two things it doesn't reach, so you're not surprised later: the 7,241 already se
 
 **Stanley Lo.** Between 20 and 25 July our Realtors July campaign sent him three cold emails from my address. On **4 August you emailed him yourself** about the 2032 Lyon Avenue offer. He was an existing counterparty — DocuSign history back to 2021 — and has since died. His address is blocked and his records are being removed from the lists. The cause was that we had no suppression list of existing clients; that's being built now, and it's the single fix that prevents a repeat.
 
-**A deleted campaign.** A property send from August — 2,000+ emails — had its campaign record deleted from Instantly, so its bounces and replies can't be recovered. It's why the total above is 11,800 and not the 9,821 I reported yesterday. I'm asking Carlo who deleted it and why. Nothing else gets deleted from here.
+**A deleted campaign.** A property send from August — 3375 17th St #311 — had its campaign record deleted from Instantly, so its numbers can't be recovered. **How big it was is genuinely unclear**: Instantly's own assistant reported over 2,000 emails, but the account's total leaves no room for that, and Jonathan's read is that it was a test. What *is* established is that three real agents replied to it, and one of them asked to be removed — so we can no longer show how we handled that request. I'm settling the volume by counting the surviving message logs, and asking who deleted it. Nothing else gets deleted from here.
 
 ## What's being done, and by whom
 
