@@ -12,8 +12,12 @@ Open each of these three campaigns → Sequences/Settings → sender pool → re
 
 They'll fail on resume otherwise.
 
-**2. Export the deleted campaign's threads**
-Ask Carlo to run Unibox `getEmails` with `campaign_id: c05714e3-35db-4223-8873-c65639a33173`. Save the output somewhere outside Instantly. Only surviving record of 2,000+ sends.
+**2. Ask Carlo and Lawrence for the original spreadsheets** — the single highest-value message you will send
+Every campaign's leads were uploaded from an offline CSV that Instantly never kept. Those files still exist on somebody's Drive or laptop, with phone numbers and brokerages Instantly never stored. One message recovers all of them:
+
+> *"Can you send me the source CSVs you uploaded for each campaign — Realtors July (1,713 leads), Oakland (948), SF County (203), Peninsula (517), 27 Prague (156), and the 3375 17th St blast from 6 August (~2,000)? I'm rebuilding them as named lists so a deleted campaign can never take a list with it again."*
+
+**2b. While you wait, pull what the logs hold.** Unibox → clear the status filter (it's showing only negative replies) → search `3375 17th St #311` → switch the folder from **Inbox to Sent** → select → export CSV. No developer needed. 57 addresses are already recovered and saved in the Dossiers tab.
 
 **3. Delete the greenbanker leads**
 Peninsula → Leads → search `greenbanker` → delete all 3 (Stanley Lo, Max Lo ×2).
