@@ -33,9 +33,11 @@ There's no CRM connection. All 17 opportunities and the $17,400 exist only as fl
 
 My recommendation: **export the current 17 now**, decide on a connection later.
 
-## One thing for Legal, not you
+## Closed today, so you know it's handled
 
-Three campaigns went out without an unsubscribe link or postal address — 7,241 emails. US CAN-SPAM requires both. I've written to Legal for a footer review. **Those three shouldn't resume until they've cleared it**, and a fourth campaign already has the correct footer to copy.
+**The unsubscribe gap is fixed.** Three campaigns had gone out with no opt-out link — 7,241 emails — and the one compliant campaign had a broken link on step 2. **All four now carry a working unsubscribe link.** That was the largest compliance exposure in the audit and it's closed going forward.
+
+Two things it doesn't reach, so you're not surprised later: the 7,241 already sent can't be retrofitted, which is why I've still asked Legal to review the footer wording; and the postal address is a separate requirement I'm confirming in each footer this week.
 
 ## Two things you should hear from me rather than elsewhere
 
@@ -47,11 +49,12 @@ Three campaigns went out without an unsubscribe link or postal address — 7,241
 
 | Who | What |
 |---|---|
-| **Me, this week** | Global suppression list built and uploaded · sender pools cleaned on three campaigns · opt-out sweep finished · unanswered replies read and answered |
+| **Me, this week** | Global suppression list built and uploaded · postal address confirmed in every footer · sender pools cleaned on three campaigns · opt-out sweep finished · unanswered replies read and answered |
 | **Carlo** | Lists verified and de-duplicated before anything resumes · sending caps · lead lists rebuilt as reusable lists · SLA flag added to the KPI bot |
-| **Legal** | Footer review on the three campaigns |
+| **Legal** | Review the footer wording for the 7,241 already sent |
 | **You** | The three decisions above |
 
 Nothing here needs your attention beyond those three answers.
 
 Jonathan
+rosanes@twinhomebuyer.com

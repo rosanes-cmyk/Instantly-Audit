@@ -32,8 +32,8 @@ Settings → Blocklist → add:
 **6. Build the suppression list** — the one fix that prevents another Stanley Lo
 Pull every address the company has transacted with — deal mailboxes, DocuSign participants, past clients, counterparty agents. One CSV. Upload to Settings → Blocklist. It applies across every campaign automatically.
 
-**7. Fix the Peninsula Step 2 unsubscribe link**
-Peninsula → Editor → Step 2 → the unsubscribe href is empty. Point it at the working one from another step.
+**7. Confirm the postal address is in every footer** — the unsubscribe link is done, this is the other half
+CAN-SPAM needs a valid physical address as well as the opt-out link. Open each campaign's sequence and check `170 Glenn Way, Suite 5, San Carlos, CA 94070` sits alongside the unsubscribe link. Four campaigns: Realtors July, Oakland, SF County, Peninsula.
 
 **8. Read and answer the open replies**
 - SF County's 2 replies and the $1,000 opportunity
@@ -51,3 +51,4 @@ They exist nowhere but Instantly. Download them.
 
 - **Never delete a campaign.** Pause, archive, rename. Deleting destroys the send record and the leads.
 - **Load leads as a named list**, never straight into a campaign queue.
+- **Sending runs Monday to Saturday**, six days. Nothing on Sunday.
