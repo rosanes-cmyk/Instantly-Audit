@@ -6,19 +6,30 @@ Paste as-is. Send Cherry's first.
 
 ## 1 — CHERRY (send now)
 
-Subject: Instantly audit closed — one item needs you today
+Subject: Instantly audit — two things you need today
 
 Hi Cherry,
 
-The Instantly audit and handoff is finished. Tracker has the full detail. Three things need you.
+The audit is finished and the tracker has the detail. Two things can't wait, and both involve you personally.
 
-**Today, please.** Phase 1 – Peninsula emailed Stanley Lo at stanleylo@greenbanker.com. He isn't a cold prospect — we have completed DocuSign transactions with him going back to 2021, offers and disclosures on 2032 Lyon Avenue. He has since died. The campaign contacted 516 of its 517 leads, so the send went out. His address is now blocked and the record is being pulled from every list. I'd rather you hear this from me than from his family.
+**Stanley Lo.** Between 20 and 25 July we sent him three cold acquisition emails from **my address, rosanes@twinhomebuyer.com**, as part of the Realtors July 2026 campaign. On **4 August you emailed him yourself** about an offer on 2032 Lyon Avenue, Belmont. So we cold-pitched an existing counterparty from our own domain, and ten days later did real business with him. We have completed DocuSign transactions with him going back to 2021. He has since died.
 
-It isn't isolated. The blocklist was **completely empty** when I opened it — eleven weeks of sending with no opt-out ever recorded. Four people had asked to be removed by replying, because three of our campaigns carry no unsubscribe link at all. Kurt's request was 41 business days old. All four are blocked now.
+Those three emails also carried **no unsubscribe link and no postal address** — Realtors July 2026 is one of three campaigns missing both. His address is blocked now and his records are being pulled from the lists. I'd rather you hear this from me than from his family or his estate.
 
-**Two decisions only you can make.**
-- **Does cold outreach run from twinhomebuyer.com at all?** 81% of our sending capacity sits on the primary business domain — including accounting@ and my own address — at 100/day per inbox, while metrixgenerate.com, the domain built to absorb exactly this risk, is throttled to 30/day. If twinhomebuyer.com gets filtered, it takes our real business mail with it.
-- **Realtors July 2026** is paused at 11% and holds 9 of our 18 lifetime opportunities. It's our best performer. The only note on it is "no further instructions." Resume, retire, or rework?
+It wasn't isolated. **The blocklist was completely empty** when I opened it — eleven weeks of sending with no opt-out ever recorded. Four people had asked to be removed by replying, because there was no link to click. The oldest was 41 business days overdue. All four are blocked now.
+
+**A campaign has been deleted.** A property send for 3375 17th St #311 went out 6–10 August — **over 2,000 emails** — and the campaign record no longer exists in Instantly. Only the raw message threads survive. Two consequences: every total I've reported is short by about 20% (the real lifetime is ~11,800 emails, not 9,821), and the bounces, replies and opportunities from those 2,000 sends are **unrecoverable**. It's also the campaign one of those four removal requests came from, so if we're ever asked to show we handled it properly, the campaign it came from is gone. I need to know who deleted it and why. Nothing gets deleted from here on.
+
+**Then one decision, and the audit has made it sharper than I first thought.**
+
+**Does cold outreach run from twinhomebuyer.com at all?** The split isn't a caps problem — it's which domain sends what:
+
+- **twinhomebuyer.com** sends Realtors July, Oakland and SF County — the three campaigns with **no unsubscribe link**, 7,241 emails, and the two worst bounce rates (4.06% and 4.72%, both near the 5% level where providers suspend senders).
+- **metrixgenerate.com** — the domain built to absorb exactly this risk — sends the compliant campaigns, and bounces at 1.69%.
+
+The burner domain is carrying the safe traffic and our real business domain is carrying the risk. That domain also carries our contracts, our DocuSign, and your own correspondence. Stanley Lo is what that looks like in practice: cold mail from rosanes@twinhomebuyer.com in July, your offer from cherry@twinhomebuyer.com in August.
+
+**And one more decision.** **Realtors July 2026** is paused at 11% and holds 9 of our 17 opportunities — our best performer, and also the campaign that emailed Stanley. The only note on it is "no further instructions." Resume, retire, or rework?
 
 **One sign-off.** I've set a 24-hour first-touch target on realtor leads and a reporting cadence of daily at 4pm in Google Chat copied to you by email, plus a Friday weekly. Both are my proposal, not an agreement — say yes or tell me what it should be.
 
