@@ -8,7 +8,7 @@ Full detail is in the live tracker if you want it. You don't need it to answer t
 
 ## Where it stands
 
-- **11,821 emails sent since 9 July**, 20 opportunities worth $19,400, 2.74% failed to deliver.
+- **11,821 emails sent since 9 July**, 2.74% failed to deliver. **17 opportunities worth $16,400** from the five funded campaigns; 20 worth $19,400 if the August test send is included.
 - **Nothing is sending.** Every campaign is paused or finished.
 - The setup is now fully documented — accounts, campaigns, sequences, lists, reporting — in a tracker anyone can pick up.
 - Daily KPI snapshot at 4pm in Google Chat, copied to you by email. Weekly on Fridays.
@@ -29,7 +29,7 @@ My recommendation: **rework and resume**, after the footer is fixed and the list
 
 **3. Should opportunities leave Instantly?**
 
-There's no CRM connection. All 17 opportunities and the $17,400 exist only as flags inside Instantly. If we want them anywhere else, that's a decision and a small build.
+There's no CRM connection. All 17 opportunities and the $16,400 exist only as flags inside Instantly. If we want them anywhere else, that's a decision and a small build.
 
 My recommendation: **export the current 17 now**, decide on a connection later.
 
@@ -43,11 +43,13 @@ Two things it doesn't reach, so you're not surprised later: the 7,241 already se
 
 **Stanley Lo.** Between 20 and 25 July our Realtors July campaign sent him three cold emails from my address. On **4 August you emailed him yourself** about the 2032 Lyon Avenue offer. He was an existing counterparty — DocuSign history back to 2021 — and has since died. His address is blocked and his records are being removed from the lists. The cause was that we had no suppression list of existing clients; that's being built now, and it's the single fix that prevents a repeat.
 
-**A deleted campaign, and it was not a test.** A property send in August — 3375 17th St #311 — emailed **about 2,000 San Francisco listing agents**, then somebody deleted the campaign. I pulled the message logs today and they name the recipients: agents at Zephyr, Compass, Vanguard, Sotheby's, Corcoran, Coldwell Banker. **57 recovered so far.**
+**A test send that went out wider than a test should.** In August we ran a property send for 3375 17th St #311 as a test of that approach. I deleted the campaign afterwards, and Seth and Lawrence have both confirmed it was a test rather than a funded campaign — so there's no mystery here about who removed it or why.
 
-It cost us more than records. That campaign produced **3 opportunities worth $3,000** — which is why I reported 17 opportunities and $17,400 yesterday when the real figures are **20 and $19,400**. Those three are gone; we know they happened and we cannot say who they were. It is also the send a named agent replied to asking to be removed, and her request was never recorded.
+What I want you to hear from me is the size of it. That test reached **about 2,000 San Francisco listing agents** over five days — agents at Zephyr, Compass, Vanguard, Sotheby's, Corcoran and Coldwell Banker — and it went out with no unsubscribe link and no postal address, the same gap the three realtor campaigns had. Calling it a test describes what we intended, not what 2,000 people received. I've recovered 57 of the recipients from the message logs and the rest are recoverable.
 
-I still do not know who deleted it. Instantly does not log that, so it needs an answer from a person. **Nothing gets deleted from here** — the rule is now in the SOP.
+Two loose ends from it, both mine to close this week. One agent replied asking to be removed and was never added to the do-not-email list. Another, **Rob Edwards, replied on 7 August asking who we were, and nobody has answered him** — that message is still unread seven weeks later.
+
+On the numbers: three opportunities worth $3,000 were logged against that test. So I'd report **17 opportunities worth $16,400** from the five funded campaigns, and note $19,400 across 20 if you want everything included. **Nothing gets deleted from here without it being written down** — the rule is now in the SOP.
 
 ## What's being done, and by whom
 

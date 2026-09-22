@@ -4,9 +4,9 @@ Ordered by what can't be recovered later. The first three are the ones to get to
 
 ---
 
-## 1 — The deleted campaign (irreversible)
+## 1 — The deleted campaign
 
-**1.1** The campaign for `3375 17th St #311` (id `c05714e3-35db-4223-8873-c65639a33173`) sent 2,000+ emails between 6 and 10 August, and its record has been deleted from Instantly — the API returns 404. **Who deleted it, when, and why?**
+**1.1** ~~Who deleted the campaign for `3375 17th St #311` (id `c05714e3-35db-4223-8873-c65639a33173`), when, and why?~~ **ANSWERED — no longer a question for you.** Jonathan deleted it deliberately; Seth and Lawrence have both confirmed it was a test of that listing approach, not a funded campaign. The remaining questions below still stand, because the send itself reached about 2,000 real agents with no unsubscribe link.
 
 **1.2** **Has anything else been deleted?** Campaigns, lead lists, or sending accounts. I'm asking because our lifetime total was short by about 20% and nobody knew.
 

@@ -69,7 +69,7 @@ For every claim, one of four answers:
 
 ## 2 — Lifetime totals
 
-**2.1** `[MATH]` **11,821 emails sent** since 9 Jul 2026 — 9,821 across the five listed campaigns plus about 2,000 from the deleted campaign `c05714e3`.
+**2.1** `[MATH]` **11,821 emails sent** since 9 Jul 2026 — 9,821 across the five listed campaigns plus about 2,000 from the deleted campaign `c05714e3` (internally a test run, but the sends were real).
 
 **2.2** `[READ]` **324 bounces**, which is **2.74%** of 11,821.
 
@@ -101,7 +101,7 @@ For each: please confirm **sent, leads loaded, leads contacted, bounces, bounce 
 
 **3.5** `[READ]` **27 Prague St, San Mateo, CA 94401** — `e7e18f27-7411-4ff5-b770-91a5695df4c8` · Completed · created 15 Aug 2026 20:31 UTC · metrixgenerate.com · 156 sent · 156 leads · 2 bounces (1.28%) · 2.56% reply · 3 opportunities ($3,000) · 1 step.
 
-**3.6** `[READ]` **3375 17th St #311, San Francisco** — `c05714e3-35db-4223-8873-c65639a33173` · **DELETED**, returns 404 · sent 6 Aug 2026 21:26 UTC to 10 Aug 2026 18:05 UTC · metrixgenerate.com, all five addresses · ~2,000 sent · ~38 bounces (~1.9%) · ~1.15% reply · 3 opportunities ($3,000) · 1 step, signed Mariaelena Diaz.
+**3.6** `[READ]` **3375 17th St #311, San Francisco** — `c05714e3-35db-4223-8873-c65639a33173` · **DELETED**, returns 404 · sent 6 Aug 2026 21:26 UTC to 10 Aug 2026 18:05 UTC · metrixgenerate.com, all five addresses · ~2,000 sent · ~38 bounces (~1.9%) · ~1.15% reply · 3 opportunities ($3,000) · 1 step, signed Mariaelena Diaz. **Internally confirmed as a test run** (deleted deliberately, verified with Seth and Lawrence) — please still confirm the send figures above, since the emails reached real recipients either way.
 
 **3.7** `[READ]` **TEST CAMPAIGN REPLY** existed with 4 sends, 0 bounces, 13 replies, 1 opportunity, created 3 Aug 2026, sender victoria@metrixgenerate.com. Deleted 22 Sep 2026.
 
@@ -217,7 +217,7 @@ For each: please confirm **sent, leads loaded, leads contacted, bounces, bounce 
 
 ## 9 — Only a person can answer these. Please do not guess.
 
-**9.1** `[PERSON]` **Who deleted campaign `c05714e3`, when, and why?** I understand Instantly does not log this. Confirm that it does not.
+**9.1** ~~`[PERSON]` Who deleted campaign `c05714e3`, when, and why?~~ **WITHDRAWN — answered internally.** Jonathan deleted it deliberately, and Seth and Lawrence confirmed it was a test send. No longer a question for anyone outside.
 
 **9.2** `[PERSON]` Why did Realtors July, Oakland and San Francisco County all stop sending on 3 August 2026?
 
