@@ -468,6 +468,14 @@
   .person .pd{font-size:12px;color:var(--ink-2);margin-top:5px;line-height:1.4;}
 
   .foot{margin-top:44px;padding-top:14px;border-top:1px solid var(--rule);font-size:11.5px;color:var(--ink-3);display:flex;flex-wrap:wrap;gap:6px 16px;justify-content:space-between;}
+  /* ---------- dossiers ---------- */
+  details.dos > summary{padding:13px;}
+  details.dos > summary .sn{min-width:74px;}
+  details.dos[open] > summary{background:var(--surface-2);}
+  .dosbody{padding:14px 13px 16px;}
+  .dosbody > .rstats{margin-top:12px;}
+  .dosbody > details.tplstep{background:var(--ground);}
+
   /* ---------- diagrams ---------- */
   figure.dgm{margin:24px 0 0;padding:16px 14px 13px;background:var(--surface);border:1px solid var(--rule);border-radius:8px;box-shadow:var(--shadow);}
   figure.dgm svg{display:block;width:100%;height:auto;color:var(--ink-3);}
@@ -758,6 +766,14 @@
     </div>
     <div id="campList"></div>
     <div class="empty" id="campEmpty">No campaigns recorded yet. Add each one and mark it active or not — a paused campaign nobody knows about is exactly the gap this audit is for.</div>
+  </section>
+
+  <section class="sec tabpanel" data-tab="dossiers" role="tabpanel" hidden aria-labelledby="dosH">
+    <div class="sechead">
+      <h2 id="dosH">Campaign Dossiers</h2>
+      <div class="note">One page per campaign: its status and numbers, the copy that actually went out, and the addresses it went to. The extraction Cherry asked for &mdash; and the answer to &ldquo;what is this campaign, and who did it reach?&rdquo; without opening Instantly.</div>
+    </div>
+    <div id="dosBody"></div>
   </section>
 
   <section class="sec tabpanel" data-tab="fixes" role="tabpanel" hidden aria-labelledby="fixH">
@@ -1319,12 +1335,182 @@
     tabCount("sop", SOP_STEPS.length, null);
   }
 
+
+  /* ---------------- campaign dossiers ---------------- */
+
+  var DOSSIERS = [{"id": "realtors_july", "name": "Realtors July 2026", "cid": "67d3a54b-e374-4503-ae65-77c9eef028fc", "status": "Paused", "created": "9 Jul 2026, 15:29 UTC", "paused": "manually paused 3 Aug 2026, 17:28 UTC, reason not recorded", "domain": "twinhomebuyer.com", "senders": "bryan@, carlo@, juan@, lawrence@, rosanes@, seth@", "nums": [["4,867", "sent"], ["198", "bounces"], ["4.06%", "bounce rate", "crit"], ["9", "opportunities", "ok"], ["1,713", "leads"], ["1,554", "contacted"], ["7", "steps"]], "flags": [["crit", "No unsubscribe link until 22 Sep \u2014 this campaign is where Stanley Lo received three cold emails from rosanes@ on 20, 22 and 25 July, ten days before Cherry emailed him about the 2032 Lyon Avenue offer."], ["warn", "Best performer in the account: 9 of the 17 opportunities, on 11% progress. Paused with no reason on record."], ["warn", "Still lists the deleted carlo@ and juan@ as senders. Resuming without editing the sender pool will fail."]], "copy": {"kind": "mismatch"}, "leadnote": "1,713 leads, of which 159 were never contacted. No named lead list exists for this campaign \u2014 the leads sit inside it and nowhere else."}, {"id": "oakland", "name": "Oakland Realtor Campaign", "cid": "54635e3e-4652-49bc-bab1-b923c007cd31", "status": "Paused", "created": "25 Jul 2026, 21:58 UTC", "paused": "paused at 44% progress", "domain": "twinhomebuyer.com", "senders": "bryan@, carlo@, juan@, lawrence@, rosanes@, seth@", "nums": [["1,760", "sent"], ["16", "bounces"], ["0.91%", "bounce rate", "ok"], ["2", "opportunities"], ["7", "steps"]], "flags": [["ok", "Cleanest list in the account at 0.91%. The reply path demonstrably worked here: timjgullicksen@gmail.com replied to lawrence@, was tagged Interested \u2014 and then the campaign was paused."], ["warn", "Step 1 carries a sixth variant that is blank. Confirm it is inert before this resumes, or it can send an empty email."], ["warn", "Still lists the deleted carlo@ and juan@ as senders."]], "copy": {"kind": "mismatch"}, "leadnote": "This is the ONLY campaign with a named lead list in the workspace: 'Oakland Realtor list', id b3952de8-3610-42ad-807c-44be8a09a1e2, uploaded 27 Jul 2026. Every other campaign's leads were loaded straight into the campaign."}, {"id": "sf_county", "name": "San Francisco County Realtor", "cid": "c1979cb5-7009-47c6-8fdb-6ddc8cd81790", "status": "Paused", "created": "29 Jul 2026, 21:01 UTC", "paused": "paused at 0% progress", "domain": "twinhomebuyer.com", "senders": "bryan@, carlo@, juan@, rosanes@, seth@", "nums": [["614", "sent"], ["29", "bounces"], ["4.72%", "bounce rate", "crit"], ["1", "opportunity"], ["$1,000", "still open", "warn"], ["7", "steps"]], "flags": [["crit", "Worst bounce rate in the account, on the smallest volume \u2014 which points at a dirty list rather than too much volume. 4.72% is inside touching distance of the 5% level where providers suspend senders."], ["crit", "STILL TAKING REPLIES WHILE PAUSED. Two replies arrived in the last four weeks against zero sends, and a $1,000 opportunity is still open. Nobody is watching a campaign that reads 0%."], ["warn", "Still lists the deleted carlo@ and juan@ as senders."]], "copy": {"kind": "mismatch"}, "leadnote": "Lead count not on record. No named list \u2014 leads are inside the campaign only."}, {"id": "peninsula", "name": "Phase 1 \u2013 Peninsula Listing Agents", "cid": "2484bb6e-1c62-41fe-8be4-414a5ec058fc", "status": "Completed", "created": "31 Jul 2026, 23:09 UTC", "paused": "completed \u2014 ran out of leads, last send 21 Sep (step 5, 19 emails)", "domain": "metrixgenerate.com", "senders": "ariana@, christopher@, isabella@, penelope@, victoria@", "nums": [["2,424", "sent"], ["41", "bounces"], ["1.69%", "bounce rate", "ok"], ["2", "opportunities"], ["517", "leads"], ["516", "contacted"], ["5", "steps"]], "flags": [["ok", "Footer already correct \u2014 San Carlos postal address plus a working unsubscribe link. This is the footer the other three were copied from on 22 Sep."], ["warn", "The KPI bot calls this campaign 'PHASE 1 \u2014 SAN MATEO/PENINSULA VERIFIED 500'. Same campaign, different label. That mismatch cost most of a day."], ["warn", "23 of the 41 bounces are invalid recipients at compass.com (SMTP 5.1.1) \u2014 dead mailboxes on realtors who are demonstrably active. Activity verification cannot see a dead mailbox."], ["crit", "Worst conversion in the account: 1 opportunity per 1,212 sent. Max Lo was emailed here AND on Realtors July, from two domains."]], "copy": {"kind": "steps", "use": [1, 2, 3, 4, 7], "note": "Peninsula runs five steps: steps 1 to 4 of the shared sequence, then the shared step 7 as its fifth and final email. Confirmed against the send records for both Max Lo addresses, 1 to 7 September."}, "leadnote": "517 leads, 516 contacted. Lead owner on the rows reads 'Carlo James Ballerdo'. The rows carry name and email only \u2014 job title, company, location, website and LinkedIn are all empty, so nothing in the list itself establishes these are Peninsula listing agents."}, {"id": "st3375", "name": "3375 17th St #311, San Francisco", "cid": "c05714e3-35db-4223-8873-c65639a33173", "status": "Deleted", "created": "sent 6 Aug 2026, 21:26 UTC \u2014 10 Aug 2026, 18:05 UTC", "paused": "CAMPAIGN RECORD DELETED \u2014 the API returns 404", "domain": "metrixgenerate.com", "senders": "ariana@, christopher@, isabella@, penelope@, victoria@", "nums": [["2,000+", "sent", "crit"], ["\u2014", "bounces"], ["\u2014", "bounce rate"], ["\u2014", "opportunities"], ["lost", "leads", "crit"]], "flags": [["crit", "THE RECORD IS GONE. Over 2,000 emails were sent in five days and the campaign object has been hard-deleted. Instantly does not log who deleted a campaign or why, so only a person can answer that \u2014 get it in writing."], ["crit", "Its leads are unrecoverable. They were loaded straight into the campaign and existed nowhere else, so deleting the campaign deleted them."], ["crit", "This is the send Leah McKern replied to on 7 Aug, 17:56 UTC, asking to be removed. The one campaign whose record was destroyed is a campaign with a known unhonoured opt-out against it."], ["warn", "Two other replies survive in the Unibox: ROB EDWARDS, never read, and Cindy Manning (out of office). Export them before they go too."], ["warn", "Roughly 400 emails a day across five mailboxes, about 80 each \u2014 well above the 30/day those accounts now run at. Four of the five were throttled from 100 down to 30 on 8 Aug at 23:15 UTC, two days into this send."]], "copy": {"kind": "none", "note": "Not on record. Subject line was '3375 17th St #311 \u2013 Available from Owner/Investor'. The body was never archived and the campaign that held it is gone. The only surviving copy is inside the Unibox threads of the people who replied \u2014 which is why exporting them matters today rather than next week."}, "leadnote": "UNRECOVERABLE. Over 2,000 SF-area agents were emailed and there is no list left. The only addresses still retrievable are those who replied, from the Unibox."}, {"id": "prague", "name": "27 Prague St, San Mateo, CA 94401", "cid": "e7e18f27-7411-4ff5-b770-91a5695df4c8", "status": "Completed", "created": "15 Aug 2026, 20:31 UTC", "paused": "completed \u2014 single-step send", "domain": "metrixgenerate.com", "senders": "ariana@, christopher@, isabella@, penelope@, victoria@ (victoria sent ~31)", "nums": [["156", "sent"], ["2", "bounces"], ["1.28%", "bounce rate", "ok"], ["3", "opportunities", "ok"], ["1 per 52", "sent per opportunity", "ok"], ["1", "step"]], "flags": [["ok", "THE BEST PERFORMER IN THE ACCOUNT, by a wide margin. 3 opportunities from 156 emails is 1 per 52, against 1 per 541 on Realtors July and 1 per 1,212 on Peninsula \u2014 between ten and twenty-three times better. One property, one short email, a named audience."], ["warn", "And the one we are least sure we were entitled to send. It is signed by a third-party agent, Mariaelena Diaz of eXp Realty, DRE #02034560, and sent from a domain she does not control. Whether she agreed to that is unconfirmed."], ["ok", "Footer correct \u2014 unsubscribe link present."]], "copy": {"kind": "extras", "i": 0, "note": "One email, sent once. This is the full copy as archived on 21 Sep."}, "leadnote": "Roughly 156 leads \u2014 one send each. No named list; the leads are inside the campaign. This is the list worth extracting first, because it is small and it is the only one whose targeting demonstrably worked."}];
+
+  var MISMATCH_NOTE =
+    "WHAT WE HOLD DOES NOT MATCH WHAT WENT OUT. The Templates tab archives a 7-step Juan Diaz " +
+    "sequence for these three campaigns, and Instantly confirms all three run identical copy. But the " +
+    "send records show different subject lines in use: Stanley Lo and Max Lo received " +
+    "'<first name> \u2014 help with off-market situations' and '<first name> \u2014 backup plan for " +
+    "hard-to-move properties' at step 1 (internal variant 0_0_4), then 'seller who can\u0027t list?' and " +
+    "'Re: seller who can\u0027t list?' at steps 2 and 3. None of those three subjects appears in the " +
+    "archive, so the archive holds some variants and not the ones actually sending. " +
+    "TO CLOSE THIS: open the campaign\u0027s Editor, expand every step and every variant, and paste the " +
+    "copy below. The archive is incomplete until that is done, and a handoff cannot claim to include " +
+    "what these campaigns say.";
+
+  function dossierChip(n){
+    var c = el("div","chip");
+    if(n[2]) c.setAttribute("data-t", n[2]);
+    c.appendChild(el("b", null, n[0]));
+    c.appendChild(document.createTextNode(" " + n[1]));
+    return c;
+  }
+
+  function dossierCopy(host, cfg){
+    if(cfg.note){
+      var nb = el("div","flag");
+      nb.setAttribute("data-s", cfg.kind === "none" || cfg.kind === "mismatch" ? "crit" : "note");
+      nb.appendChild(el("div","fb"));
+      var nbb = el("div", null);
+      nbb.appendChild(el("div","fd", cfg.note));
+      nb.appendChild(nbb);
+      host.appendChild(nb);
+    }
+    if(cfg.kind === "mismatch"){
+      var mb = el("div","flag");
+      mb.setAttribute("data-s","crit");
+      mb.appendChild(el("div","fb"));
+      var mbb = el("div", null);
+      mbb.appendChild(el("div","ft","The copy on record is incomplete"));
+      mbb.appendChild(el("div","fd", MISMATCH_NOTE));
+      mb.appendChild(mbb);
+      host.appendChild(mb);
+      host.appendChild(el("div","tplmeta",
+        "What the archive does hold for these three is in the Templates tab \u2014 the shared 7-step sequence, all five step-1 variants, and the footer."));
+      return;
+    }
+    if(cfg.kind === "none") return;
+
+    var items = [];
+    if(cfg.kind === "extras"){
+      var x = TPL_EXTRAS[cfg.i];
+      items.push({ sn:"1 step", ss:x.name, subject:x.subject, body:x.body });
+    } else {
+      cfg.use.forEach(function(n, i){
+        var st = null;
+        TPL_STEPS.forEach(function(s){ if(s.n === n) st = s; });
+        if(!st) return;
+        var lab = "Step " + (i+1);
+        if(n !== (i+1)) lab += " \u00b7 shared step " + n;
+        if(st.variants){
+          st.variants.forEach(function(v){
+            items.push({ sn:lab, ss:v.label, subject:v.subject, body:v.body });
+          });
+        } else {
+          items.push({ sn:lab, ss:st.day, subject:st.subject, body:st.body });
+        }
+      });
+    }
+    items.forEach(function(it){
+      var d = document.createElement("details");
+      d.className = "tplstep";
+      var sm = document.createElement("summary");
+      sm.appendChild(el("span","sn", it.sn));
+      sm.appendChild(el("span","ss", it.ss));
+      d.appendChild(sm);
+      d.appendChild(el("div","tplsub","Subject: " + it.subject));
+      var pre = document.createElement("pre");
+      pre.className = "tplbody";
+      pre.textContent = it.body;
+      d.appendChild(pre);
+      host.appendChild(d);
+    });
+  }
+
+  function buildDossiers(){
+    var host = byId("dosBody");
+    if(!host) return;
+    host.innerHTML = "";
+
+    host.appendChild(el("div","tplmeta",
+      "One page per campaign \u00b7 status and numbers, the copy that went out, and the addresses it went to \u00b7 6 campaigns, including the one whose record was deleted"));
+
+    var how = el("div","flag");
+    how.setAttribute("data-s","note");
+    how.appendChild(el("div","fb"));
+    var hb = el("div", null);
+    hb.appendChild(el("div","ft","How to extract a campaign\u0027s addresses"));
+    hb.appendChild(el("div","fd",
+      "Open the campaign in Instantly \u2192 Leads tab \u2192 select all \u2192 Export. That downloads a CSV. " +
+      "Paste the email column into the box at the bottom of the campaign below and it saves to this page for " +
+      "everyone. Do this before anything else on the list: right now most campaigns\u0027 leads exist inside " +
+      "the campaign and nowhere else, which is how the 3375 17th St campaign took 2,000+ addresses with it " +
+      "when it was deleted. Keep the CSV too \u2014 this page is a record, not a backup."));
+    how.appendChild(hb);
+    host.appendChild(how);
+
+    DOSSIERS.forEach(function(c){
+      var wrap = document.createElement("details");
+      wrap.className = "tplstep dos";
+      if(c.id === "prague") wrap.open = true;
+
+      var sm = document.createElement("summary");
+      sm.appendChild(el("span","sn", c.status));
+      sm.appendChild(el("span","ss", c.name));
+      sm.appendChild(el("span","sv", c.domain));
+      wrap.appendChild(sm);
+
+      var body = el("div","dosbody");
+
+      body.appendChild(el("div","tplmeta",
+        "Created " + c.created + " \u00b7 " + c.paused + " \u00b7 senders " + c.senders + " \u00b7 id " + c.cid));
+
+      var chips = el("div","rstats");
+      c.nums.forEach(function(n){ chips.appendChild(dossierChip(n)); });
+      body.appendChild(chips);
+
+      (c.flags || []).forEach(function(f){
+        var box = el("div","flag");
+        box.setAttribute("data-s", f[0] === "ok" ? "note" : f[0]);
+        box.appendChild(el("div","fb"));
+        var b = el("div", null);
+        b.appendChild(el("div","fd", f[1]));
+        box.appendChild(b);
+        body.appendChild(box);
+      });
+
+      var h1 = el("div","eyebrow","The emails that went out");
+      h1.style.marginTop = "24px";
+      body.appendChild(h1);
+      dossierCopy(body, c.copy);
+
+      var h2 = el("div","eyebrow","The addresses it went to");
+      h2.style.marginTop = "24px";
+      body.appendChild(h2);
+      body.appendChild(el("div","tplmeta", c.leadnote));
+
+      var f = el("div","f full");
+      f.style.marginTop = "10px";
+      var lab = el("label", null, "Exported addresses \u2014 paste the email column here");
+      lab.setAttribute("for","f_leads_" + c.id);
+      var ta = document.createElement("textarea");
+      ta.id = "f_leads_" + c.id;
+      ta.rows = 3;
+      ta.setAttribute("data-field","leads_" + c.id);
+      ta.setAttribute("data-autosize","1");
+      ta.placeholder = "one address per line, pasted from the CSV";
+      f.appendChild(lab);
+      f.appendChild(ta);
+      body.appendChild(f);
+
+      wrap.appendChild(body);
+      host.appendChild(wrap);
+    });
+
+    tabCount("dossiers", DOSSIERS.length, null);
+  }
+
   var TABS = [
     { id:"phases",    label:"Phases" },
     { id:"map",       label:"System Map" },
     { id:"sop",       label:"SOP" },
     { id:"accounts",  label:"Accounts" },
     { id:"campaigns", label:"Campaigns" },
+    { id:"dossiers", label:"Dossiers" },
     { id:"fixes", label:"Decisions" },
     { id:"templates", label:"Templates" },
     { id:"updates",   label:"Updates" },
@@ -2685,6 +2871,7 @@
   buildPhases();
   buildBar();
   buildFlow();
+  buildDossiers();
   bindFieldInputs();
   bindRosterControls();
   mirrorLoad();
