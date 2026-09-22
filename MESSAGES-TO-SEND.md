@@ -80,9 +80,22 @@ The gap is narrower than I thought, and it's one thing: the activity check can't
 
 **On the ramp** — I had this wrong and I've withdrawn it. I'd read the 30/day as a throttle against the twinhomebuyer 100s; +5/day toward 100 is a deliberate ramp and the right mechanism.
 
-My one remaining concern is the destination rather than the method. 100/day per mailbox is about double the range most cold outreach holds to, and more to the point, capacity isn't what's limiting us right now — nothing is sending, and we got **17 opportunities out of 9,821 emails**. 27 Prague St produced 3 of those from 156 sends. Could we **hold the ramp at 50/day until SF County and Realtors July are under 2% bounce**, then resume to 100? That way the extra volume lands on lists that can take it.
+I also asked you to hold at 50/day. **Withdrawing that too** — I pulled the daily send data and it doesn't support me. Per address, on each campaign's busiest day: SF County sent **26/day and fails at 4.72%**; Oakland sent **47/day and fails at 0.91%**. The one sending least fails most. Volume isn't what's driving it, the lists are. A cap cut would have cost us capacity and fixed nothing.
 
-**One question still open.** On the account being added later — that explains victoria@'s setup, but I still can't find where the **3375 17th St #311** send of 7 Aug lives. It's not in the campaign list on any status filter. Is victoria@metrixgenerate.com in a **separate Instantly workspace**? If the property one-offs sit in a second workspace that would explain it, and I'd want access — that send is the one Leah McKern replied to asking to be removed, so it needs to be in the inventory.
+**So the real ask is just the list verification.** Can we run Instantly's bulk verification over each list before its campaign resumes? SF County first — it has **1,184 people who have never been emailed** sitting on the list with the worst delivery rate we own.
+
+**And the source spreadsheets, which matter more than anything else here.** Every campaign's leads went straight into the campaign rather than a saved list, so a deleted campaign takes its list with it — which is exactly what happened to 3375 17th St. Can you send me the original CSVs you uploaded?
+
+* Realtors July — 1,713 loaded, 1,554 contacted
+* Oakland Realtor — 1,598 loaded, 948 contacted
+* SF County Realtor — 1,387 loaded, 203 contacted
+* Phase 1 – Peninsula — 517
+* 27 Prague St — 156
+* 3375 17th St #311, 6 August — ~2,000
+
+I'm rebuilding them as permanent named lists so this can't happen again.
+
+**Two questions on August, and I'd rather have them in writing.** The daily data shows **Realtors July, Oakland and SF County all stopped sending on 3 August, the same day** — that looks like one decision rather than three. What happened that week? And **who deleted the 3375 campaign, and why?** Instantly doesn't log it, so there's no way to answer it from the system.
 
 Last one if you have time: can the Realtor Outreach KPI bot also flag any realtor lead past 24 hours without a first touch? You already have the API access.
 
