@@ -468,6 +468,35 @@
   .person .pd{font-size:12px;color:var(--ink-2);margin-top:5px;line-height:1.4;}
 
   .foot{margin-top:44px;padding-top:14px;border-top:1px solid var(--rule);font-size:11.5px;color:var(--ink-3);display:flex;flex-wrap:wrap;gap:6px 16px;justify-content:space-between;}
+  /* ---------- diagrams ---------- */
+  figure.dgm{margin:24px 0 0;padding:16px 14px 13px;background:var(--surface);border:1px solid var(--rule);border-radius:8px;box-shadow:var(--shadow);}
+  figure.dgm svg{display:block;width:100%;height:auto;color:var(--ink-3);}
+  /* A six-box flow scaled to a phone puts its labels at about 4px, so the
+     figure keeps a legible minimum and swipes sideways instead - same
+     affordance the wide tables on this page already use. */
+  .dgmscroll{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  .dgmscroll > svg{min-width:880px;}
+  .dgmscroll.narrow > svg{min-width:720px;}
+  figure.dgm figcaption{margin-top:13px;padding-top:11px;border-top:1px dashed var(--rule-strong);font-size:12.5px;line-height:1.6;color:var(--ink-2);}
+  figure.dgm figcaption b{color:var(--ink);font-weight:600;}
+  .dgm .bx{fill:var(--surface-2);stroke:var(--rule-strong);stroke-width:1;}
+  .dgm .bx.dash{stroke-dasharray:4 3;}
+  .dgm .bx.hd{fill:var(--ground);}
+  .dgm .bx.gate{stroke:var(--crit);fill:var(--crit-soft);}
+  .dgm .bx.ok{stroke:var(--ok);fill:var(--ok-soft);}
+  .dgm .bt{font-family:var(--f-display);font-size:13px;font-weight:600;fill:var(--ink);}
+  .dgm .bt.gt{fill:var(--crit);}
+  .dgm .bs{font-family:var(--f-body);font-size:10.5px;fill:var(--ink-2);}
+  .dgm .lbl{font-family:var(--f-mono);font-size:9px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;fill:var(--ink-3);}
+  .dgm .lbl.gt{fill:var(--crit);}
+  .dgm .lbl.okt{fill:var(--ok);}
+  .dgm .an{font-family:var(--f-mono);font-size:8.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;fill:var(--ink-3);}
+  .dgm .an.gt,.dgm .an.warnt{fill:var(--crit);}
+  .dgm .critt{fill:var(--crit);font-weight:600;}
+  .dgm .okt{fill:var(--ok);font-weight:600;}
+  .dgm .ar{stroke:currentColor;stroke-width:1.4;fill:none;}
+  .dgm .ar.dash{stroke-dasharray:5 4;stroke:var(--warn);}
+  .dgm .ar.gatearr{stroke:var(--crit);stroke-dasharray:4 3;}
   .banner{margin-top:18px;padding:10px 13px;border-radius:7px;border:1px solid var(--warn);background:var(--warn-soft);color:var(--warn);font-size:12.5px;}
 </style>
 
@@ -537,7 +566,7 @@
   <section class="sec tabpanel" data-tab="map" role="tabpanel" hidden aria-labelledby="mapH">
     <div class="sechead">
       <h2 id="mapH">System Map — How Instantly Actually Works</h2>
-      <div class="note">Fill in each stage with what is really happening today, not what was intended. This is what gives Cherry visibility into the setup.</div>
+      <div class="note">Fill in each stage with what is really happening today, not what was intended. The drawn version of this is in the <b>SOP</b> tab — the whole flow in one picture, plus the two sending domains side by side. This is the same thing in words, stage by stage.</div>
     </div>
     <div class="flow" id="flow"></div>
     <div class="diagram">
@@ -552,6 +581,154 @@
       <h2 id="sopH">How Instantly Works Here</h2>
       <div class="note">The standing operating procedure for Twin Realtor Reach, written for whoever runs this next — no technical background assumed. Every term is defined, and the last section says which parts of it are not yet true.</div>
     </div>
+    <div id="sopIntro"></div>
+  <figure class="dgm">
+    <div class="dgmscroll">
+    <svg viewBox="0 0 1000 380" role="img" aria-label="How a realtor goes from a sourced list to a booked meeting: build and verify the list, load it as a named list, assign it to a campaign, every send checked against the blocklist, out through nine inboxes on two domains, and every reply returning into one Unibox to be answered, tagged and reported to Cherry at 4pm.">
+      <defs>
+        <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M 0 1 L 9 5 L 0 9 z" fill="currentColor"></path>
+        </marker>
+      </defs>
+
+      <polyline class="ar dash" points="85,96 85,52 417,52 417,96" marker-end="url(#ah)"></polyline>
+      <text class="an" x="251" y="44" text-anchor="middle">how it has actually been done &#8212; no list layer</text>
+
+      <rect class="bx" x="19" y="96" width="132" height="66" rx="6"></rect>
+      <text class="bt" x="85" y="123" text-anchor="middle">Build the list</text>
+      <text class="bs" x="85" y="141" text-anchor="middle">sources, then</text>
+      <text class="bs" x="85" y="154" text-anchor="middle">5 checks each</text>
+
+      <rect class="bx dash" x="185" y="96" width="132" height="66" rx="6"></rect>
+      <text class="bt" x="251" y="123" text-anchor="middle">Named list</text>
+      <text class="bs" x="251" y="141" text-anchor="middle">one list,</text>
+      <text class="bs" x="251" y="154" text-anchor="middle">re-usable</text>
+
+      <rect class="bx" x="351" y="96" width="132" height="66" rx="6"></rect>
+      <text class="bt" x="417" y="123" text-anchor="middle">Campaign</text>
+      <text class="bs" x="417" y="141" text-anchor="middle">7 steps</text>
+      <text class="bs" x="417" y="154" text-anchor="middle">Mon&#8211;Sat</text>
+
+      <rect class="bx gate" x="517" y="96" width="132" height="66" rx="6"></rect>
+      <text class="bt gt" x="583" y="123" text-anchor="middle">Blocklist</text>
+      <text class="bs" x="583" y="141" text-anchor="middle">checked before</text>
+      <text class="bs" x="583" y="154" text-anchor="middle">every send</text>
+
+      <rect class="bx" x="683" y="96" width="132" height="66" rx="6"></rect>
+      <text class="bt" x="749" y="123" text-anchor="middle">Sending</text>
+      <text class="bs" x="749" y="141" text-anchor="middle">9 inboxes</text>
+      <text class="bs" x="749" y="154" text-anchor="middle">2 domains</text>
+
+      <rect class="bx" x="849" y="96" width="132" height="66" rx="6"></rect>
+      <text class="bt" x="915" y="123" text-anchor="middle">The realtor</text>
+      <text class="bs" x="915" y="141" text-anchor="middle">30&#8211;50</text>
+      <text class="bs" x="915" y="154" text-anchor="middle">a day</text>
+
+      <line class="ar" x1="151" y1="129" x2="185" y2="129" marker-end="url(#ah)"></line>
+      <text class="an" x="168" y="88" text-anchor="middle">verified only</text>
+      <line class="ar" x1="317" y1="129" x2="351" y2="129" marker-end="url(#ah)"></line>
+      <text class="an" x="334" y="88" text-anchor="middle">assigned</text>
+      <line class="ar" x1="483" y1="129" x2="517" y2="129" marker-end="url(#ah)"></line>
+      <text class="an" x="500" y="88" text-anchor="middle">each address</text>
+      <line class="ar" x1="649" y1="129" x2="683" y2="129" marker-end="url(#ah)"></line>
+      <text class="an" x="666" y="88" text-anchor="middle">if not blocked</text>
+      <line class="ar" x1="815" y1="129" x2="849" y2="129" marker-end="url(#ah)"></line>
+      <text class="an" x="832" y="88" text-anchor="middle">delivered</text>
+
+      <text class="an warnt" x="583" y="182" text-anchor="middle">empty for 11 weeks &#8212; filled 22 Sep</text>
+
+      <polyline class="ar" points="915,162 915,224 749,224 749,280" marker-end="url(#ah)"></polyline>
+      <text class="an" x="836" y="216" text-anchor="middle">replies</text>
+
+      <rect class="bx" x="683" y="280" width="132" height="66" rx="6"></rect>
+      <text class="bt" x="749" y="307" text-anchor="middle">Reply</text>
+      <text class="bs" x="749" y="325" text-anchor="middle">or a bounce,</text>
+      <text class="bs" x="749" y="338" text-anchor="middle">or an opt-out</text>
+
+      <rect class="bx" x="517" y="280" width="132" height="66" rx="6"></rect>
+      <text class="bt" x="583" y="307" text-anchor="middle">Unibox</text>
+      <text class="bs" x="583" y="325" text-anchor="middle">one screen,</text>
+      <text class="bs" x="583" y="338" text-anchor="middle">every inbox</text>
+
+      <rect class="bx" x="351" y="280" width="132" height="66" rx="6"></rect>
+      <text class="bt" x="417" y="307" text-anchor="middle">Answer, tag</text>
+      <text class="bs" x="417" y="325" text-anchor="middle">book the meeting,</text>
+      <text class="bs" x="417" y="338" text-anchor="middle">set the status</text>
+
+      <rect class="bx" x="185" y="280" width="132" height="66" rx="6"></rect>
+      <text class="bt" x="251" y="307" text-anchor="middle">4pm report</text>
+      <text class="bs" x="251" y="325" text-anchor="middle">bot lines, plus</text>
+      <text class="bs" x="251" y="338" text-anchor="middle">one human line</text>
+
+      <rect class="bx" x="19" y="280" width="132" height="66" rx="6"></rect>
+      <text class="bt" x="85" y="313" text-anchor="middle">Cherry</text>
+      <text class="bs" x="85" y="331" text-anchor="middle">Chat and email</text>
+
+      <line class="ar" x1="683" y1="313" x2="649" y2="313" marker-end="url(#ah)"></line>
+      <text class="an" x="666" y="272" text-anchor="middle">all land here</text>
+      <line class="ar" x1="517" y1="313" x2="483" y2="313" marker-end="url(#ah)"></line>
+      <text class="an" x="500" y="272" text-anchor="middle">same day</text>
+      <line class="ar" x1="351" y1="313" x2="317" y2="313" marker-end="url(#ah)"></line>
+      <text class="an" x="334" y="272" text-anchor="middle">the numbers</text>
+      <line class="ar" x1="185" y1="313" x2="151" y2="313" marker-end="url(#ah)"></line>
+      <text class="an" x="168" y="272" text-anchor="middle">daily</text>
+
+    </svg>
+    </div>
+    <figcaption><b>The whole system, in one picture.</b> The top row is outbound, the bottom row is everything coming back. Two things are worth reading closely. <b>The blocklist is a gate</b>, not a list — every single send is checked against it, which is why one upload of past clients protects every campaign at once, and why it being empty for eleven weeks let cold mail reach people we were already doing business with. And <b>the named list is dashed</b> because it has been skipped: leads were loaded straight into campaigns, so nothing could be de-duplicated across them and deleting a campaign deleted its leads. The loop closes at the bottom right: an opt-out or a bounce arriving as a reply goes <b>straight onto that same blocklist</b>, which is how one person asking to be removed is honoured on every campaign at once.</figcaption>
+  </figure>
+
+  <figure class="dgm">
+    <div class="dgmscroll narrow">
+    <svg viewBox="0 0 900 358" role="img" aria-label="The two sending domains side by side. twinhomebuyer.com runs four inboxes at 100 a day and sends the three realtor campaigns, including the two worst bounce rates in the account, while also carrying the company's contracts, DocuSign and Cherry's own correspondence. metrixgenerate.com runs five inboxes and sends the property campaigns at 1.69 and 1.28 percent bounce, and carries nothing else.">
+      <defs>
+        <marker id="ah2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M 0 1 L 9 5 L 0 9 z" fill="currentColor"></path>
+        </marker>
+      </defs>
+
+      <rect class="bx hd" x="30" y="26" width="390" height="46" rx="6"></rect>
+      <text class="bt" x="225" y="47" text-anchor="middle">twinhomebuyer.com</text>
+      <text class="bs" x="225" y="64" text-anchor="middle">4 inboxes &#183; 100 a day each</text>
+
+      <rect class="bx hd" x="480" y="26" width="390" height="46" rx="6"></rect>
+      <text class="bt" x="675" y="47" text-anchor="middle">metrixgenerate.com</text>
+      <text class="bs" x="675" y="64" text-anchor="middle">5 inboxes &#183; one at 100, four at 30</text>
+
+      <line class="ar" x1="225" y1="72" x2="225" y2="98" marker-end="url(#ah2)"></line>
+      <line class="ar" x1="675" y1="72" x2="675" y2="98" marker-end="url(#ah2)"></line>
+
+      <rect class="bx" x="30" y="98" width="390" height="112" rx="6"></rect>
+      <text class="lbl" x="48" y="118">sends</text>
+      <text class="bs" x="48" y="140">Realtors July 2026 &#8212; <tspan class="critt">4.06% bounce</tspan></text>
+      <text class="bs" x="48" y="160">Oakland Realtor &#8212; 0.91%</text>
+      <text class="bs" x="48" y="180">San Francisco County &#8212; <tspan class="critt">4.72% bounce</tspan></text>
+      <text class="bs" x="48" y="200">all three had no unsubscribe link until 22 Sep</text>
+
+      <rect class="bx" x="480" y="98" width="390" height="112" rx="6"></rect>
+      <text class="lbl" x="498" y="118">sends</text>
+      <text class="bs" x="498" y="140">Phase 1 &#8211; Peninsula &#8212; <tspan class="okt">1.69%</tspan></text>
+      <text class="bs" x="498" y="160">27 Prague St &#8212; <tspan class="okt">1.28%</tspan></text>
+      <text class="bs" x="498" y="180">3375 17th St &#8212; record deleted</text>
+      <text class="bs" x="498" y="200">footer already correct</text>
+
+      <line class="ar" x1="225" y1="210" x2="225" y2="236" marker-end="url(#ah2)"></line>
+      <line class="ar" x1="675" y1="210" x2="675" y2="236" marker-end="url(#ah2)"></line>
+
+      <rect class="bx gate" x="30" y="236" width="390" height="98" rx="6"></rect>
+      <text class="lbl gt" x="48" y="256">and also carries</text>
+      <text class="bs" x="48" y="278">Every contract and DocuSign we send</text>
+      <text class="bs" x="48" y="298">Cherry&#8217;s own correspondence</text>
+      <text class="bs" x="48" y="318">Every email to a real, existing client</text>
+
+      <rect class="bx ok" x="480" y="236" width="390" height="98" rx="6"></rect>
+      <text class="lbl okt" x="498" y="256">and also carries</text>
+      <text class="bs" x="498" y="284">Nothing else. This domain exists</text>
+      <text class="bs" x="498" y="304">to absorb exactly this risk.</text>
+    </svg>
+    </div>
+    <figcaption><b>The decision Cherry has to make, in one picture.</b> The two worst bounce rates in the account &#8212; both close to the 5% level where providers start suspending senders &#8212; are on the left, on the domain that also carries our contracts and Cherry&#8217;s own mail. All three campaigns that went out with no unsubscribe link were on the left too. The domain built to absorb that risk is on the right, sending the clean campaigns and carrying nothing else. <b>Swapping the daily caps would not change this</b>: it is about which domain sends which campaign.</figcaption>
+  </figure>
     <div id="sopBody"></div>
   </section>
 
@@ -630,8 +807,8 @@
     <div class="people">
       <div class="person">
         <div class="pn">Carlo</div>
-        <div class="pr">Original configuration</div>
-        <div class="pd">Built the Instantly setup — campaigns, sequences, sending domains and inboxes, integrations and webhooks.</div>
+        <div class="pr">Reference only — built it originally</div>
+        <div class="pd">Built the Instantly setup: campaigns, sequences, sending domains and inboxes. Ask him how something was wired, not to fix it — that sits with Jonathan now.</div>
       </div>
       <div class="person">
         <div class="pn">Lawrence &amp; Seth</div>
@@ -640,7 +817,7 @@
       </div>
       <div class="person">
         <div class="pn">Jonathan</div>
-        <div class="pr">Owner after handoff</div>
+        <div class="pr">Owner — escalate here first</div>
         <div class="pd">Runs the daily checks, holds the realtor lead SLA, sends the reports.<br><span class="mono">rosanes@twinhomebuyer.com</span></div>
       </div>
       <div class="person">
@@ -1008,10 +1185,10 @@
 
   var SOP_GLOSSARY = [["Instantly.ai", "The software that actually sends the emails and collects the replies. Everything in this SOP happens inside it. app.instantly.ai"], ["Sending account (inbox)", "One email address the system sends from, e.g. rosanes@twinhomebuyer.com. We have several so the volume is spread out instead of coming from one address."], ["Domain", "The part after the @. We use two: twinhomebuyer.com (the real company domain, which also carries contracts and DocuSign) and metrixgenerate.com (a separate domain kept for cold outreach so problems don't touch the real one)."], ["Sequence", "The set of emails one contact receives, spaced over days. Nobody writes them one at a time \u2014 the sequence runs on its own."], ["Step", "One email inside a sequence. Our realtor sequence has 7 steps over 7 days."], ["Variant", "An alternative version of the same step. Instantly rotates between them so not every recipient gets identical wording."], ["Daily cap", "The most emails one inbox is allowed to send in a day. Going over it gets the address flagged as spam."], ["Warmup", "Instantly quietly sending small amounts of mail between its own inboxes to build a new address's reputation before real outreach. Warmup mail is NOT outreach and must never be counted as sent volume."], ["Bounce", "An email that could not be delivered \u2014 usually a dead address. Above roughly 5% bounces, email providers start suspending the sender."], ["Unibox", "The single screen where every reply lands, no matter which inbox it came to. Replies are worked here, not in scattered mailboxes. app.instantly.ai/app/crm"], ["Lead", "One contact \u2014 a realtor we are emailing."], ["Lead list", "A group of leads, loaded together. Always load a list as a NAMED list, never straight into a campaign (see gap 2 below)."], ["Blocklist / suppression", "Addresses the system must never email, whatever list they appear on. This is where opt-outs and existing clients go."], ["Opt-out", "Someone asking to stop receiving our email. By law we must honour it within 10 business days, permanently."], ["Open tracking", "An invisible pixel that reports when someone opens an email. Ours is switched OFF on purpose \u2014 it hurts deliverability and the numbers are unreliable. Do not turn it on, and do not report open rate."]];
   var SOP_STEPS = [["Build the list", "Assemble the market's active listing agents into a working sheet. For each one capture: First Name, Last Name, Email, Brokerage, City, County.\n\nSources: MLSListings.com, brokerage sites, agent websites, Realtor.com, Zillow, Compass, LinkedIn.\n\nPrioritise agents with RECENT listing activity in the target market. Those are the people bringing sellers to market, and they are the only ones worth the send."], ["Verify every lead", "Never upload an unverified list \u2014 bad data burns the sender's reputation and it does not recover quickly.\n\nFor each agent confirm all five:\n  1. Active \u2014 the agent is currently working.\n  2. Listing-side \u2014 confirmed by recent listing activity, not buyer-side only.\n  3. Email \u2014 a real, deliverable address. This is a SEPARATE check from the two above; an active agent can still have a dead mailbox.\n  4. Verification source \u2014 where you confirmed it.\n  5. Verification date \u2014 when you checked.\n\nSet Final Status to 'Ready for Instantly' only when all five pass. Anything unconfirmed is dropped or held. Nothing else moves forward."], ["Format the columns", "Export to the Instantly-ready format, in this column order:\n\nFirst Name \u00b7 Last Name \u00b7 Email \u00b7 Brokerage \u00b7 City \u00b7 County \u00b7 Active Status \u00b7 Listing-Side Status \u00b7 Verification Source \u00b7 Verification Date \u00b7 Final Status\n\nFirst Name, Brokerage and City are the personalisation variables the sequence uses, so they must be clean and correctly cased. 'JOHN' or 'john' appears in the email exactly as typed.\n\nSave as Instantly_Ready_[Market].csv"], ["Upload and check", "In Instantly: open or create the realtor-outreach campaign, upload the CSV, and map the columns to Instantly's fields.\n\nThen, before launching, confirm four things:\n  - Instantly's duplicate and invalid-email flags are cleared.\n  - The sending accounts on the campaign are the approved ones and are warmed up.\n  - The sequence is the approved copy.\n  - The schedule and daily cap are right."], ["Launch and hold the volume", "Launch at 30\u201350 emails/day across all sending accounts, and hold there until reply rate and deliverability are proven.\n\nSending runs SIX DAYS A WEEK \u2014 Monday to Saturday. Nothing goes out on Sunday. At 30\u201350/day that is roughly 180\u2013300 emails a week, which is the number to size a list against.\n\nKeep warmup enabled on every inbox. Let Instantly spread sends across inboxes and throttle each one \u2014 do not override its limits.\n\nScale only gradually, and only after the numbers justify it. More volume on a weak list produces bounces, not meetings."], ["Work the replies", "Check the Unibox at least once a day. Speed is what turns a reply into a booked meeting.\n\n  - Answer interested replies fast.\n  - Update each lead's status: interested, not interested, meeting booked.\n  - Book meetings promptly and hand off to the right person.\n  - Process opt-outs and bounces the same day. Opt-outs go on the blocklist immediately."], ["Report", "Daily at 4pm: the Realtor Outreach KPI bot posts per-campaign lines into Google Chat by itself. Underneath it, add the one human summary line \u2014 account totals, opportunities and their value, inbox health, and any exception worth flagging. Copy it to Cherry by email, unchanged.\n\nWeekly on Friday at 4pm: realtor leads in, first touch inside 24 hours, SLA breaches, sent, replies, bounce rate, opportunities and value, plus any process gap with a named owner.\n\nReport emails sent, reply rate, bounce rate and meetings booked. Do NOT report open rate \u2014 see the glossary."]];
-  var SOP_SETUP = [["Outreach operator", "Jonathan \u2014 rosanes@twinhomebuyer.com. Day-to-day owner: the daily Unibox check, the realtor lead SLA and the 4pm report. First point of contact before anything escalates to Carlo."], ["Workspace", "One only \u2014 'My Organization', owned by carlo@twinhomebuyer.com. There is no second workspace."], ["Sending accounts", "9 active. twinhomebuyer.com: bryan@, lawrence@, rosanes@, seth@ (100/day each). metrixgenerate.com: ariana@ (100/day), christopher@, isabella@, penelope@, victoria@ (30/day each)."], ["Deleted accounts", "carlo@, juan@ and accounting@twinhomebuyer.com were removed on 22 Sep to protect those mailboxes' health. Do not re-add them to campaigns."], ["Campaigns", "5 live or completed: Realtors July 2026, Oakland Realtor, San Francisco County Realtor, Phase 1 \u2013 Peninsula Listing Agents, 27 Prague St. All paused or finished."], ["Which domain sends what", "The three realtor campaigns send from twinhomebuyer.com. Peninsula and the property campaigns send from metrixgenerate.com. Whether that stays that way is one of Cherry's open decisions."], ["Sequences", "The three realtor campaigns share one 7-step sequence (5 variants on step 1). Peninsula has its own 5-step sequence. 27 Prague St is a single email."], ["Signature", "Every realtor email is signed Juan Diaz, CA GC Lic. #1066892 \u2014 regardless of which inbox sent it."], ["Reporting", "Realtor Outreach KPI bot \u2192 Google Chat, 4pm daily, one line per campaign. Plus the human summary, copied to Cherry by email. Weekly on Fridays."], ["Bot naming", "The bot posts its own labels, not Instantly's campaign names. 'PHASE 1 \u2014 SAN MATEO/PENINSULA VERIFIED 500' is the bot's name for 'Phase 1 \u2013 Peninsula Listing Agents'. Same campaign."], ["Sending days", "SIX days a week \u2014 Monday to Saturday. Nothing sends on Sunday. Worth one check against the campaign schedule: the KPI bot's posts show no Saturday activity either, so if Saturday is meant to be sending, confirm it is switched on."], ["Actual send volume", "The KPI bot's Google Chat posts show Peninsula sending 100/day through mid-September \u2014 100, 100, 100, 94, 64, 42, 30, 19 as it ran out of leads, about 549 emails over those eight days, every one delivered and none bounced, and no replies. So the 30\u201350/day in step 5 is the target for starting a NEW campaign, not a description of what this account has been doing."], ["Open tracking", "OFF account-wide, on purpose. Leave it off."], ["Lifetime volume", "~11,800 emails sent since 9 July 2026. 17 opportunities worth $17,400. Overall bounce rate 2.9%."], ["Unsubscribe footer", "As of 22 September the unsubscribe link is on all four live campaigns. The postal address is a separate element \u2014 see gap 3 below."]];
+  var SOP_SETUP = [["Outreach operator", "Jonathan \u2014 rosanes@twinhomebuyer.com. Owns this system outright: the daily Unibox check, the realtor lead SLA, the 4pm report, and everything in the escalation table below. Carlo built the original configuration and remains the reference on how it was wired, but the work sits here now."], ["Workspace", "One only \u2014 'My Organization', owned by carlo@twinhomebuyer.com. There is no second workspace."], ["Sending accounts", "9 active. twinhomebuyer.com: bryan@, lawrence@, rosanes@, seth@ (100/day each). metrixgenerate.com: ariana@ (100/day), christopher@, isabella@, penelope@, victoria@ (30/day each)."], ["Deleted accounts", "carlo@, juan@ and accounting@twinhomebuyer.com were removed on 22 Sep to protect those mailboxes' health. Do not re-add them to campaigns."], ["Campaigns", "5 live or completed: Realtors July 2026, Oakland Realtor, San Francisco County Realtor, Phase 1 \u2013 Peninsula Listing Agents, 27 Prague St. All paused or finished."], ["Which domain sends what", "The three realtor campaigns send from twinhomebuyer.com. Peninsula and the property campaigns send from metrixgenerate.com. Whether that stays that way is one of Cherry's open decisions."], ["Sequences", "The three realtor campaigns share one 7-step sequence (5 variants on step 1). Peninsula has its own 5-step sequence. 27 Prague St is a single email."], ["Signature", "Every realtor email is signed Juan Diaz, CA GC Lic. #1066892 \u2014 regardless of which inbox sent it."], ["Reporting", "Realtor Outreach KPI bot \u2192 Google Chat, 4pm daily, one line per campaign. Plus the human summary, copied to Cherry by email. Weekly on Fridays."], ["Bot naming", "The bot posts its own labels, not Instantly's campaign names. 'PHASE 1 \u2014 SAN MATEO/PENINSULA VERIFIED 500' is the bot's name for 'Phase 1 \u2013 Peninsula Listing Agents'. Same campaign."], ["Sending days", "SIX days a week \u2014 Monday to Saturday. Nothing sends on Sunday. Worth one check against the campaign schedule: the KPI bot's posts show no Saturday activity either, so if Saturday is meant to be sending, confirm it is switched on."], ["Actual send volume", "The KPI bot's Google Chat posts show Peninsula sending 100/day through mid-September \u2014 100, 100, 100, 94, 64, 42, 30, 19 as it ran out of leads, about 549 emails over those eight days, every one delivered and none bounced, and no replies. So the 30\u201350/day in step 5 is the target for starting a NEW campaign, not a description of what this account has been doing."], ["Open tracking", "OFF account-wide, on purpose. Leave it off."], ["Lifetime volume", "~11,800 emails sent since 9 July 2026. 17 opportunities worth $17,400. Overall bounce rate 2.9%."], ["Unsubscribe footer", "As of 22 September the unsubscribe link is on all four live campaigns. The postal address is a separate element \u2014 see gap 3 below."]];
   var SOP_ROUTINE = [["Every campaign", ["Build the market list of active listing agents.", "Verify every lead on all five checks; set Final Status = Ready for Instantly.", "Export to the Instantly-ready columns.", "Upload, clear duplicates and invalids, map fields.", "Confirm approved sending accounts, approved copy, schedule and cap.", "Launch at 30\u201350/day."]], ["Every day", ["Check the Unibox. Answer interested replies fast.", "Update lead statuses.", "Process opt-outs and bounces \u2014 same day, no exceptions.", "Check no campaign has paused or errored on its own.", "Check no inbox has gone into an error state.", "Post the 4pm summary under the bot's lines, and copy it to Cherry."]], ["Every week", ["Pull metrics: sent, reply rate, bounce rate, meetings booked.", "Review deliverability \u2014 bounce and complaint rates per campaign.", "Post the Friday 4pm weekly summary.", "Name any process gap, with an owner. A gap with no owner does not get fixed."]], ["Every 90 days", ["Re-read this SOP against what the system actually does.", "Re-verify the sending domains, inboxes and daily caps.", "Re-confirm the approved sequence copy."]]];
   var SOP_COMPLIANCE = [["Say who we are, truthfully", "Every email identifies Twin Home Buyer honestly, with a subject line that reflects what the email actually says. No deceptive sender names or headers."], ["Include a real postal address", "Every commercial email needs a valid physical mailing address in it. Ours is 170 Glenn Way, Suite 5, San Carlos, CA 94070."], ["Include a working opt-out", "Every email needs a clear way to unsubscribe, and the link must actually work \u2014 not just be present."], ["Honour opt-outs fast and forever", "Within 10 business days, permanently. Add the address to Instantly's blocklist the same day you see the request. A reply asking to be removed counts as an opt-out even if they did not click anything."], ["Never email a bounce or an opt-out again", "Both go on the blocklist. The blocklist applies across every campaign, which is why it is the safety net."], ["Keep the verification trail", "The list stays to legitimate business contacts, and the record of how each was verified stays intact."], ["If someone objects, stop", "Stop that thread and escalate to ops. Do not argue, and do not keep the sequence running."]];
-  var SOP_ESCALATION = [["Bounce rate climbing", "Pause the campaign. Clean and re-verify the list before sending again. Above 5% risks suspension."], ["Deliverability drop or spam flags", "Pause sending. Check warmup and domain health. Escalate to Carlo."], ["A sending account or domain breaks", "Carlo, or the Instantly admin."], ["A recipient complains, or a compliance question", "Stop the thread. Escalate to ops and ownership the same day."], ["Low reply rate across a full cycle", "Do not send more. Review targeting and copy with the campaign owner."], ["A campaign or list looks wrong or missing", "Do not delete anything. Escalate \u2014 deleting a campaign in Instantly destroys its send record and its leads permanently."]];
+  var SOP_ESCALATION = [["Bounce rate climbing", "Pause the campaign. Clean and re-verify the list before sending again. Above 5% risks suspension."], ["Deliverability drop or spam flags", "Pause sending. Check warmup and domain health. Jonathan handles it \u2014 rosanes@twinhomebuyer.com."], ["A sending account or domain breaks", "Jonathan, as Instantly admin \u2014 rosanes@twinhomebuyer.com. Carlo built the original setup, so he is the reference of last resort on how something was wired, not the person who fixes it."], ["A recipient complains, or a compliance question", "Stop the thread. Escalate to ops and ownership the same day."], ["Low reply rate across a full cycle", "Do not send more. Review targeting and copy with the campaign owner."], ["A campaign or list looks wrong or missing", "Do not delete anything. Escalate \u2014 deleting a campaign in Instantly destroys its send record and its leads permanently."]];
   var SOP_GAPS = [["There is no blocklist of existing clients yet", "This SOP assumes the blocklist protects people we already do business with. It does not yet \u2014 there has never been one. Until it exists, a cold list can contain a current client, a past counterparty, or someone mid-transaction with us. Building it is the single highest-value fix outstanding: one CSV of every address the company has transacted with, uploaded once, applies to every campaign automatically."], ["Leads have been loaded straight into campaigns, not as named lists", "Only one named lead list exists in the whole workspace. Every other campaign's leads sit inside that campaign alone. That means nothing can be de-duplicated across campaigns, a list cannot be cleaned once and re-used, and deleting a campaign deletes its leads for good. From here, load leads as a named list first \u2014 always."], ["The postal address still needs confirming in every footer", "The unsubscribe link went onto all four live campaigns on 22 September, which closes the larger half of this. CAN-SPAM requires a valid physical mailing address as well, and that is a separate element in the footer. Open each campaign's sequence and confirm 170 Glenn Way, Suite 5, San Carlos, CA 94070 appears alongside the unsubscribe link \u2014 then this is fully closed. Legal has been asked to review the footer wording for the 7,241 emails already sent, which is history and cannot be changed now."]];
 
   function sopHead(text, top){
@@ -1056,8 +1233,10 @@
     if(!host) return;
     host.innerHTML = "";
 
-    host.appendChild(el("div","tplmeta",
-      "Twin Realtor Reach \u00b7 v1.0 \u00b7 September 2026 \u00b7 developer Carlo \u00b7 platform Instantly.ai \u00b7 review every 90 days"));
+    var ih = byId("sopIntro");
+    if(ih) ih.innerHTML = "";
+    (ih || host).appendChild(el("div","tplmeta",
+      "Twin Realtor Reach \u00b7 v1.0 \u00b7 September 2026 \u00b7 owner Jonathan, rosanes@twinhomebuyer.com \u00b7 originally built by Carlo \u00b7 platform Instantly.ai \u00b7 review every 90 days"));
 
     var intro = el("div","flag");
     intro.setAttribute("data-s","note");
@@ -1067,9 +1246,10 @@
     ib.appendChild(el("div","fd",
       "Twin Realtor Reach sends personalised cold emails to active listing agents \u2014 the agents who bring sellers to market \u2014 so that Twin Home Buyer can build a realtor acquisition pipeline and book conversations. It runs on software called Instantly.ai. You give it a verified list of realtors and an approved set of emails; it sends them on a schedule, spread across several sending addresses, and collects every reply in one place. It replaces sending these emails by hand. Nothing here requires writing code."));
     intro.appendChild(ib);
-    host.appendChild(intro);
+    var ihost = byId("sopIntro");
+    (ihost || host).appendChild(intro);
 
-    host.appendChild(sopHead("The words you will keep seeing"));
+    host.appendChild(sopHead("The words you will keep seeing", 6));
     host.appendChild(sopPairTable(SOP_GLOSSARY, "Term", "What it means", "170px"));
 
     host.appendChild(sopHead("The seven steps, every time"));
