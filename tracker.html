@@ -324,6 +324,9 @@
     border:1px solid var(--rule);background:var(--surface);color:var(--ink-3);
   }
   .chip b{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums;}
+  button.chip{font-family:var(--f-mono);cursor:pointer;}
+  button.chip:hover{filter:brightness(1.25);}
+  button.chip[aria-pressed="true"]{outline:2px solid var(--accent);outline-offset:2px;}
   .chip[data-t="ok"]{color:var(--ok);border-color:var(--ok);background:var(--ok-soft);}
   .chip[data-t="ok"] b{color:var(--ok);}
   .chip[data-t="warn"]{color:var(--warn);border-color:var(--warn);background:var(--warn-soft);}
@@ -1799,6 +1802,7 @@
   };
 
   var roster = { accounts:{}, campaigns:{}, fixes:{} };
+  var rosterFilter = { accounts:null, campaigns:null, fixes:null };
   var rosterExists = { accounts:false, campaigns:false, fixes:false };
   var pendingRoster = { accounts:{}, campaigns:{}, fixes:{} };
 
@@ -1887,21 +1891,51 @@
     return wrap;
   }
 
-  function chip(label, value, tier){
-    var c = el("div","chip");
+  function chip(label, value, tier, filter, key){
+    var c;
+    if(filter !== undefined){
+      c = document.createElement("button");
+      c.type = "button";
+      c.className = "chip";
+      var on = rosterFilter[key] === filter;
+      c.setAttribute("aria-pressed", on ? "true" : "false");
+      c.title = on ? "Showing only these \u2014 click to show all" : "Show only these";
+      c.addEventListener("click", function(){
+        rosterFilter[key] = on ? null : filter;
+        renderRoster(key);
+      });
+    } else {
+      c = el("div","chip");
+    }
     if(tier) c.setAttribute("data-t", tier);
     c.appendChild(el("b", null, String(value)));
     c.appendChild(document.createTextNode(" " + label));
     return c;
   }
 
+  // Which entries a filter admits; null shows everything.
+  function passesFilter(key, e){
+    var f = rosterFilter[key];
+    if(!f) return true;
+    var done = (e.status === "Done" || e.status === "Won't do");
+    if(f === "done") return done;
+    if(f === "open") return !done;
+    if(f === "blockers"){
+      var sc = scoreOf(e);
+      return !done && sc !== null && sc <= 1;
+    }
+    return true;
+  }
+
   function groupKey(cfg, e){
     return cfg.group === "domain" ? domainOf(e.name) : (e.status || "Unknown");
   }
 
-  function rosterOrder(key){
+  function rosterOrder(key, ignoreFilter){
     var cfg = ROSTERS[key], data = roster[key];
-    return Object.keys(data).sort(function(a,b){
+    var keys = Object.keys(data);
+    if(!ignoreFilter) keys = keys.filter(function(k){ return passesFilter(key, data[k] || {}); });
+    return keys.sort(function(a,b){
       var ea = data[a] || {}, eb = data[b] || {};
       var ga = groupKey(cfg, ea), gb = groupKey(cfg, eb);
       if(ga !== gb){
@@ -2103,9 +2137,9 @@
         }
       });
       host.appendChild(chip(plural(ids.length, cfg.noun, cfg.nouns), ids.length, null));
-      host.appendChild(chip("still open", fopen, fopen > 0 ? "warn" : "ok"));
-      if(fblock) host.appendChild(chip(plural(fblock, "blocker", "blockers"), fblock, "crit"));
-      host.appendChild(chip("done", fdone, fdone > 0 ? "ok" : null));
+      host.appendChild(chip("still open", fopen, fopen > 0 ? "warn" : "ok", "open", key));
+      if(fblock) host.appendChild(chip(plural(fblock, "blocker", "blockers"), fblock, "crit", "blockers", key));
+      host.appendChild(chip("done", fdone, fdone > 0 ? "ok" : null, "done", key));
       return;
     }
 
@@ -2152,10 +2186,11 @@
     var host = byId(cfg.list);
     if(!host) return;
     var ids = rosterOrder(key);
+    var allIds = rosterOrder(key, true);
 
     // Rebuild only when the rows or their grouping change, so a snapshot
     // arriving mid-sentence cannot tear down the field being typed in.
-    var sig = ids.join("|") + "#" + ids.map(function(i){
+    var sig = (rosterFilter[key] || "all") + "#" + ids.join("|") + "#" + ids.map(function(i){
       var e = roster[key][i] || {};
       return groupKey(cfg, e) + ":" + (e.score == null ? "" : e.score);
     }).join("|");
@@ -2192,18 +2227,18 @@
       ids.forEach(function(id){ syncRosterRow(key, cfg, id); });
     }
 
-    byId(cfg.empty).hidden = ids.length > 0;
+    byId(cfg.empty).hidden = allIds.length > 0;
     if(cfg.fixMode){
       var stillOpen = 0;
-      ids.forEach(function(id){
+      allIds.forEach(function(id){
         var st = (roster[key][id] || {}).status;
         if(st !== "Done" && st !== "Won't do") stillOpen++;
       });
-      tabCount(key, ids.length ? (stillOpen + "/" + ids.length) : "", stillOpen ? "warn" : "ok");
+      tabCount(key, allIds.length ? (stillOpen + "/" + allIds.length) : "", stillOpen ? "warn" : "ok");
     } else {
-      tabCount(key, ids.length || "", null);
+      tabCount(key, allIds.length || "", null);
     }
-    renderRosterStats(key, ids);
+    renderRosterStats(key, allIds);
     lockRoster(key);
   }
 
