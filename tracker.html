@@ -1,4 +1,4 @@
-<title>Instantly Handoff Tracker</title>
+<title>Twin Home Buyer — Sales Email Audit</title>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Asap:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
 <style>
@@ -65,6 +65,8 @@
     padding-bottom:18px;border-bottom:2px solid var(--ink);
   }
   .mast h1{font-size:clamp(25px,4.4vw,36px);font-weight:700;letter-spacing:-.022em;line-height:1.08;}
+  .mast .h1sub{font-family:var(--f-mono);font-size:11.5px;font-weight:600;letter-spacing:.09em;
+    text-transform:uppercase;color:var(--accent-ink);margin-top:7px;}
   .mast .sub{color:var(--ink-2);font-size:13.5px;margin-top:6px;}
   .mast .sub b{color:var(--ink);font-weight:600;}
   .syncrow{display:flex;flex-direction:column;align-items:flex-start;gap:7px;}
@@ -467,7 +469,10 @@
   .person .pr{font-family:var(--f-mono);font-size:9.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-ink);margin-top:3px;}
   .person .pd{font-size:12px;color:var(--ink-2);margin-top:5px;line-height:1.4;}
 
-  .foot{margin-top:44px;padding-top:14px;border-top:1px solid var(--rule);font-size:11.5px;color:var(--ink-3);display:flex;flex-wrap:wrap;gap:6px 16px;justify-content:space-between;}
+  .foot{margin-top:44px;padding-top:14px;border-top:1px solid var(--rule);font-size:11.5px;
+    color:var(--ink-3);display:flex;flex-wrap:wrap;gap:6px 16px;justify-content:space-between;
+    line-height:1.6;}
+  .foot b{color:var(--ink-2);font-weight:600;}
   /* ---------- sending-history chart ---------- */
   .dg{margin-top:18px;padding:15px 14px 12px;background:var(--surface);border:1px solid var(--rule);border-radius:8px;}
   .dgscroll{overflow-x:auto;-webkit-overflow-scrolling:touch;position:relative;}
@@ -605,9 +610,10 @@
 
   <header class="mast">
     <div>
-      <div class="eyebrow">Outbound operations · handoff in progress</div>
-      <h1>Instantly Audit &amp; Handoff</h1>
-      <div class="sub">Owner <b>Jonathan</b> · reporting to <b>Cherry</b> · deadline <b>end of day today</b> · update posted at least hourly</div>
+      <div class="eyebrow">Twin Home Buyer · Twin Realtor Reach · Confidential</div>
+      <h1>Our Sales Email System</h1>
+      <div class="h1sub">Audit and handover · September 2026</div>
+      <div class="sub">Prepared by <b>Jonathan Rosanes</b> for <b>Cherry</b> · system built by <b>Carlo James Ballerda</b> · runs on Instantly.ai</div>
     </div>
     <div class="syncrow">
       <span class="pill" id="syncPill" data-s="wait"><span class="dot"></span><span id="syncText">Connecting</span></span>
@@ -1113,7 +1119,10 @@
   </section>
 
   <div class="foot">
-    <span>The limits here are the normal ones for sales email: under 2% of emails should bounce, and under 0.1% should be marked as spam.</span>
+    <span><b>Twin Home Buyer</b> &middot; Twin Realtor Reach &middot; Confidential &mdash; internal use only.
+      Prepared September 2026. Review every 90 days, or whenever the setup or the email wording changes.<br>
+      The limits used here are the normal ones for sales email: under 2% of emails should bounce, and under
+      0.1% should be marked as spam.</span>
     <span class="mono" id="footStamp"></span>
   </div>
 </div>
