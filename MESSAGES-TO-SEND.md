@@ -53,24 +53,26 @@ Jonathan
 
 ---
 
-## 3 — CARLO
+## 3 — REPLY TO LAWRENCE (replaces the original Carlo message — he's already answered)
 
-Subject: Instantly handoff — four things I need from you
+Subject: Re: Instantly — thanks, two follow-ups
 
-Hi Carlo,
+Hi Lawrence,
 
-Finished the Instantly audit today. Four things only you can answer.
+Thanks, that clears up most of it. Two of the four are closed on your answers.
 
-1. **Where does the 3375 17th St #311 send live?** A property campaign went out from victoria@metrixgenerate.com on 7 Aug, signed Mariaelena Diaz — and it appears nowhere in the campaigns list. It matters because that's the email Leah McKern replied to asking to be removed, so a send that collected an opt-out request isn't in our inventory at all. Where do property one-off sends sit, and how do I catalogue them?
+**On the removed inboxes** — understood, and that's the right call. I'd logged them as an unattended error state; knowing they were pulled deliberately to protect mailbox health changes how it reads. Worth saying: the same logic applies to lawrence@, rosanes@, seth@ and bryan@, which are still sending cold at 100/day each on the same domain.
 
-   Related, and probably simpler: the KPI bot reported **PHASE 1 — SAN MATEO/PENINSULA VERIFIED 500** completing on 21 Sep with 19 sent. I can't find a campaign by that name, but **Phase 1 – Peninsula Listing Agents** has 517 leads and finished at 100%. Is that the same thing under a different label — a lead-list name rather than a campaign? If so I'll close it out.
+**On verification** — this was the most useful thing you told me, because it explains a result I'd misread. I'd assumed "verified" meant email verification. Checking whether a realtor has recently sold or listed is a better method than I'd credited, and the numbers back it: Peninsula bounces at **1.69% across 2,424 sends**, against **4.06%** on Realtors July 2026 and **4.72%** on SF County. Active realtors have live mailboxes. I've corrected my report.
 
-2. **Three inboxes are dead** — carlo@, juan@ and accounting@ are in an error state, 230/day of capacity offline, and two are attached to campaigns we'd want to resume. Reconnect or retire? accounting@ shouldn't be a sending account at all.
+The gap is narrower than I thought, and it's one thing: the activity check can't see whether the mailbox still exists. **23 of Peninsula's 41 bounces are dead compass.com addresses** on realtors who are demonstrably active. Can we run Instantly's bulk verification over each list before its campaign resumes — SF County and Realtors July first, since they're the two at 4%+? It's a pass over lists that already exist.
 
-3. **The caps are backwards.** twinhomebuyer.com inboxes run at 100/day each; metrixgenerate.com is at 30. 20–50/day is the safe range — the 100/day inboxes are the outlier, and they're on our primary business domain. I want those cut.
+**On the ramp** — I had this wrong and I've withdrawn it. I'd read the 30/day as a throttle against the twinhomebuyer 100s; +5/day toward 100 is a deliberate ramp and the right mechanism.
 
-4. **Lead lists.** You're the lead owner on Peninsula. Those rows have name and email only — no job title, company or location — so there's nothing showing these are Peninsula listing agents. Where did the list come from, and what confirms they're in the target segment? Same question for the other realtor lists. Related: Max Lo is on Peninsula twice under two addresses, so he got the sequence twice.
+My one remaining concern is the destination rather than the method. 100/day per mailbox is about double the range most cold outreach holds to, and more to the point, capacity isn't what's limiting us right now — nothing is sending, and we got **17 opportunities out of 9,821 emails**. 27 Prague St produced 3 of those from 156 sends. Could we **hold the ramp at 50/day until SF County and Realtors July are under 2% bounce**, then resume to 100? That way the extra volume lands on lists that can take it.
 
-One more if you have time: the KPI bot you built posts per-campaign lines at 4pm. Can it also flag any realtor lead past 24 hours without a first touch? You already have the API access.
+**One question still open.** On the account being added later — that explains victoria@'s setup, but I still can't find where the **3375 17th St #311** send of 7 Aug lives. It's not in the campaign list on any status filter. Is victoria@metrixgenerate.com in a **separate Instantly workspace**? If the property one-offs sit in a second workspace that would explain it, and I'd want access — that send is the one Leah McKern replied to asking to be removed, so it needs to be in the inventory.
+
+Last one if you have time: can the Realtor Outreach KPI bot also flag any realtor lead past 24 hours without a first touch? You already have the API access.
 
 Jonathan
