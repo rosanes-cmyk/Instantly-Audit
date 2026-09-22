@@ -23,9 +23,23 @@ My recommendation: **move cold outreach entirely to metrixgenerate.com.** Carlo 
 
 **2. Does Realtors July 2026 resume?**
 
-Paused at 11% on 3 August. It holds **9 of our 17 opportunities** — our best performer — and nobody recorded why it stopped. Resume, retire, or rework?
+Paused on 3 August, 11% of the way through its seven emails, and nobody recorded why. It holds **9 of our 17 opportunities** — more than half our pipeline. Resume, retire, or rework?
 
-My recommendation: **rework and resume**, after the footer is fixed and the list is cleaned.
+One correction on that 11%: it's how far through the sequence it got, not how much of the list it reached. It had already contacted 1,554 of its 1,713 people, so only **159 are untouched**. An earlier draft of this page said 89% were untouched; that was wrong and it overstated the case for restarting.
+
+And the comparison that matters more than any of this — how hard each campaign worked for one lead:
+
+| Campaign | Emails per lead |
+|---|---|
+| **27 Prague St** | **1 per 52** |
+| Realtors July 2026 | 1 per 541 |
+| San Francisco County | 1 per 614 |
+| Oakland Realtor | 1 per 880 |
+| Phase 1 – Peninsula | 1 per 1,212 |
+
+27 Prague St was one property, one short email, 156 of the right people. It beat everything else by ten to twenty-three times.
+
+My recommendation: **rework and resume**, after the footer is fixed and the list is cleaned — but the bigger prize is **running more Prague-style property sends**, not the 159 names left in Realtors July. The untouched volume is actually in Oakland (650) and San Francisco County (1,184), already found and already paid for.
 
 **3. Should opportunities leave Instantly?**
 
