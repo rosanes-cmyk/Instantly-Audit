@@ -1842,11 +1842,22 @@
 
   /* ---------------- local mirror ---------------- */
 
-  var MIRROR_KEY = "instantly-tracker-mirror";
+  var MIRROR_KEY = "instantly-tracker-mirror-2";
 
+  // Two different things go in the mirror and they must not be confused.
+  // tasks/fields/roster are a copy of SHARED state, kept only so the page has
+  // something to draw before it connects. pending* are edits this device made
+  // that the store has not accepted yet, and they are the only things that may
+  // ever be written back. Mirroring them together, as this did, meant every
+  // row in a stale local copy looked like a local edit — so a row deleted by
+  // anyone else came back on this browser's next load.
   function mirrorSave(){
     try{
-      localStorage.setItem(MIRROR_KEY, JSON.stringify({ tasks:tasks, fields:fields, posts:pendingPosts, roster:roster }));
+      localStorage.setItem(MIRROR_KEY, JSON.stringify({
+        tasks:tasks, fields:fields, roster:roster,
+        posts:pendingPosts,
+        ptasks:pendingTasks, pfields:pendingFields, proster:pendingRoster
+      }));
     }catch(e){}
   }
 
@@ -1855,22 +1866,26 @@
       var raw = localStorage.getItem(MIRROR_KEY);
       if(!raw) return;
       var m = JSON.parse(raw) || {};
-      if(m.tasks){
-        tasks = m.tasks;
-        Object.keys(m.tasks).forEach(function(k){ pendingTasks[k] = m.tasks[k]; });
-      }
-      if(m.fields){
-        fields = m.fields;
-        Object.keys(m.fields).forEach(function(k){ pendingFields[k] = m.fields[k]; });
-      }
-      if(m.posts && m.posts.length) pendingPosts = m.posts.slice();
+
+      // Shared state, for drawing only. Overwritten by the first snapshot.
+      if(m.tasks)  tasks  = m.tasks;
+      if(m.fields) fields = m.fields;
       if(m.roster){
         Object.keys(ROSTERS).forEach(function(k){
-          if(!m.roster[k]) return;
-          roster[k] = m.roster[k];
-          Object.keys(m.roster[k]).forEach(function(id){ pendingRoster[k][id] = m.roster[k][id]; });
+          if(m.roster[k]) roster[k] = m.roster[k];
         });
       }
+
+      // Unaccepted local edits, the only things flushPending may write back.
+      if(m.ptasks)  Object.keys(m.ptasks).forEach(function(k){ pendingTasks[k] = m.ptasks[k]; });
+      if(m.pfields) Object.keys(m.pfields).forEach(function(k){ pendingFields[k] = m.pfields[k]; });
+      if(m.proster){
+        Object.keys(ROSTERS).forEach(function(k){
+          if(!m.proster[k]) return;
+          Object.keys(m.proster[k]).forEach(function(id){ pendingRoster[k][id] = m.proster[k][id]; });
+        });
+      }
+      if(m.posts && m.posts.length) pendingPosts = m.posts.slice();
     }catch(e){}
   }
 
