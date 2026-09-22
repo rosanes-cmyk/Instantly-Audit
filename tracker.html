@@ -468,6 +468,40 @@
   .person .pd{font-size:12px;color:var(--ink-2);margin-top:5px;line-height:1.4;}
 
   .foot{margin-top:44px;padding-top:14px;border-top:1px solid var(--rule);font-size:11.5px;color:var(--ink-3);display:flex;flex-wrap:wrap;gap:6px 16px;justify-content:space-between;}
+  /* ---------- sending-history chart ---------- */
+  .dg{margin-top:18px;padding:15px 14px 12px;background:var(--surface);border:1px solid var(--rule);border-radius:8px;}
+  .dgscroll{overflow-x:auto;-webkit-overflow-scrolling:touch;position:relative;}
+  .dgscroll > svg{display:block;width:100%;min-width:760px;height:auto;}
+  .dg .g{stroke:var(--rule);stroke-width:1;}
+  .dg .ax{font-family:var(--f-mono);font-size:9px;fill:var(--ink-3);}
+  .dg .axt{font-family:var(--f-mono);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;fill:var(--ink-3);}
+  .dg .ln{fill:none;stroke-width:2;stroke-linejoin:round;stroke-linecap:round;}
+  .dg .dot{stroke:var(--surface);stroke-width:2;}
+  .dg .an1{font-family:var(--f-mono);font-size:8.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;}
+  .dg .stop{stroke:var(--crit);stroke-width:1.5;stroke-dasharray:4 4;}
+  .dg .note{font-family:var(--f-mono);font-size:8.5px;font-weight:600;letter-spacing:.05em;
+    text-transform:uppercase;fill:var(--crit);}
+  .dg .cross{stroke:var(--ink-3);stroke-width:1;stroke-dasharray:3 3;pointer-events:none;}
+  .dglegend{display:flex;flex-wrap:wrap;gap:6px 16px;margin-bottom:12px;}
+  .dgl{display:inline-flex;align-items:center;gap:7px;font-size:11.5px;color:var(--ink-2);}
+  .dgl i{width:14px;height:3px;border-radius:2px;flex:none;}
+  .dgtip{
+    position:absolute;pointer-events:none;display:none;z-index:4;
+    background:var(--ground);border:1px solid var(--rule-strong);border-radius:6px;
+    padding:8px 10px;box-shadow:var(--shadow);min-width:172px;
+  }
+  .dgtip .dd{font-family:var(--f-mono);font-size:10px;letter-spacing:.05em;color:var(--ink-3);
+    text-transform:uppercase;margin-bottom:5px;}
+  .dgtip .dr{display:flex;align-items:center;gap:7px;font-size:11.5px;color:var(--ink-2);margin-top:3px;}
+  .dgtip .dr i{width:9px;height:3px;border-radius:2px;flex:none;}
+  .dgtip .dr b{margin-left:auto;font-family:var(--f-mono);color:var(--ink);font-variant-numeric:tabular-nums;}
+  table.dgtbl{width:100%;border-collapse:collapse;font-size:12px;min-width:520px;}
+  table.dgtbl th,table.dgtbl td{padding:7px 10px;border-bottom:1px solid var(--rule);text-align:right;}
+  table.dgtbl th{font-family:var(--f-mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--ink-3);background:var(--surface-2);}
+  table.dgtbl td:first-child,table.dgtbl th:first-child{text-align:left;color:var(--ink);font-weight:600;}
+  table.dgtbl td{font-family:var(--f-mono);color:var(--ink-2);font-variant-numeric:tabular-nums;}
+
   /* ---------- plain-English layer ---------- */
   .headline{
     margin-top:22px;padding:16px 18px;border-radius:9px;
@@ -881,6 +915,56 @@
       <input type="text" id="campNew" placeholder="Campaign name as it appears in Instantly" autocomplete="off">
       <button type="button" class="post" id="campAddBtn">Add campaign</button>
     </div>
+    <figure class="dgm dg" style="margin-top:22px">
+      <div class="dglegend" id="dgLegend"></div>
+      <div class="dgscroll" id="dgWrap">
+      <svg viewBox="0 0 1000 410" role="img" aria-label="Daily emails sent by campaign, 10 July to 21 September 2026. Realtors July 2026 climbs from 30 a day to 514 within three days, and is the campaign with the second worst delivery failure rate at 4.07 percent. Phase 1 Peninsula ramps gently from 25 to 100 over a month and fails at only 1.69 percent. All three campaigns sending from the twinhomebuyer.com domain stop on the same day, 3 August.">
+      <line class="g" x1="54" y1="374.0" x2="974.0" y2="374.0"></line>
+      <text class="ax" x="45" y="377.5" text-anchor="end">0</text>
+      <line class="g" x1="54" y1="311.5" x2="974.0" y2="311.5"></line>
+      <text class="ax" x="45" y="315.0" text-anchor="end">100</text>
+      <line class="g" x1="54" y1="248.9" x2="974.0" y2="248.9"></line>
+      <text class="ax" x="45" y="252.4" text-anchor="end">200</text>
+      <line class="g" x1="54" y1="186.4" x2="974.0" y2="186.4"></line>
+      <text class="ax" x="45" y="189.9" text-anchor="end">300</text>
+      <line class="g" x1="54" y1="123.8" x2="974.0" y2="123.8"></line>
+      <text class="ax" x="45" y="127.3" text-anchor="end">400</text>
+      <line class="g" x1="54" y1="61.3" x2="974.0" y2="61.3"></line>
+      <text class="ax" x="45" y="64.8" text-anchor="end">500</text>
+      <text class="axt" x="10" y="14">emails sent per day</text>
+      <text class="ax" x="91.8" y="396" text-anchor="middle">13 Jul</text>
+      <text class="ax" x="331.3" y="396" text-anchor="middle">1 Aug</text>
+      <text class="ax" x="721.9" y="396" text-anchor="middle">1 Sep</text>
+      <text class="ax" x="974.0" y="396" text-anchor="middle">21 Sep</text>
+      <line class="stop" x1="356.5" y1="30" x2="356.5" y2="374.0"></line>
+      <text class="note" x="348.5" y="14" text-anchor="end">3 Aug &#8212; all three stop, same day</text>
+      <path class="ln" d="M54.0 355.2 L91.8 355.2 L104.4 355.2 L117.0 355.2 L142.2 367.7 L154.8 238.9 L167.4 346.5 L180.0 100.1 L192.6 56.3 L205.2 59.4 L217.8 66.9 L230.4 52.5 L243.0 134.5 L255.6 132.6 L268.2 240.2 L280.8 330.8 L293.5 309.0 L306.1 297.1 L318.7 228.3 L331.3 250.8 L343.9 247.7 L356.5 303.9" stroke="#3987e5"></path>
+      <circle class="dot" cx="356.5" cy="303.9" r="4" fill="#3987e5"></circle>
+      <path class="ln" d="M268.2 251.4 L280.8 198.9 L293.5 199.5 L306.1 202.0 L318.7 227.0 L331.3 247.7 L343.9 249.5 L356.5 315.2" stroke="#d95926"></path>
+      <circle class="dot" cx="356.5" cy="315.2" r="4" fill="#d95926"></circle>
+      <path class="ln" d="M293.5 325.8 L306.1 295.2 L318.7 336.5 L331.3 292.1 L343.9 292.1 L356.5 318.3" stroke="#199e70"></path>
+      <circle class="dot" cx="356.5" cy="318.3" r="4" fill="#199e70"></circle>
+      <path class="ln" d="M356.5 358.4 L369.1 355.2 L381.7 352.1 L394.3 349.0 L406.9 345.9 L444.7 342.7 L457.3 336.5 L469.9 336.5 L482.5 336.5 L495.1 336.5 L532.9 336.5 L545.5 336.5 L558.1 336.5 L570.7 336.5 L583.3 336.5 L621.1 336.5 L633.7 330.2 L646.3 324.0 L658.9 324.0 L671.5 324.0 L709.3 324.0 L721.9 324.0 L734.5 324.0 L747.2 311.5 L759.8 311.5 L797.6 311.5 L810.2 311.5 L822.8 311.5 L835.4 311.5 L848.0 311.5 L885.8 311.5 L898.4 315.2 L911.0 334.0 L923.6 347.7 L936.2 355.2 L974.0 362.1" stroke="#c98500"></path>
+      <circle class="dot" cx="974.0" cy="362.1" r="4" fill="#c98500"></circle>
+      <path class="ln" d="M507.7 355.2 L520.3 355.2 L532.9 355.2 L545.5 355.2 L558.1 355.2 L570.7 370.2" stroke="#d55181"></path>
+      <circle class="dot" cx="570.7" cy="370.2" r="4" fill="#d55181"></circle>
+      <text class="an1" x="205.2" y="43.5" text-anchor="middle" fill="#3987e5">514 a day at peak &#8212; up from 30 in three days</text>
+      <text class="an1" x="747.2" y="301.5" text-anchor="middle" fill="#c98500">ramped 25 to 100 over a month</text>
+      </svg>
+        <div class="dgtip" id="dgTip"></div>
+      </div>
+      <figcaption><b>What this shows.</b> How many emails each campaign sent on each day it sent. Two shapes
+        matter. <b>Realtors July 2026 went from 30 a day to over 500 in three days</b> &mdash; that is not a
+        warm-up, it is a cliff, and it is the campaign with 4.07% of emails failing to deliver.
+        <b>Peninsula climbed gently from 25 to 100 over a month</b> and fails at 1.69%. And
+        <b>all three campaigns on twinhomebuyer.com stopped on the same day, 3 August</b> &mdash; a coordinated
+        halt nobody has recorded a reason for. Lines connect days on which a campaign sent; the gaps are
+        weekends and the pauses.</figcaption>
+      <details class="tplstep" style="margin-top:12px">
+        <summary><span class="sn">Table view</span><span class="ss">the same numbers, per campaign</span></summary>
+        <div class="tscroll" style="margin:0;border:0"><table class="dgtbl" id="dgTable"></table></div>
+      </details>
+    </figure>
     <div id="campList"></div>
     <div class="empty" id="campEmpty">No campaigns recorded yet. Add each one and mark it active or not — a paused campaign nobody knows about is exactly the gap this audit is for.</div>
   </section>
@@ -1401,7 +1485,7 @@
 
   var SOP_GLOSSARY = [["Instantly.ai", "The software that actually sends the emails and collects the replies. Everything in this SOP happens inside it. app.instantly.ai"], ["Sending account (inbox)", "An email address we send from, e.g. rosanes@twinhomebuyer.com. We have nine. Spreading the volume across several is what stops any one address looking like a spammer."], ["Domain", "The @name our emails come from. We own two: twinhomebuyer.com (our real business address, which also carries contracts, DocuSign and Cherry's correspondence) and metrixgenerate.com (kept separate so marketing email cannot damage the first one)."], ["Sequence", "The set of emails one person receives, spaced over days. Nobody sends them by hand \u2014 the sequence runs on its own once it starts."], ["Step", "One email inside a sequence. Our realtor sequence has 7 steps over 7 days, so one agent gets seven emails."], ["Variant", "An alternative wording of the same step. Instantly rotates between them so not everyone gets identical text."], ["Daily cap", "The most emails one address is allowed to send in a day. Go over it and that address gets flagged as spam."], ["Warmup", "Instantly quietly sending small amounts of mail between its own addresses to build a new address's reputation before any real marketing goes out. Warmup mail is NOT marketing and must never be counted as sent volume."], ["Bounce", "An email that could not be delivered, usually a dead address. Bounce rate is how many fail: under 2% is healthy, and above roughly 5% email providers start suspending the sender."], ["Unibox", "The one screen where every reply lands, whichever address it was sent to. Replies get worked here, not in scattered mailboxes. app.instantly.ai/app/crm"], ["Lead", "One contact \u2014 a realtor we are emailing."], ["Lead list", "A group of contacts, loaded together. Always load one as a NAMED list, never straight into a campaign (see gap 2 below)."], ["Blocklist / suppression", "Our do-not-email list: addresses the system must never contact, whatever list they appear on. Opt-outs and existing clients belong here, and it applies to every campaign at once."], ["Opt-out", "Someone asking to stop receiving our email. Marketing email is legally required to carry an opt-out link (an 'unsubscribe' link; the law is called CAN-SPAM), and by law we must honour a request within 10 business days, permanently."], ["Open tracking", "An invisible pixel that reports when someone opens an email. Ours is switched OFF on purpose \u2014 it hurts whether our email reaches inboxes at all, and the numbers are unreliable anyway. Do not switch it on, and do not report open rate."]];
   var SOP_STEPS = [["Build the list", "Assemble the market's active listing agents into a working sheet. For each one capture: First Name, Last Name, Email, Brokerage, City, County.\n\nSources: MLSListings.com, brokerage sites, agent websites, Realtor.com, Zillow, Compass, LinkedIn.\n\nPrioritise agents with RECENT listing activity in the target market. Those are the people bringing sellers to market, and they are the only ones worth the send."], ["Verify every lead", "Never upload an unverified list \u2014 bad data burns the sender's reputation and it does not recover quickly.\n\nFor each agent confirm all five:\n  1. Active \u2014 the agent is currently working.\n  2. Listing-side \u2014 confirmed by recent listing activity, not buyer-side only.\n  3. Email \u2014 a real, deliverable address. This is a SEPARATE check from the two above; an active agent can still have a dead mailbox.\n  4. Verification source \u2014 where you confirmed it.\n  5. Verification date \u2014 when you checked.\n\nSet Final Status to 'Ready for Instantly' only when all five pass. Anything unconfirmed is dropped or held. Nothing else moves forward."], ["Format the columns", "Export to the Instantly-ready format, in this column order:\n\nFirst Name \u00b7 Last Name \u00b7 Email \u00b7 Brokerage \u00b7 City \u00b7 County \u00b7 Active Status \u00b7 Listing-Side Status \u00b7 Verification Source \u00b7 Verification Date \u00b7 Final Status\n\nFirst Name, Brokerage and City are the personalisation variables the sequence uses, so they must be clean and correctly cased. 'JOHN' or 'john' appears in the email exactly as typed.\n\nSave as Instantly_Ready_[Market].csv"], ["Upload and check", "In Instantly: open or create the realtor-outreach campaign, upload the CSV, and map the columns to Instantly's fields.\n\nThen, before launching, confirm four things:\n  - Instantly's duplicate and invalid-email flags are cleared.\n  - The sending accounts on the campaign are the approved ones and are warmed up.\n  - The sequence is the approved copy.\n  - The schedule and daily cap are right."], ["Launch and hold the volume", "Launch at 30\u201350 emails/day across all sending accounts, and hold there until reply rate and deliverability are proven.\n\nSending runs SIX DAYS A WEEK \u2014 Monday to Saturday. Nothing goes out on Sunday. At 30\u201350/day that is roughly 180\u2013300 emails a week, which is the number to size a list against.\n\nKeep warmup enabled on every inbox. Let Instantly spread sends across inboxes and throttle each one \u2014 do not override its limits.\n\nScale only gradually, and only after the numbers justify it. More volume on a weak list produces bounces, not meetings."], ["Work the replies", "Check the Unibox at least once a day. Speed is what turns a reply into a booked meeting.\n\n  - Answer interested replies fast.\n  - Update each lead's status: interested, not interested, meeting booked.\n  - Book meetings promptly and hand off to the right person.\n  - Process opt-outs and bounces the same day. Opt-outs go on the blocklist immediately."], ["Report", "Daily at 4pm: the Realtor Outreach KPI bot posts per-campaign lines into Google Chat by itself. Underneath it, add the one human summary line \u2014 account totals, opportunities and their value, inbox health, and any exception worth flagging. Copy it to Cherry by email, unchanged.\n\nWeekly on Friday at 4pm: realtor leads in, first touch inside 24 hours, SLA breaches, sent, replies, bounce rate, opportunities and value, plus any process gap with a named owner.\n\nReport emails sent, reply rate, bounce rate and meetings booked. Do NOT report open rate \u2014 see the glossary."]];
-  var SOP_SETUP = [["Who owns this system", "Jonathan \u2014 rosanes@twinhomebuyer.com. Owns this system outright: the daily Unibox check, the realtor lead SLA, the 4pm report, and everything in the escalation table below. Carlo built the original configuration and remains the reference on how it was wired, but the work sits here now."], ["Workspace (the account everything lives in)", "One only \u2014 'My Organization', owned by carlo@twinhomebuyer.com. There is no second workspace."], ["Addresses we send from", "9 connected, all Active with a full warmup score of 100, giving 620 emails a day. twinhomebuyer.com: bryan@, lawrence@, rosanes@, seth@ at 100/day each = 400. metrixgenerate.com: ariana@ at 100, plus christopher@, isabella@, penelope@, victoria@ at 30 each = 220."], ["Addresses we removed", "carlo@, juan@ and accounting@twinhomebuyer.com were removed on 22 Sep to protect those mailboxes' health. Do not re-add them to campaigns."], ["Campaigns", "5 live or completed: Realtors July 2026, Oakland Realtor, San Francisco County Realtor, Phase 1 \u2013 Peninsula Listing Agents, 27 Prague St. All paused or finished."], ["Which @name sends which campaign", "The three realtor campaigns send from twinhomebuyer.com. Peninsula and the property campaigns send from metrixgenerate.com. Whether that stays that way is one of Cherry's open decisions."], ["How many emails each campaign sends", "The three realtor campaigns share one 7-step sequence (5 variants on step 1). Peninsula has its own 5-step sequence. 27 Prague St is a single email."], ["Who the emails are signed by", "Every realtor email is signed Juan Diaz, CA GC Lic. #1066892 \u2014 regardless of which inbox sent it."], ["Reporting", "Realtor Outreach KPI bot \u2192 Google Chat, 4pm daily, one line per campaign. Plus the human summary, copied to Cherry by email. Weekly on Fridays."], ["Why the names do not match", "The bot posts its own labels, not Instantly's campaign names. 'PHASE 1 \u2014 SAN MATEO/PENINSULA VERIFIED 500' is the bot's name for 'Phase 1 \u2013 Peninsula Listing Agents'. Same campaign."], ["Which days we send", "SIX days a week \u2014 Monday to Saturday. Nothing sends on Sunday. Worth one check against the campaign schedule: the KPI bot's posts show no Saturday activity either, so if Saturday is meant to be sending, confirm it is switched on."], ["How much we have really been sending", "The KPI bot's Google Chat posts show Peninsula sending 100/day through mid-September \u2014 100, 100, 100, 94, 64, 42, 30, 19 as it ran out of leads, about 549 emails over those eight days, every one delivered and none bounced, and no replies. So the 30\u201350/day in step 5 is the target for starting a NEW campaign, not a description of what this account has been doing."], ["Open tracking (off on purpose)", "OFF account-wide, on purpose. Leave it off."], ["Everything sent so far", "11,821 emails since 9 July 2026 \u2014 9,821 from the five listed campaigns plus about 2,000 from the deleted 3375 17th St campaign. 324 failed to deliver, 2.74% overall. 81 replies from 57 people. 20 opportunities worth $19,400, of which 3 worth $3,000 sit inside the deleted campaign and exist nowhere retrievable."], ["The legally required opt-out link", "As of 22 September the unsubscribe link is on all four live campaigns. The postal address is a separate element \u2014 see gap 3 below."], ["Leads we have but have not used", "About 1,994 realtors are loaded into campaigns and have never been emailed \u2014 1,184 on San Francisco County, 650 on Oakland, 159 on Realtors July, 1 on Peninsula. They are already sourced and paid for. That is roughly the same number of people again as the biggest campaign we have run."]];
+  var SOP_SETUP = [["Who owns this system", "Jonathan \u2014 rosanes@twinhomebuyer.com. Owns this system outright: the daily Unibox check, the realtor lead SLA, the 4pm report, and everything in the escalation table below. Carlo built the original configuration and remains the reference on how it was wired, but the work sits here now."], ["Workspace (the account everything lives in)", "One only \u2014 'My Organization', owned by carlo@twinhomebuyer.com. There is no second workspace."], ["Addresses we send from", "9 connected, all Active with a full warmup score of 100, giving 620 emails a day. twinhomebuyer.com: bryan@, lawrence@, rosanes@, seth@ at 100/day each = 400. metrixgenerate.com: ariana@ at 100, plus christopher@, isabella@, penelope@, victoria@ at 30 each = 220."], ["Addresses we removed", "carlo@, juan@ and accounting@twinhomebuyer.com were removed on 22 Sep to protect those mailboxes' health. Do not re-add them to campaigns."], ["Campaigns", "5 live or completed: Realtors July 2026, Oakland Realtor, San Francisco County Realtor, Phase 1 \u2013 Peninsula Listing Agents, 27 Prague St. All paused or finished."], ["Which @name sends which campaign", "The three realtor campaigns send from twinhomebuyer.com. Peninsula and the property campaigns send from metrixgenerate.com. Whether that stays that way is one of Cherry's open decisions."], ["How many emails each campaign sends", "The three realtor campaigns share one 7-step sequence (5 variants on step 1). Peninsula has its own 5-step sequence. 27 Prague St is a single email."], ["Who the emails are signed by", "Every realtor email is signed Juan Diaz, CA GC Lic. #1066892 \u2014 regardless of which inbox sent it."], ["Reporting", "Realtor Outreach KPI bot \u2192 Google Chat, 4pm daily, one line per campaign. Plus the human summary, copied to Cherry by email. Weekly on Fridays."], ["Why the names do not match", "The bot posts its own labels, not Instantly's campaign names. 'PHASE 1 \u2014 SAN MATEO/PENINSULA VERIFIED 500' is the bot's name for 'Phase 1 \u2013 Peninsula Listing Agents'. Same campaign."], ["Which days we send", "SIX days a week \u2014 Monday to Saturday. Nothing sends on Sunday. Worth one check against the campaign schedule: the KPI bot's posts show no Saturday activity either, so if Saturday is meant to be sending, confirm it is switched on."], ["How much we have really been sending", "The KPI bot's Google Chat posts show Peninsula sending 100/day through mid-September \u2014 100, 100, 100, 94, 64, 42, 30, 19 as it ran out of leads, about 549 emails over those eight days, every one delivered and none bounced, and no replies. So the 30\u201350/day in step 5 is the target for starting a NEW campaign, not a description of what this account has been doing."], ["Open tracking (off on purpose)", "OFF account-wide, on purpose. Leave it off."], ["Everything sent so far", "11,821 emails since 9 July 2026 \u2014 9,821 from the five listed campaigns plus about 2,000 from the deleted 3375 17th St campaign. 324 failed to deliver, 2.74% overall. 81 replies from 57 people. 20 opportunities worth $19,400, of which 3 worth $3,000 sit inside the deleted campaign and exist nowhere retrievable."], ["The legally required opt-out link", "As of 22 September the unsubscribe link is on all four live campaigns. The postal address is a separate element \u2014 see gap 3 below."], ["Leads we have but have not used", "About 1,994 realtors are loaded into campaigns and have never been emailed \u2014 1,184 on San Francisco County, 650 on Oakland, 159 on Realtors July, 1 on Peninsula. They are already sourced and paid for. That is roughly the same number of people again as the biggest campaign we have run."], ["Volume does not explain the failures", "Read off the daily send data: San Francisco County sent the LEAST per address, about 26 a day, and has the WORST failure rate at 4.72%. Oakland sent nearly twice that, 47 a day, and has the BEST at 0.91%. So the failures track list quality, not how much we send. Cleaning lists fixes this; cutting daily caps does not."], ["Replies keep arriving after a campaign stops", "San Francisco County's last send was 3 August and a reply landed 10 September \u2014 38 days later, on a campaign showing 0% progress that nobody was watching. Realtors July's last send was 3 August and a reply came on 17 August. A paused campaign is not a finished campaign; the Unibox still needs checking daily."], ["Click tracking is off too", "Not just opens. Across every campaign and every day, both open events and click events read zero. Neither can be reported, and neither should be switched on \u2014 both hurt whether the email reaches the inbox at all."]];
   var SOP_ROUTINE = [["Every campaign", ["Build the market list of active listing agents.", "Verify every lead on all five checks; set Final Status = Ready for Instantly.", "Export to the Instantly-ready columns.", "Upload, clear duplicates and invalids, map fields.", "Confirm approved sending accounts, approved copy, schedule and cap.", "Launch at 30\u201350/day."]], ["Every day", ["Check the Unibox. Answer interested replies fast.", "Update lead statuses.", "Process opt-outs and bounces \u2014 same day, no exceptions.", "Check no campaign has paused or errored on its own.", "Check no inbox has gone into an error state.", "Post the 4pm summary under the bot's lines, and copy it to Cherry."]], ["Every week", ["Pull metrics: sent, reply rate, bounce rate, meetings booked.", "Review deliverability \u2014 bounce and complaint rates per campaign.", "Post the Friday 4pm weekly summary.", "Name any process gap, with an owner. A gap with no owner does not get fixed."]], ["Every 90 days", ["Re-read this SOP against what the system actually does.", "Re-verify the sending domains, inboxes and daily caps.", "Re-confirm the approved sequence copy."]]];
   var SOP_COMPLIANCE = [["Say who we are, truthfully", "Every email identifies Twin Home Buyer honestly, with a subject line that reflects what the email actually says. No deceptive sender names or headers."], ["Include a real postal address", "Every commercial email needs a valid physical mailing address in it. Ours is 170 Glenn Way, Suite 5, San Carlos, CA 94070."], ["Include a working opt-out", "Every email needs a clear way to unsubscribe, and the link must actually work \u2014 not just be present."], ["Honour opt-outs fast and forever", "Within 10 business days, permanently. Add the address to Instantly's blocklist the same day you see the request. A reply asking to be removed counts as an opt-out even if they did not click anything."], ["Never email a bounce or an opt-out again", "Both go on the blocklist. The blocklist applies across every campaign, which is why it is the safety net."], ["Keep the verification trail", "The list stays to legitimate business contacts, and the record of how each was verified stays intact."], ["If someone objects, stop", "Stop that thread and escalate to ops. Do not argue, and do not keep the sequence running."]];
   var SOP_ESCALATION = [["Bounce rate climbing", "Pause the campaign. Clean and re-verify the list before sending again. Above 5% risks suspension."], ["Deliverability drop or spam flags", "Pause sending. Check warmup and domain health. Jonathan handles it \u2014 rosanes@twinhomebuyer.com."], ["A sending account or domain breaks", "Jonathan, as Instantly admin \u2014 rosanes@twinhomebuyer.com. Carlo built the original setup, so he is the reference of last resort on how something was wired, not the person who fixes it."], ["A recipient complains, or a compliance question", "Stop the thread. Escalate to ops and ownership the same day."], ["Low reply rate across a full cycle", "Do not send more. Review targeting and copy with the campaign owner."], ["A campaign or list looks wrong or missing", "Do not delete anything. Escalate \u2014 deleting a campaign in Instantly destroys its send record and its leads permanently."]];
@@ -1739,6 +1823,107 @@
     });
 
     tabCount("dossiers", DOSSIERS.length, null);
+  }
+
+  /* ---------------- sending-history chart ---------------- */
+
+  var DG = {"L": 54, "T": 30, "pw": 920, "ph": 344, "YMAX": 550, "D0": "2026-07-10", "NDAYS": 73, "series": {"rj": [["2026-07-10", 30], ["2026-07-13", 30], ["2026-07-14", 30], ["2026-07-15", 30], ["2026-07-17", 10], ["2026-07-18", 216], ["2026-07-19", 44], ["2026-07-20", 438], ["2026-07-21", 508], ["2026-07-22", 503], ["2026-07-23", 491], ["2026-07-24", 514], ["2026-07-25", 383], ["2026-07-26", 386], ["2026-07-27", 214], ["2026-07-28", 69], ["2026-07-29", 104], ["2026-07-30", 123], ["2026-07-31", 233], ["2026-08-01", 197], ["2026-08-02", 202], ["2026-08-03", 112], ["2026-08-04", 0], ["2026-08-17", 0]], "oak": [["2026-07-27", 196], ["2026-07-28", 280], ["2026-07-29", 279], ["2026-07-30", 275], ["2026-07-31", 235], ["2026-08-01", 202], ["2026-08-02", 199], ["2026-08-03", 94], ["2026-08-04", 0]], "sf": [["2026-07-29", 77], ["2026-07-30", 126], ["2026-07-31", 60], ["2026-08-01", 131], ["2026-08-02", 131], ["2026-08-03", 89], ["2026-09-10", 0]], "peninsula": [["2026-08-03", 25], ["2026-08-04", 30], ["2026-08-05", 35], ["2026-08-06", 40], ["2026-08-07", 45], ["2026-08-08", 0], ["2026-08-10", 50], ["2026-08-11", 60], ["2026-08-12", 60], ["2026-08-13", 60], ["2026-08-14", 60], ["2026-08-17", 60], ["2026-08-18", 60], ["2026-08-19", 60], ["2026-08-20", 60], ["2026-08-21", 60], ["2026-08-24", 60], ["2026-08-25", 70], ["2026-08-26", 80], ["2026-08-27", 80], ["2026-08-28", 80], ["2026-08-31", 80], ["2026-09-01", 80], ["2026-09-02", 80], ["2026-09-03", 100], ["2026-09-04", 100], ["2026-09-07", 100], ["2026-09-08", 100], ["2026-09-09", 100], ["2026-09-10", 100], ["2026-09-11", 100], ["2026-09-14", 100], ["2026-09-15", 94], ["2026-09-16", 64], ["2026-09-17", 42], ["2026-09-18", 30], ["2026-09-21", 19]], "prague": [["2026-08-15", 30], ["2026-08-16", 30], ["2026-08-17", 30], ["2026-08-18", 30], ["2026-08-19", 30], ["2026-08-20", 6]]}, "meta": [["rj", "Realtors July 2026", "#3987e5"], ["oak", "Oakland Realtor", "#d95926"], ["sf", "San Francisco County", "#199e70"], ["peninsula", "Phase 1 \u2013 Peninsula", "#c98500"], ["prague", "27 Prague St", "#d55181"]]};
+
+  function buildChart(){
+    var wrap = byId("dgWrap"), tip = byId("dgTip"), leg = byId("dgLegend");
+    if(!wrap || !leg) return;
+
+    DG.meta.forEach(function(m){
+      var b = el("span","dgl");
+      var i = document.createElement("i");
+      i.style.background = m[2];
+      b.appendChild(i);
+      b.appendChild(document.createTextNode(m[1]));
+      leg.appendChild(b);
+    });
+
+    var tbl = byId("dgTable");
+    if(tbl){
+      var head = document.createElement("tr");
+      ["Campaign","Days sending","Total sent","Busiest day","Per address that day","First send","Last send"]
+        .forEach(function(h){ var th=document.createElement("th"); th.textContent=h; head.appendChild(th); });
+      tbl.appendChild(head);
+      var BOXES = {rj:6, oak:6, sf:5, peninsula:5, prague:5};
+      DG.meta.forEach(function(m){
+        var rows = DG.series[m[0]], total = 0, peak = 0;
+        rows.forEach(function(r){ total += r[1]; if(r[1] > peak) peak = r[1]; });
+        var sending = rows.filter(function(r){ return r[1] > 0; });
+        var tr = document.createElement("tr");
+        [m[1], String(sending.length), total.toLocaleString(), peak.toLocaleString(),
+         Math.round(peak / BOXES[m[0]]) + " a day",
+         sending[0][0], sending[sending.length-1][0]].forEach(function(v){
+          var td = document.createElement("td"); td.textContent = v; tr.appendChild(td);
+        });
+        tbl.appendChild(tr);
+      });
+    }
+
+    // crosshair + tooltip: snap to the nearest day, list whoever sent that day
+    var svg = wrap.querySelector("svg");
+    var hit = byId("dgHit"), cross = byId("dgCross");
+    if(!svg || !hit) return;
+    var d0 = Date.parse(DG.D0 + "T00:00:00Z");
+
+    function dayOf(iso){ return Math.round((Date.parse(iso + "T00:00:00Z") - d0) / 86400000); }
+    function show(ev){
+      var r = svg.getBoundingClientRect();
+      var scale = DG.pw && r.width ? (1000 / r.width) : 1;
+      var sx = (ev.clientX - r.left) * scale;
+      var frac = (sx - DG.L) / DG.pw;
+      if(frac < 0) frac = 0; if(frac > 1) frac = 1;
+      var day = Math.round(frac * DG.NDAYS);
+
+      // one row per campaign: its nearest sending day within a day of the cursor,
+      // so three consecutive points of one series cannot list it three times
+      var rows = [], best = null, bestGap = 99;
+      DG.meta.forEach(function(m){
+        var hit = null, gap = 99;
+        DG.series[m[0]].forEach(function(p){
+          if(p[1] <= 0) return;
+          var g = Math.abs(dayOf(p[0]) - day);
+          if(g < gap){ gap = g; hit = p; }
+        });
+        if(hit && gap <= 1){
+          rows.push([m[1], m[2], hit[1], hit[0]]);
+          if(gap < bestGap){ bestGap = gap; best = dayOf(hit[0]); }
+        }
+      });
+      if(!rows.length){ tip.style.display = "none"; cross.style.display = "none"; return; }
+
+      var gx = DG.L + (best / DG.NDAYS) * DG.pw;
+      cross.setAttribute("x1", gx); cross.setAttribute("x2", gx);
+      cross.style.display = "";
+
+      tip.innerHTML = "";
+      var dd = el("div","dd", rows[0][3]);
+      tip.appendChild(dd);
+      rows.sort(function(a,b){ return b[2] - a[2]; }).forEach(function(q){
+        var line = el("div","dr");
+        var sw = document.createElement("i"); sw.style.background = q[1];
+        line.appendChild(sw);
+        line.appendChild(document.createTextNode(q[0]));
+        line.appendChild(el("b", null, q[2].toLocaleString()));
+        tip.appendChild(line);
+      });
+      tip.style.display = "block";
+      var px = (gx / scale) / 1000 * r.width;
+      var left = px + 14;
+      if(left + tip.offsetWidth > wrap.clientWidth) left = px - tip.offsetWidth - 14;
+      tip.style.left = Math.max(0, left) + "px";
+      tip.style.top = "14px";
+    }
+    function hide(){ tip.style.display = "none"; cross.style.display = "none"; }
+    hit.addEventListener("mousemove", show);
+    hit.addEventListener("mouseleave", hide);
+    hit.addEventListener("touchmove", function(e){
+      if(e.touches && e.touches[0]) show(e.touches[0]);
+    }, {passive:true});
+    hit.addEventListener("touchend", hide);
   }
 
   var TABS = [
@@ -3142,6 +3327,7 @@
   buildBar();
   buildFlow();
   buildDossiers();
+  buildChart();
   bindFieldInputs();
   bindRosterControls();
   mirrorLoad();
