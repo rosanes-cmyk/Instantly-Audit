@@ -61,7 +61,9 @@ Hi Carlo,
 
 Finished the Instantly audit today. Four things only you can answer.
 
-1. **Where does PHASE 1 — SAN MATEO/PENINSULA VERIFIED 500 live?** It ran and completed on 21 Sep — 19 sent, 0 bounces — but it doesn't appear in the campaigns list. A second one, a property send for 3375 17th St #311 from victoria@metrixgenerate.com on 7 Aug, is also missing. I can't hand over an inventory that doesn't include everything that sends.
+1. **Where does the 3375 17th St #311 send live?** A property campaign went out from victoria@metrixgenerate.com on 7 Aug, signed Mariaelena Diaz — and it appears nowhere in the campaigns list. It matters because that's the email Leah McKern replied to asking to be removed, so a send that collected an opt-out request isn't in our inventory at all. Where do property one-off sends sit, and how do I catalogue them?
+
+   Related, and probably simpler: the KPI bot reported **PHASE 1 — SAN MATEO/PENINSULA VERIFIED 500** completing on 21 Sep with 19 sent. I can't find a campaign by that name, but **Phase 1 – Peninsula Listing Agents** has 517 leads and finished at 100%. Is that the same thing under a different label — a lead-list name rather than a campaign? If so I'll close it out.
 
 2. **Three inboxes are dead** — carlo@, juan@ and accounting@ are in an error state, 230/day of capacity offline, and two are attached to campaigns we'd want to resume. Reconnect or retire? accounting@ shouldn't be a sending account at all.
 
