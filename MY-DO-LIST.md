@@ -52,7 +52,7 @@ CAN-SPAM needs a valid physical address as well as the opt-out link. Open each c
 
 **8. Read and answer the open replies**
 - SF County's 2 replies and the $1,000 opportunity
-- Rob Edwards — replied to the deleted campaign, never read
+- **Rob Edwards** — `rob.edwards.sf@gmail.com`, replied 7 Aug at 18:56 asking *"Can you tell me who you are or why you contacting me?"* — still unread after seven weeks. Answer this one first; it's a real person who asked us a direct question.
 - Anything Instantly AI question 9 turns up
 
 **9. Finish the opt-out sweep**
