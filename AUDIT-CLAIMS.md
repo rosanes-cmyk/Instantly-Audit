@@ -1,4 +1,16 @@
 # Instantly Audit — every claim, for fact-checking
+
+> **CHECKED 22 Sep 2026 against the live workspace. 76 of 77 confirmed, 1 partly.**
+> Three things came back that changed the tracker:
+> **4.6 PARTLY** — Instantly keeps no history of what a setting used to be, so "cut from 100 to 30" is an
+> inference. The send logs put the old cap at 80 or above; the exact number cannot be read back.
+> **5.7 CONFIRMED BUT EXPLAINED** — our archive is the live copy. The wording was rewritten in the editor
+> after 25 July, so anyone emailed before that got a different version which exists only in the send logs.
+> That was not a gap in our records; it was an undocumented edit.
+> **New detail** — Rob Edwards replied from rob.edwards.sf@gmail.com on 7 Aug at 18:56:29 asking who we
+> were, and it is still unread. Leah McKern's reply was "I moved to Texas about a decade ago. Please remove
+> me from your distribution list. Thx" at 18:04:23, eight minutes after we emailed her. The four people who
+> asked to be removed are Leah McKern, Kurt Byer, Jason Born and John Anagnostou.
 **Workspace:** My Organization · **Audit date:** 22 September 2026 · **Auditor:** Jonathan
 
 ---
