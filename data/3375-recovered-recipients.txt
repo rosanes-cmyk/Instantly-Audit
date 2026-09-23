@@ -1,0 +1,81 @@
+# 3375 17th St #311 — recovered recipients (test run, campaign deleted)
+
+Saved out of the tracker on 23 Sep 2026 when the test campaigns were removed from the
+campaign lists to stop them confusing the performance numbers. Kept here because about
+38 of the ~2,000 addresses bounced and belong on the blocklist, and because two people
+who replied are still owed an answer.
+
+Campaign id c05714e3-35db-4223-8873-c65639a33173 — deleted deliberately by Jonathan,
+confirmed a test with Seth and Lawrence. Sent 6–10 Aug 2026 from the five
+metrixgenerate.com addresses.
+
+STILL OPEN, both on the do-list:
+  - Rob Edwards  rob.edwards.sf@gmail.com  replied 7 Aug 18:56, still unread
+  - Leah McKern  leah@leahmckern.com       asked to be removed 7 Aug, never blocklisted
+
+---
+
+RECOVERED 22 Sep 2026 from the message logs, after the campaign record itself was deleted. 57 of roughly 2,000 recipients. Name, address, and the time we emailed them (UTC).
+
+Rosana	rosanavantuyl@zephyrsf.com	2026-08-10 18:05
+Gina	gbocage@gmail.com	2026-08-10 18:04
+Derrik	derrik@cityrealtors.com	2026-08-10 18:04
+Robert	robertstark8910@gmail.com	2026-08-10 18:04
+Natalie	npelc@hill-co.com	2026-08-10 17:56
+Les	les.spurlock@gmail.com	2026-08-10 17:49
+Patrick	mallenpatrick96@gmail.com	2026-08-10 17:48
+Rick	rick.avery@compass.com	2026-08-10 17:47
+Steven	stevenclarksf@gmail.com	2026-08-10 17:47
+Whitney	whitneybdavis@gmail.com	2026-08-10 17:40
+Lucy	lucy@lyeung.com	2026-08-10 17:39
+Kathleen	gilheanywest@yahoo.com	2026-08-10 17:38
+Kevin	kevinfeather@zephyrsf.com	2026-08-10 17:38
+Yulia	homes.goyal@gmail.com	2026-08-10 17:31
+Shaban	shaban@residentialsf.com	2026-08-10 17:30
+Julia	jmason@pacunion.com	2026-08-10 17:29
+Christine	christineacasey@yahoo.com	2026-08-10 17:29
+Mark	mark-slaughter@comcast.net	2026-08-10 17:22
+Kari	kvarland@paragon-re.com	2026-08-10 17:20
+Arthur	arttom3@gmail.com	2026-08-10 17:20
+David	archibeque.db@gmail.com	2026-08-10 17:20
+Diana	dmsmith57@gmail.com	2026-08-10 17:13
+Nancy	nancy.corsaut@corcorangl.com	2026-08-10 17:11
+Ellen	ellen.anderson@sothebyshomes.com	2026-08-10 17:10
+Jennifer	1311@sbcglobal.net	2026-08-10 17:10
+Suhl	suhl.chin@corcorangl.com	2026-08-10 17:04
+Peter	petergrady@zephyrsf.com	2026-08-10 17:02
+Peter	gallegospete@sbcglobal.net	2026-08-10 17:01
+Carren	carren@legacysfhomes.com	2026-08-10 17:01
+John	jm@wgre.com	2026-08-10 16:55
+Chrissie	chrissie@chrissieemmons.com	2026-08-10 16:53
+Jean	jdavis@cbnorcal.com	2026-08-10 16:52
+Christine	christine@cityofthebay.com	2026-08-10 16:52
+Katrina	kschissel@hill-co.com	2026-08-10 16:46
+Donald	dwoolhouse@gmail.com	2026-08-10 16:44
+George	george.limperis@compass.com	2026-08-10 16:43
+Michael	michael@kerwinrealty.com	2026-08-10 16:43
+Terry	terry.wright@compass.com	2026-08-10 16:37
+Jito	jitosf@gmail.com	2026-08-10 16:35
+Frances	ferry.home@gmail.com	2026-08-10 16:33
+Tyler	tyler@vanguardsf.com	2026-08-10 16:28
+Michael	msalstein@gmail.com	2026-08-10 16:28
+Scott	scott.fugelseth@cbnorcal.com	2026-08-10 16:26
+Inna	iliveinsf@gmail.com	2026-08-10 16:24
+Oliver	oliver@weknowsf.com	2026-08-10 16:17
+Dean	dean@deansereni.com	2026-08-10 16:16
+Nicholas	nick@vanguardsf.com	2026-08-10 16:16
+Duncan	duncan@duncanwheeler.com	2026-08-10 16:15
+Dan	danbunker@zephyrsf.com	2026-08-10 16:06
+Christopher	chris@vanguardproperties.com	2026-08-10 16:06
+Adam	adam@gavzer.com	2026-08-10 16:06
+Jacky	jacky@jackyhome.com	2026-08-10 16:06
+Leah	leah@leahmckern.com	2026-08-07 17:56
+Douglas	team@dougandeddy.com	2026-08-06 21:26
+Cindy	cindy.manning@compass.com	2026-08-06 21:26
+Justin	justin@tridentsf.com	2026-08-06 21:26
+Damon	damon@damonknox.com	2026-08-06 21:26
+
+leah@leahmckern.com replied to this asking to be removed. She is now on the do-not-email list.
+cindy.manning@compass.com replied out of office. Rob Edwards also replied and has never been read.
+
+STILL MISSING: roughly 1,940 recipients. Pull the full message log for campaign c05714e3-35db-4223-8873-c65639a33173 before anything ages out.

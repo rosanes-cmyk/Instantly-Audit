@@ -8,7 +8,7 @@ Full detail is in the live tracker if you want it. You don't need it to answer t
 
 ## Where it stands
 
-- **11,821 emails sent since 9 July**, 2.74% failed to deliver. **10 leads are still live.** I'm no longer reporting a dollar figure against them — see the note below.
+- **9,821 emails sent since 9 July** across five campaigns, 2.91% failed to deliver. **10 leads are still live.** I'm no longer reporting a dollar figure against them — see the note below.
 - **Nothing is sending.** Every campaign is paused or finished.
 - The setup is now fully documented — accounts, campaigns, sequences, lists, reporting — in a tracker anyone can pick up.
 - Daily KPI snapshot at 4pm in Google Chat, copied to you by email. Weekly on Fridays.
@@ -69,7 +69,7 @@ Two things it doesn't reach, so you're not surprised later: the 7,241 already se
 
 **A test send that went out wider than a test should.** In August we ran a property send for 3375 17th St #311 as a test of that approach. I deleted the campaign afterwards, and Seth and Lawrence have both confirmed it was a test rather than a funded campaign — so there's no mystery here about who removed it or why.
 
-What I want you to hear from me is the size of it. That test reached **about 2,000 San Francisco listing agents** over five days — agents at Zephyr, Compass, Vanguard, Sotheby's, Corcoran and Coldwell Banker — and it went out with no unsubscribe link and no postal address, the same gap the three realtor campaigns had. Calling it a test describes what we intended, not what 2,000 people received. I've recovered 57 of the recipients from the message logs and the rest are recoverable.
+It is left out of the numbers above, so they cover the five real campaigns only. What I want you to hear from me is the size of it: that test reached **about 2,000 San Francisco listing agents** over five days — agents at Zephyr, Compass, Vanguard, Sotheby's, Corcoran and Coldwell Banker — and it went out with no unsubscribe link and no postal address, the same gap the three realtor campaigns had. Calling it a test describes what we intended, not what 2,000 people received. I've recovered 57 of the recipients from the message logs and the rest are recoverable.
 
 Two loose ends from it, both mine to close this week. One agent replied asking to be removed and was never added to the do-not-email list. Another, **Rob Edwards, replied on 7 August asking who we were, and nobody has answered him** — that message is still unread seven weeks later.
 
