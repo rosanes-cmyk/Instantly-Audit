@@ -221,6 +221,8 @@ For each: please confirm **sent, leads loaded, leads contacted, bounces, bounce 
 
 **8.8** I reported 17 opportunities and $17,400, then 20 and $19,400. **Both withdrawn, 23 Sep.** “Opportunity” is a tag Instantly applies to a positive-looking reply, not a reviewed lead. After review, **10 are live**. And the dollar amounts are Instantly's default $1,000 per tag — a placeholder, never quoted or invoiced — so **all dollar figures have been removed from this audit.**
 
+**8.11** I recorded San Francisco County's email 4 subject as *"A second opinion before you advise the seller"*, different from the shared sequence. **Wrong — withdrawn 23 Sep.** Its editor was opened and photographed: all seven subjects are identical to the shared sequence, email 4 included ("When the Seller Wants It Quiet"). The copy shown on its card was right; my note about it was not.
+
 **8.10** I called 27 Prague St our best campaign at 1 lead per 52 emails and recommended running more like it. **Withdrawn, 23 Sep.** All three of its tagged leads were later marked Wrong Person or Not Interested, so it has none. Its 2.56% reply rate is still the highest in the account — the format worked, the targeting did not.
 
 **8.9** I recorded Oakland at 948 leads and SF County at 203. Those were *contacted* counts. Real list sizes are **1,598** and **1,387**. **Corrected.**
