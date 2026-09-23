@@ -141,7 +141,17 @@ For each: please confirm **sent, leads loaded, leads contacted, bounces, bounce 
 
 **5.4** `[READ]` 27 Prague St and 3375 17th St are signed **Mariaelena Diaz, eXp Realty, DRE #02034560**.
 
-**5.5** `[READ]` Peninsula's footer carries a postal address (170 Glenn Way, Suite 5, San Carlos, CA 94070) and an unsubscribe link. The other three carried **neither**, across **7,241 emails**, until 22 Sep 2026.
+**5.5** `[READ]` **RESOLVED 23 Sep — this claim was wrong twice over, and the corrected version is below.** I originally said three campaigns carried neither an unsubscribe link nor a postal address across 7,241 emails, and that 27 Prague St was compliant. A version-by-version check gives:
+
+| Campaign | Sent | Opt-out link | Street address |
+|---|---|---|---|
+| Realtors July 2026 | 4,867 | missing on 1,228 (4 of 5 versions of email 1) | **missing on all 4,867** |
+| Oakland Realtor | 1,760 | missing on 504 (4 of 5 versions of email 1) | **missing on all 1,760** |
+| San Francisco County | 614 | present on all 614 | **missing on all 614** |
+| 27 Prague St | 156 | **missing on all 156** | **missing on all 156** |
+| Phase 1 – Peninsula | 2,424 | present | present |
+
+**7,397 emails were missing the street address; 1,888 of those also had no opt-out link; 2,424 were fully correct.** 7,397 + 2,424 = 9,821. Please confirm this table.
 
 **5.6** `[READ]` Peninsula's **step 2 had an empty unsubscribe href** — the link was present but went nowhere.
 

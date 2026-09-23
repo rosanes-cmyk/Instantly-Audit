@@ -24,12 +24,12 @@ It wasn't isolated. **The blocklist was completely empty** when I opened it — 
 
 **Does cold outreach run from twinhomebuyer.com at all?** The split isn't a caps problem — it's which domain sends what:
 
-- **twinhomebuyer.com** sends Realtors July, Oakland and SF County — the three campaigns with **no unsubscribe link**, 7,241 emails, and the two worst bounce rates (4.06% and 4.72%, both near the 5% level where providers suspend senders).
+- **twinhomebuyer.com** sends Realtors July, Oakland and SF County — 7,241 emails, **none of which carried our street address**, and the two worst bounce rates (4.07% and 4.72%, both near the 5% level where providers suspend senders).
 - **metrixgenerate.com** — the domain built to absorb exactly this risk — sends the compliant campaigns, and bounces at 1.69%.
 
 The burner domain is carrying the safe traffic and our real business domain is carrying the risk. That domain also carries our contracts, our DocuSign, and your own correspondence. Stanley Lo is what that looks like in practice: cold mail from rosanes@twinhomebuyer.com in July, your offer from cherry@twinhomebuyer.com in August.
 
-**And one more decision.** **Realtors July 2026** is paused at 11% and holds 9 of our 17 opportunities — our best performer, and also the campaign that emailed Stanley. The only note on it is "no further instructions." Resume, retire, or rework?
+**And one more decision.** **Realtors July 2026** is paused 11% of the way through its sequence and produced 5 of our 10 live leads — our best performer, and also the campaign that emailed Stanley. The only note on it is "no further instructions." Resume, retire, or rework?
 
 **One sign-off.** I've set a 24-hour first-touch target on realtor leads and a reporting cadence of daily at 4pm in Google Chat copied to you by email, plus a Friday weekly. Both are my proposal, not an agreement — say yes or tell me what it should be.
 
@@ -41,15 +41,21 @@ Jonathan
 
 ## 2 — LEGAL
 
-Subject: CAN-SPAM review needed — 7,241 emails already sent
+Subject: CAN-SPAM review needed — 7,397 emails already sent
 
 Hi,
 
 I've audited our cold email setup and need a review before anything restarts.
 
-**Three campaigns — Realtors July 2026, Oakland Realtor, San Francisco County Realtor — carry no unsubscribe mechanism and no physical postal address.** US CAN-SPAM requires both in commercial email. 7,241 emails have already gone out across them.
+US CAN-SPAM requires two things in every commercial email: a working opt-out mechanism and a valid physical postal address. We were missing one or both. Checked email by email on 23 September:
 
-Because there was no link, replying was the only way out. **Four people did. None was recorded as an opt-out** — our blocklist was empty. The longest ran 41 business days past the 10-business-day window. All four are suppressed now.
+- **7,397 emails carried no physical postal address** — Realtors July 2026 (4,867), Oakland Realtor (1,760), San Francisco County Realtor (614) and 27 Prague St (156). That is every campaign except one.
+- **1,888 of those also had no opt-out mechanism at all** — four of the five versions of the first email on Realtors July (1,228) and on Oakland (504), plus the whole of 27 Prague St (156).
+- **2,424 emails were fully correct** — Phase 1 Peninsula, which carried both on every step.
+
+San Francisco County did carry an opt-out link on all 614; only the address was missing there.
+
+For the 1,888 with no link at all, replying was the only way out. **Four people did. None was recorded as an opt-out** — our blocklist was empty. The longest ran 41 business days past the 10-business-day window. All four are suppressed now.
 
 A fourth campaign, Phase 1 – Peninsula, has the correct footer — San Carlos address plus unsubscribe — so it's a copy job once you've approved the wording. Its Step 2 has a broken unsubscribe link, which I'm fixing.
 

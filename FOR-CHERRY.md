@@ -59,9 +59,19 @@ My recommendation: **export the 10 now**, decide on a connection later.
 
 ## Closed today, so you know it's handled
 
-**The unsubscribe gap is fixed.** Three campaigns had gone out with no opt-out link — 7,241 emails — and the one compliant campaign had a broken link on step 2. **All four now carry a working unsubscribe link.** That was the largest compliance exposure in the audit and it's closed going forward.
+**The unsubscribe gap is fixed.** All four live campaigns now carry a working opt-out link, and the broken one on Peninsula's step 2 was repaired in the same pass. That's closed going forward.
 
-Two things it doesn't reach, so you're not surprised later: the 7,241 already sent can't be retrofitted, which is why I've still asked Legal to review the footer wording; and the postal address is a separate requirement I'm confirming in each footer this week.
+**A correction on the size of it.** I first reported this as 7,241 emails. Checked email by email on 23 September, the real picture is worse and more precise:
+
+| | Emails |
+|---|---|
+| Missing our **street address** | **7,397** |
+| Of those, also missing **any opt-out link** | **1,888** |
+| Fully correct | **2,424** — Peninsula only |
+
+So every campaign except Peninsula was short of what the law requires, and 27 Prague St — which I'd previously reported as compliant — had neither the link nor the address on any of its 156 emails. 7,397 plus Peninsula's 2,424 is 9,821, every email we have sent.
+
+None of those already sent can be retrofitted, which is why Legal still needs to review the wording.
 
 ## Two things you should hear from me rather than elsewhere
 
@@ -81,7 +91,7 @@ On the numbers: three opportunities were tagged against that test and it was del
 |---|---|
 | **Me, this week** | Global suppression list built and uploaded · postal address confirmed in every footer · sender pools cleaned on three campaigns · opt-out sweep finished · unanswered replies read and answered |
 | **Lawrence** | Lists verified and de-duplicated before anything resumes · sending caps · lead lists rebuilt as reusable lists · SLA flag added to the KPI bot |
-| **Legal** | Review the footer wording for the 7,241 already sent |
+| **Legal** | Review the footer wording for the 7,397 already sent |
 | **You** | The three decisions above |
 
 Nothing here needs your attention beyond those three answers.

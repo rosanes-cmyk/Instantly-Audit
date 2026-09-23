@@ -119,7 +119,7 @@ They're ordered by value. Batch 1 alone closes or shrinks four blockers.
 Not asks to chase — just so you know why they're still on the Fixes tab:
 
 - **Whether cold outreach runs from twinhomebuyer.com.** A business decision about risk to the company's real mail. Instantly can tell us the caps; it can't make the call.
-- **Whether the footer wording is compliant.** Legal's judgement on 7,241 emails already sent.
-- **Whether Realtors July 2026 resumes.** It holds 9 of 17 opportunities and was paused with no reason recorded. Instantly can show the numbers; only Cherry can say resume or retire.
+- **Whether the footer wording is compliant.** Legal's judgement on the 7,397 emails that went out with no street address, 1,888 of which also had no opt-out link.
+- **Whether Realtors July 2026 resumes.** It produced 5 of our 10 live leads and was paused with no reason recorded. Instantly can show the numbers; only Cherry can say resume or retire.
 
 Everything else on the list, the questions above should settle.
