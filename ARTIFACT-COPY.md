@@ -84,7 +84,7 @@ Plain words, short sentences, no jargon that is not defined on the page.
 **`section.tplH.note`**
 > What each campaign actually sends. Instantly stays the source of truth — this is the archive as pulled, so re-pull it if a sequence is edited.
 **`section.logH.heading`**
-> Update Log No update posted yet Post an update Connecting to the shared log… Post update No updates yet. The first one is due within the hour — say where the audit stands, even if the answer is "waiting on Carlo". Who To Contact
+> Update Log No update posted yet Post an update Connecting to the shared log… Post update No updates yet. The first one is due within the hour — say where the audit stands, even if the answer is "waiting on Lawrence". Who To Contact
 **`section.logH.note`**
 > The escalation path this SOP hands over. If sending breaks, this is the order to work down.
 
@@ -107,7 +107,7 @@ Plain words, short sentences, no jargon that is not defined on the page.
 **`PHASES.p4.target`**
 > Target: hour 4, then ongoing
 **`PHASES.p1t1.text`**
-> Get a walkthrough from Carlo on the original Instantly configuration — campaigns, sequences, sending domains/inboxes, integrations/webhooks
+> Get a walkthrough from Lawrence on the Instantly configuration — campaigns, sequences, sending domains/inboxes, integrations/webhooks
 **`PHASES.p1t1.note`**  _(the grey prompt inside the notes box)_
 > When it happened, and what surprised you
 **`PHASES.p1t2.text`**
@@ -281,7 +281,7 @@ Plain words, short sentences, no jargon that is not defined on the page.
 
 ### Our actual setup
 **`SOP_SETUP[0]`**  _(row: "Outreach operator")_
-> Jonathan — rosanes@twinhomebuyer.com. Owns this system outright: the daily Unibox check, the realtor lead SLA, the 4pm report, and everything in the escalation table below. Carlo built the original configuration and remains the reference on how it was wired, but the work sits here now.
+> Jonathan — rosanes@twinhomebuyer.com. Owns this system outright: the daily Unibox check, the realtor lead SLA, the 4pm report, and everything in the escalation table below. Lawrence is the reference on how it was wired, but the work sits here now.
 **`SOP_SETUP[1]`**  _(row: "Workspace")_
 > One only — 'My Organization', owned by carlo@twinhomebuyer.com. There is no second workspace.
 **`SOP_SETUP[2]`**  _(row: "Sending accounts")_
@@ -372,7 +372,7 @@ Plain words, short sentences, no jargon that is not defined on the page.
 **`SOP_ESCALATION[1]`**  _(situation: "Deliverability drop or spam flags")_
 > Pause sending. Check warmup and domain health. Jonathan handles it — rosanes@twinhomebuyer.com.
 **`SOP_ESCALATION[2]`**  _(situation: "A sending account or domain breaks")_
-> Jonathan, as Instantly admin — rosanes@twinhomebuyer.com. Carlo built the original setup, so he is the reference of last resort on how something was wired, not the person who fixes it.
+> Jonathan, as Instantly admin — rosanes@twinhomebuyer.com. Lawrence is the reference on how something was wired, not the person who fixes it.
 **`SOP_ESCALATION[3]`**  _(situation: "A recipient complains, or a compliance question")_
 > Stop the thread. Escalate to ops and ownership the same day.
 **`SOP_ESCALATION[4]`**  _(situation: "Low reply rate across a full cycle")_
@@ -479,7 +479,7 @@ Plain words, short sentences, no jargon that is not defined on the page.
 
 ### Phase 1 – Peninsula Listing Agents
 **`DOSSIERS.peninsula.leadnote`**
-> 517 leads, 516 contacted. Lead owner on the rows reads 'Carlo James Ballerdo'. The rows carry name and email only — job title, company, location, website and LinkedIn are all empty, so nothing in the list itself establishes these are Peninsula listing agents.
+> 517 leads, 516 contacted. The rows carry name and email only — job title, company, location, website and LinkedIn are all empty, so nothing in the list itself establishes these are Peninsula listing agents.
 **`DOSSIERS.peninsula.flags[0]`**  _(severity: ok)_
 > Footer already correct — San Carlos postal address plus a working unsubscribe link. This is the footer the other three were copied from on 22 Sep.
 **`DOSSIERS.peninsula.flags[1]`**  _(severity: warn)_
@@ -530,7 +530,7 @@ Plain words, short sentences, no jargon that is not defined on the page.
 **`empty.fixEmpty`**
 > No fixes recorded yet.
 **`empty.logEmpty`**
-> No updates yet. The first one is due within the hour — say where the audit stands, even if the answer is "waiting on Carlo".
+> No updates yet. The first one is due within the hour — say where the audit stands, even if the answer is "waiting on Lawrence".
 **`banner.readonly`**
 > You can read everything here, but ticking a task or posting an update needs edit access — ask Jonathan to share it as “can edit”.
 **`footer.note`**

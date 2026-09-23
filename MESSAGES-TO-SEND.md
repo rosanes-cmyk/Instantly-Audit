@@ -64,7 +64,7 @@ Jonathan
 
 ---
 
-## 3 — REPLY TO LAWRENCE (replaces the original Carlo message — he's already answered)
+## 3 — REPLY TO LAWRENCE (replaces the original Lawrence message — he's already answered)
 
 Subject: Re: Instantly — thanks, two follow-ups
 

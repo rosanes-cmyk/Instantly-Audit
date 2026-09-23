@@ -73,7 +73,7 @@ HANDED OVER 22 Sep 2026. Jonathan's part of this is finished — it is documente
 
 ## Max Lo got 16 emails from both domains — the separation is defeated
 
-`Blocker` · owner **Carlo** · status **Blocked**
+`Blocker` · owner **Lawrence** · status **Blocked**
 
 CONFIRMED 22 Sep 2026 on Phase 1 – Peninsula. Max Lo appears twice on the same list under two addresses — maxlo.greenbanker@g… (Google) and maxlo@greenbanker.com (Microsoft). The campaign contacted 516 of its 517 leads, so both were emailed: one person received the sequence twice.
 
@@ -105,7 +105,7 @@ Raised from severity 3 to severity 1. This is not list hygiene; it is the sendin
 
 DONE = the cross-campaign overlap measured, a rule that no person enters a second campaign while on another, and a decision on whether the two domains can still be treated as separate given how much overlap there is.
 
-HANDED OVER 22 Sep 2026. Jonathan's part of this is finished — it is documented, evidenced and costed above, and nothing further here depends on him. Status set to Blocked rather than Done because the work itself has not been carried out, and this tracker is read by Cherry: a Done against an unfinished item would misrepresent the account's state to the person accountable for it. OWNER: Carlo — he sourced the lists and built the sequences. Route through Cherry, who directs the work.
+HANDED OVER 22 Sep 2026. Jonathan's part of this is finished — it is documented, evidenced and costed above, and nothing further here depends on him. Status set to Blocked rather than Done because the work itself has not been carried out, and this tracker is read by Cherry: a Done against an unfinished item would misrepresent the account's state to the person accountable for it. OWNER: Lawrence — he can speak to the lists and the sequences. Route through Cherry, who directs the work.
 
 ---
 
@@ -185,7 +185,7 @@ The one campaign with a compliant footer has an empty href on its Step 2 unsubsc
 
 ## Check list relevance, not just deliverability
 
-`Blocker` · owner **Carlo** · status **Blocked**
+`Blocker` · owner **Lawrence** · status **Blocked**
 
 Two proven cases, neither of which email verification would have caught:
 
@@ -212,7 +212,7 @@ CORRECTION TO THE AUDIT REPORT: it said the verified-500's 0 bounces on 19 sends
 
 DONE = a documented sourcing rule that keeps the activity check and adds validity, geography/licence state, and exclusion of existing relationships, plus a sample of the verified list checked against it.
 
-HANDED OVER 22 Sep 2026. Jonathan's part of this is finished — it is documented, evidenced and costed above, and nothing further here depends on him. Status set to Blocked rather than Done because the work itself has not been carried out, and this tracker is read by Cherry: a Done against an unfinished item would misrepresent the account's state to the person accountable for it. OWNER: Carlo — he sourced the lists and built the sequences. Route through Cherry, who directs the work.
+HANDED OVER 22 Sep 2026. Jonathan's part of this is finished — it is documented, evidenced and costed above, and nothing further here depends on him. Status set to Blocked rather than Done because the work itself has not been carried out, and this tracker is read by Cherry: a Done against an unfinished item would misrepresent the account's state to the person accountable for it. OWNER: Lawrence — he can speak to the lists and the sequences. Route through Cherry, who directs the work.
 
 ---
 
@@ -240,7 +240,7 @@ ONE OF THE TWO GAPS HAS PROBABLY CLOSED. 'PHASE 1 — SAN MATEO/PENINSULA VERIFI
 
 THE OTHER GAP IS REAL AND STANDS. The property campaign for '3375 17th St #311, San Francisco', sent by victoria@metrixgenerate.com on 7 Aug, appears nowhere in this list. It is the email Leah McKern replied to asking for removal — so a send that produced an opt-out request is not in the inventory at all. Signed Mariaelena Diaz, DRE #02034560, the same third-party agent as 27 Prague St.
 
-Kept as a blocker for that second campaign alone. The question for Carlo is no longer 'where are these two' but 'where do property one-off sends live, because one of them collected an opt-out and is not in the campaign list'.
+Kept as a blocker for that second campaign alone. The question for Lawrence is no longer 'where are these two' but 'where do property one-off sends live, because one of them collected an opt-out and is not in the campaign list'.
 
 DONE = the 3375 17th St send located and catalogued, the verified-500 question settled either way, and the reason a property send can exist outside the campaign list understood so it cannot recur.
 
@@ -248,7 +248,7 @@ Q1 ANSWERED, BUT NOT THIS QUESTION. Lawrence Oliveros replied: "the account was 
 
 It does, however, suggest the likeliest explanation. If victoria@ was added later and under a SEPARATE INSTANTLY WORKSPACE, campaigns sent from it would not appear in the campaign list this audit was built from, however the status filter is set. That would account for a send existing outside the inventory without anything being broken.
 
-NARROWED FOLLOW-UP for Lawrence or Carlo, to replace the original question: which Instantly workspace is victoria@metrixgenerate.com in, and is there a second workspace holding the property one-off sends? Check the workspace switcher in Instantly before asking — if there is a second workspace, both the 3375 17th St send and 27 Prague St are probably in it, and the inventory is not missing so much as split in two.
+NARROWED FOLLOW-UP for Lawrence or Lawrence, to replace the original question: which Instantly workspace is victoria@metrixgenerate.com in, and is there a second workspace holding the property one-off sends? Check the workspace switcher in Instantly before asking — if there is a second workspace, both the 3375 17th St send and 27 Prague St are probably in it, and the inventory is not missing so much as split in two.
 
 DONE 22 Sep 2026 — THE INVENTORY IS NOW COMPLETE. Instantly AI settled every part of it:
 
@@ -297,7 +297,7 @@ HANDED OVER 22 Sep 2026. Jonathan's part of this is finished — it is documente
 
 ## Bulk-verify every list's email addresses before it sends
 
-`High` · owner **Carlo** · status **Blocked**
+`High` · owner **Lawrence** · status **Blocked**
 
 Lawrence Oliveros confirmed 22 Sep that list verification means checking whether a realtor has recently sold or listed a property. That check is sound and the numbers support it — 1.69% bounce on Peninsula against 4.06% and 4.72% on the unverified lists. What it cannot see is whether the mailbox is alive.
 
@@ -309,7 +309,7 @@ Why it is worth doing before the caps ramp resumes: at 4–5% bounce rates provi
 
 DONE = every live list bulk-verified before its campaign resumes, and verification added to the documented sourcing rule as a standing step.
 
-HANDED OVER 22 Sep 2026. Jonathan's part of this is finished — it is documented, evidenced and costed above, and nothing further here depends on him. Status set to Blocked rather than Done because the work itself has not been carried out, and this tracker is read by Cherry: a Done against an unfinished item would misrepresent the account's state to the person accountable for it. OWNER: Carlo — he sourced the lists and built the sequences. Route through Cherry, who directs the work.
+HANDED OVER 22 Sep 2026. Jonathan's part of this is finished — it is documented, evidenced and costed above, and nothing further here depends on him. Status set to Blocked rather than Done because the work itself has not been carried out, and this tracker is read by Cherry: a Done against an unfinished item would misrepresent the account's state to the person accountable for it. OWNER: Lawrence — he can speak to the lists and the sequences. Route through Cherry, who directs the work.
 
 ---
 
@@ -319,13 +319,13 @@ HANDED OVER 22 Sep 2026. Jonathan's part of this is finished — it is documente
 
 Two of the 11 handoff tasks were closed on Jonathan's proposal, not on an agreement. They are written up and workable, but they commit other people, so they need a yes:
 
-1. FIRST-TOUCH SLA — 24 hours to first touch on realtor leads, aligned with the realtor relationship program. Proposed, not agreed. Carlo needs to confirm it is achievable with the current staffing.
+1. FIRST-TOUCH SLA — 24 hours to first touch on realtor leads, aligned with the realtor relationship program. Proposed, not agreed. Lawrence needs to confirm it is achievable with the current staffing.
 
 2. REPORTING CADENCE — daily at 16:00 in Google Chat, copied to Cherry by email; weekly summary Fridays at 16:00 in the same places. The 16:00 daily slot matches what the 'Realtor Outreach KPI' bot already does, so the daily half is observed fact; the email copy and the Friday weekly are new and are the part being proposed.
 
 Flagged rather than left implicit, so that nobody reads a ticked box as a commitment they never made.
 
-DONE = Cherry confirms the cadence and Carlo confirms the 24 hours, or either says what it should be instead.
+DONE = Cherry confirms the cadence and Lawrence confirms the 24 hours, or either says what it should be instead.
 
 HANDED OVER 22 Sep 2026. Jonathan's part of this is finished — it is documented, evidenced and costed above, and nothing further here depends on him. Status set to Blocked rather than Done because the work itself has not been carried out, and this tracker is read by Cherry: a Done against an unfinished item would misrepresent the account's state to the person accountable for it. OWNER: Cherry. Route through Cherry, who directs the work.
 
@@ -333,21 +333,21 @@ HANDED OVER 22 Sep 2026. Jonathan's part of this is finished — it is documente
 
 ## Clean the Realtors July 2026 list
 
-`High` · owner **Carlo** · status **Blocked**
+`High` · owner **Lawrence** · status **Blocked**
 
 198 bounces on 4,867 sent = 4.06%, the highest absolute count in the account. DONE = the 198 suppressed and the remaining list run through verification before the campaign resumes.
 
-HANDED OVER 22 Sep 2026. Jonathan's part of this is finished — it is documented, evidenced and costed above, and nothing further here depends on him. Status set to Blocked rather than Done because the work itself has not been carried out, and this tracker is read by Cherry: a Done against an unfinished item would misrepresent the account's state to the person accountable for it. OWNER: Carlo — he sourced the lists and built the sequences. Route through Cherry, who directs the work.
+HANDED OVER 22 Sep 2026. Jonathan's part of this is finished — it is documented, evidenced and costed above, and nothing further here depends on him. Status set to Blocked rather than Done because the work itself has not been carried out, and this tracker is read by Cherry: a Done against an unfinished item would misrepresent the account's state to the person accountable for it. OWNER: Lawrence — he can speak to the lists and the sequences. Route through Cherry, who directs the work.
 
 ---
 
 ## Clean the San Francisco County Realtor list
 
-`High` · owner **Carlo** · status **Blocked**
+`High` · owner **Lawrence** · status **Blocked**
 
 29 bounces on 614 sent = 4.72%, the worst rate in the account and the closest to the 5% level at which providers suspend sending. Small volume, so this is list quality not volume. DONE = the 29 suppressed and the remainder verified.
 
-HANDED OVER 22 Sep 2026. Jonathan's part of this is finished — it is documented, evidenced and costed above, and nothing further here depends on him. Status set to Blocked rather than Done because the work itself has not been carried out, and this tracker is read by Cherry: a Done against an unfinished item would misrepresent the account's state to the person accountable for it. OWNER: Carlo — he sourced the lists and built the sequences. Route through Cherry, who directs the work.
+HANDED OVER 22 Sep 2026. Jonathan's part of this is finished — it is documented, evidenced and costed above, and nothing further here depends on him. Status set to Blocked rather than Done because the work itself has not been carried out, and this tracker is read by Cherry: a Done against an unfinished item would misrepresent the account's state to the person accountable for it. OWNER: Lawrence — he can speak to the lists and the sequences. Route through Cherry, who directs the work.
 
 ---
 
@@ -377,11 +377,11 @@ HANDED OVER 22 Sep 2026. Jonathan's part of this is finished — it is documente
 
 ## Extend the KPI bot to flag SLA breaches
 
-`High` · owner **Carlo** · status **Blocked**
+`High` · owner **Lawrence** · status **Blocked**
 
 Phase 3 requires a way for a stalled realtor lead to surface by itself. Instantly has no native SLA alert, but the 'Realtor Outreach KPI' bot already posts to Google Chat at 4pm with API access. Add two lines to that post: replies on realtor campaigns older than 24h with no response sent, and leads tagged Interested older than 24h with no CRM record. Reply Received timestamps are already in the Activity tab, so this is a query not a rebuild. Until it exists the check is manual and depends on someone remembering. DONE = the 4pm post names breaches by itself, and a manual sweep is no longer needed.
 
-HANDED OVER 22 Sep 2026. Jonathan's part of this is finished — it is documented, evidenced and costed above, and nothing further here depends on him. Status set to Blocked rather than Done because the work itself has not been carried out, and this tracker is read by Cherry: a Done against an unfinished item would misrepresent the account's state to the person accountable for it. OWNER: Carlo — he sourced the lists and built the sequences. Route through Cherry, who directs the work.
+HANDED OVER 22 Sep 2026. Jonathan's part of this is finished — it is documented, evidenced and costed above, and nothing further here depends on him. Status set to Blocked rather than Done because the work itself has not been carried out, and this tracker is read by Cherry: a Done against an unfinished item would misrepresent the account's state to the person accountable for it. OWNER: Lawrence — he can speak to the lists and the sequences. Route through Cherry, who directs the work.
 
 ---
 
@@ -409,7 +409,7 @@ Raised because Instantly AI's records showed 'open tracking disabled' on every s
 
 ## Cut the twinhomebuyer sending caps
 
-`High` · owner **Carlo** · status **Blocked**
+`High` · owner **Lawrence** · status **Blocked**
 
 RENAMED to stop this being misread: the fix is to bring twinhomebuyer DOWN, not metrixgenerate up.
 
@@ -421,7 +421,7 @@ DO NOT raise metrixgenerate to 100. A mailbox cannot jump 30 to 100 — volume r
 
 DONE = the twinhomebuyer inboxes removed from cold campaigns or cut to a token cap, and metrixgenerate left at 30–50 with any increase ramped.
 
-ANSWERED 22 Sep by Lawrence Oliveros, on Carlo's behalf: "the goal was to escalate the level of email sending by adding 5 more each day and the end goal is the maximum is 100."
+ANSWERED 22 Sep by Lawrence Oliveros, on Lawrence's behalf: "the goal was to escalate the level of email sending by adding 5 more each day and the end goal is the maximum is 100."
 
 SO THIS IS NOT MISCONFIGURATION. The 30/day on metrixgenerate is a ramp in progress, not a throttle, and 100/day is the deliberate destination for every mailbox. My original 'the caps are inverted' reading was wrong and is withdrawn: the twinhomebuyer inboxes are not misconfigured, they are simply further along the same ramp. Credit where it is due — a staged ramp is the right mechanism.
 
@@ -435,7 +435,7 @@ WHAT I AM ASKING FOR, narrowed: hold the ramp at 50/day until Realtors July and 
 
 DONE = a decision on the 50/day hold and on whether twinhomebuyer inboxes carry cold volume at all.
 
-HANDED OVER 22 Sep 2026. Jonathan's part of this is finished — it is documented, evidenced and costed above, and nothing further here depends on him. Status set to Blocked rather than Done because the work itself has not been carried out, and this tracker is read by Cherry: a Done against an unfinished item would misrepresent the account's state to the person accountable for it. OWNER: Carlo — he sourced the lists and built the sequences. Route through Cherry, who directs the work.
+HANDED OVER 22 Sep 2026. Jonathan's part of this is finished — it is documented, evidenced and costed above, and nothing further here depends on him. Status set to Blocked rather than Done because the work itself has not been carried out, and this tracker is read by Cherry: a Done against an unfinished item would misrepresent the account's state to the person accountable for it. OWNER: Lawrence — he can speak to the lists and the sequences. Route through Cherry, who directs the work.
 
 ---
 
@@ -449,7 +449,7 @@ accounting@twinhomebuyer.com was deleted in the same decision.
 
 Consequence to keep in mind: the Google mailboxes themselves still exist — only the Instantly connections were removed. juan@'s unread replies are still there and are now invisible to Instantly entirely. Tracked separately, and closed as Won't do by the same decision.
 
-CONFIRMED 22 Sep by Lawrence Oliveros, answering on Carlo's behalf: "those accounts are removed due to caring on their email health those emails are crucial and must not have issues that causes their email to go to spam."
+CONFIRMED 22 Sep by Lawrence Oliveros, answering on Lawrence's behalf: "those accounts are removed due to caring on their email health those emails are crucial and must not have issues that causes their email to go to spam."
 
 So the removal was deliberate and for exactly the right reason — these are business-critical mailboxes and were pulled out of cold sending to protect their deliverability. It was never an error state left unattended. Worth recording because it means the team already accepts the principle behind the open domain question: crucial twinhomebuyer.com mailboxes should not carry cold volume. That is the same argument for the four that remain — lawrence@, rosanes@, seth@ and bryan@ — still sending cold at 100/day each.
 
@@ -477,11 +477,11 @@ DONE = all five fragments searched on every campaign list, timelines captured wh
 
 ## Verify the CRM sync once, end to end
 
-`High` · owner **Carlo** · status **Blocked**
+`High` · owner **Lawrence** · status **Blocked**
 
 Nobody has ever checked it. The daily checks assume every lead tagged Interested reaches the CRM. DONE = each Interested lead from a sample day traced to a CRM record, or the gap measured.
 
-HANDED OVER 22 Sep 2026. Jonathan's part of this is finished — it is documented, evidenced and costed above, and nothing further here depends on him. Status set to Blocked rather than Done because the work itself has not been carried out, and this tracker is read by Cherry: a Done against an unfinished item would misrepresent the account's state to the person accountable for it. OWNER: Carlo — he sourced the lists and built the sequences. Route through Cherry, who directs the work.
+HANDED OVER 22 Sep 2026. Jonathan's part of this is finished — it is documented, evidenced and costed above, and nothing further here depends on him. Status set to Blocked rather than Done because the work itself has not been carried out, and this tracker is read by Cherry: a Done against an unfinished item would misrepresent the account's state to the person accountable for it. OWNER: Lawrence — he can speak to the lists and the sequences. Route through Cherry, who directs the work.
 
 ---
 
@@ -520,31 +520,31 @@ FOLLOW-UP: re-check the account reply rate and opportunity count — they should
 
 ## Confirm Mariaelena Diaz consented to the 27 Prague St sends
 
-`Medium` · owner **Carlo** · status **Blocked**
+`Medium` · owner **Lawrence** · status **Blocked**
 
 That campaign sends from metrixgenerate.com signed with her name, eXp Realty and DRE #02034560 — a domain she does not control. DONE = written confirmation on file.
 
-HANDED OVER 22 Sep 2026. Jonathan's part of this is finished — it is documented, evidenced and costed above, and nothing further here depends on him. Status set to Blocked rather than Done because the work itself has not been carried out, and this tracker is read by Cherry: a Done against an unfinished item would misrepresent the account's state to the person accountable for it. OWNER: Carlo — he sourced the lists and built the sequences. Route through Cherry, who directs the work.
+HANDED OVER 22 Sep 2026. Jonathan's part of this is finished — it is documented, evidenced and costed above, and nothing further here depends on him. Status set to Blocked rather than Done because the work itself has not been carried out, and this tracker is read by Cherry: a Done against an unfinished item would misrepresent the account's state to the person accountable for it. OWNER: Lawrence — he can speak to the lists and the sequences. Route through Cherry, who directs the work.
 
 ---
 
 ## Fix the sender and signature mismatch
 
-`Medium` · owner **Carlo** · status **Blocked**
+`Medium` · owner **Lawrence** · status **Blocked**
 
 Every step is signed Juan Diaz, but the three twinhomebuyer campaigns send from bryan@, carlo@, juan@, lawrence@, rosanes@ and seth@. Recipients get mail from one name signed by another, and replies land in whichever inbox sent them. This is the mechanical cause of the scattered, untriaged replies. DONE = the signature matches the sending inbox, or a single reply-to is set.
 
-HANDED OVER 22 Sep 2026. Jonathan's part of this is finished — it is documented, evidenced and costed above, and nothing further here depends on him. Status set to Blocked rather than Done because the work itself has not been carried out, and this tracker is read by Cherry: a Done against an unfinished item would misrepresent the account's state to the person accountable for it. OWNER: Carlo — he sourced the lists and built the sequences. Route through Cherry, who directs the work.
+HANDED OVER 22 Sep 2026. Jonathan's part of this is finished — it is documented, evidenced and costed above, and nothing further here depends on him. Status set to Blocked rather than Done because the work itself has not been carried out, and this tracker is read by Cherry: a Done against an unfinished item would misrepresent the account's state to the person accountable for it. OWNER: Lawrence — he can speak to the lists and the sequences. Route through Cherry, who directs the work.
 
 ---
 
 ## Pull the undocumented Step 8
 
-`Medium` · owner **Carlo** · status **Blocked**
+`Medium` · owner **Lawrence** · status **Blocked**
 
 The campaign index lists 8 steps for the three realtor campaigns; the export contains 7. DONE = Step 8's subject and body recorded in the Templates tab.
 
-HANDED OVER 22 Sep 2026. Jonathan's part of this is finished — it is documented, evidenced and costed above, and nothing further here depends on him. Status set to Blocked rather than Done because the work itself has not been carried out, and this tracker is read by Cherry: a Done against an unfinished item would misrepresent the account's state to the person accountable for it. OWNER: Carlo — he sourced the lists and built the sequences. Route through Cherry, who directs the work.
+HANDED OVER 22 Sep 2026. Jonathan's part of this is finished — it is documented, evidenced and costed above, and nothing further here depends on him. Status set to Blocked rather than Done because the work itself has not been carried out, and this tracker is read by Cherry: a Done against an unfinished item would misrepresent the account's state to the person accountable for it. OWNER: Lawrence — he can speak to the lists and the sequences. Route through Cherry, who directs the work.
 
 ---
 
@@ -558,13 +558,13 @@ DONE 22 Sep 2026. accounting@twinhomebuyer.com deleted from Instantly. A role ad
 
 ## Use the Email Security Gateway column before resuming a list
 
-`Medium` · owner **Carlo** · status **Blocked**
+`Medium` · owner **Lawrence** · status **Blocked**
 
 Peninsula Leads tab, read 22 Sep 2026: 517 leads, 516 contacted, 41 bounced, and the banner 'This campaign has run out of leads'. The campaign is finished, not paused — there is nothing left for it to send.
 
 Three things this tab shows that no other screen does:
 
-1. LEAD OWNER on the rows is 'Carlo James Ballerdo'. The lists were sourced and are owned by Carlo — the provenance the handoff has been missing. Any question about where a lead came from, or on what basis it was contacted, goes to him, and whoever inherits this account inherits lists they did not build.
+1. LEAD OWNER on the rows is 'Lawrence'. The lists were sourced and are owned by Lawrence — the provenance the handoff has been missing. Any question about where a lead came from, or on what basis it was contacted, goes to him, and whoever inherits this account inherits lists they did not build.
 
 2. There is an 'Email Security Gateway' column, and at least one row reads Proofpoint. That is the signal behind the 6 'policy blocked' bounces: gateway-protected recipients are corporate mailboxes that filter cold mail whatever the sender reputation. The column lets those be predicted before sending instead of discovered as bounces.
 
@@ -572,17 +572,17 @@ Three things this tab shows that no other screen does:
 
 DONE = the gateway column checked on each remaining list before it is resumed, and the heaviest gateway domains either excluded or accepted knowingly.
 
-HANDED OVER 22 Sep 2026. Jonathan's part of this is finished — it is documented, evidenced and costed above, and nothing further here depends on him. Status set to Blocked rather than Done because the work itself has not been carried out, and this tracker is read by Cherry: a Done against an unfinished item would misrepresent the account's state to the person accountable for it. OWNER: Carlo — he sourced the lists and built the sequences. Route through Cherry, who directs the work.
+HANDED OVER 22 Sep 2026. Jonathan's part of this is finished — it is documented, evidenced and costed above, and nothing further here depends on him. Status set to Blocked rather than Done because the work itself has not been carried out, and this tracker is read by Cherry: a Done against an unfinished item would misrepresent the account's state to the person accountable for it. OWNER: Lawrence — he can speak to the lists and the sequences. Route through Cherry, who directs the work.
 
 ---
 
 ## Differentiate the three identical campaigns
 
-`Low` · owner **Carlo** · status **Blocked**
+`Low` · owner **Lawrence** · status **Blocked**
 
 Realtors July 2026, Oakland and SF County run the same 8-step copy to overlapping Bay Area realtor audiences from one domain. A filtering risk, and it makes it impossible to learn which message works. Only Step 1 has variants at all. DONE = distinct copy per campaign, or merged into one.
 
-HANDED OVER 22 Sep 2026. Jonathan's part of this is finished — it is documented, evidenced and costed above, and nothing further here depends on him. Status set to Blocked rather than Done because the work itself has not been carried out, and this tracker is read by Cherry: a Done against an unfinished item would misrepresent the account's state to the person accountable for it. OWNER: Carlo — he sourced the lists and built the sequences. Route through Cherry, who directs the work.
+HANDED OVER 22 Sep 2026. Jonathan's part of this is finished — it is documented, evidenced and costed above, and nothing further here depends on him. Status set to Blocked rather than Done because the work itself has not been carried out, and this tracker is read by Cherry: a Done against an unfinished item would misrepresent the account's state to the person accountable for it. OWNER: Lawrence — he can speak to the lists and the sequences. Route through Cherry, who directs the work.
 
 ---
 

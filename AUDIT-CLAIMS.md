@@ -169,7 +169,7 @@ For each: please confirm **sent, leads loaded, leads contacted, bounces, bounce 
 
 **6.9** `[READ]` **23 of Peninsula's 41 bounces** are invalid-recipient failures at compass.com.
 
-**6.10** `[READ]` Peninsula's lead rows show the lead owner as **"Carlo James Ballerdo"**, and the job title, company, location, website and LinkedIn fields are **empty** on those rows.
+**6.10** `[READ]` Peninsula's lead rows show the lead owner as **"Lawrence"**, and the job title, company, location, website and LinkedIn fields are **empty** on those rows.
 
 **6.11** `[READ]` **timjgullicksen@gmail.com** replied to lawrence@twinhomebuyer.com on Oakland Realtor and was tagged Interested. The campaign was then paused.
 

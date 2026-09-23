@@ -27,7 +27,7 @@ The dollar figure was worse. Instantly assigns a **default $1,000 to each tag**.
 
 Our three realtor campaigns send from the primary business domain — the same one carrying our contracts, DocuSign and your own mail. The burner domain, metrixgenerate.com, sends the safer property campaigns. That's backwards. If twinhomebuyer.com ever gets filtered, our real business mail goes with it.
 
-My recommendation: **move cold outreach entirely to metrixgenerate.com.** Carlo can do it.
+My recommendation: **move cold outreach entirely to metrixgenerate.com.** Lawrence can do it.
 
 **2. Does Realtors July 2026 resume?**
 
@@ -80,7 +80,7 @@ On the numbers: three opportunities were tagged against that test and it was del
 | Who | What |
 |---|---|
 | **Me, this week** | Global suppression list built and uploaded · postal address confirmed in every footer · sender pools cleaned on three campaigns · opt-out sweep finished · unanswered replies read and answered |
-| **Carlo** | Lists verified and de-duplicated before anything resumes · sending caps · lead lists rebuilt as reusable lists · SLA flag added to the KPI bot |
+| **Lawrence** | Lists verified and de-duplicated before anything resumes · sending caps · lead lists rebuilt as reusable lists · SLA flag added to the KPI bot |
 | **Legal** | Review the footer wording for the 7,241 already sent |
 | **You** | The three decisions above |
 
