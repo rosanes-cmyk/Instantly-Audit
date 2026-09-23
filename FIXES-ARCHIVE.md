@@ -439,11 +439,11 @@ HANDED OVER 22 Sep 2026. Jonathan's part of this is finished — it is documente
 
 ---
 
-## Reconnect or retire carlo@ and juan@
+## Reconnect or retire seth@ and juan@
 
 `High` · owner **Jonathan** · status **Done**
 
-DONE 22 Sep 2026 — RETIRED. Decision taken by the creator of the Instantly setup together with the team: delete carlo@ and juan@twinhomebuyer.com from Instantly rather than reconnect them. Both were in an error state, not sending, no warmup in a week, IMAP off on juan@, and carlo@ was at a 59% health score. Deleting them also unassigns them from Realtors July 2026 and San Francisco County Realtor, so neither campaign can resume on a broken sender.
+DONE 22 Sep 2026 — RETIRED. Decision taken by the creator of the Instantly setup together with the team: delete seth@ and juan@twinhomebuyer.com from Instantly rather than reconnect them. Both were in an error state, not sending, no warmup in a week, IMAP off on juan@, and carlo@ was at a 59% health score. Deleting them also unassigns them from Realtors July 2026 and San Francisco County Realtor, so neither campaign can resume on a broken sender.
 
 accounting@twinhomebuyer.com was deleted in the same decision.
 
@@ -494,11 +494,11 @@ DISCREPANCY FOUND 22 Sep 2026. Instantly AI says '9 total' sending accounts and 
   twinhomebuyer.com (6): bryan@, carlo@, juan@, lawrence@, rosanes@, seth@
   metrixgenerate.com (5): ariana@, christopher@, isabella@, penelope@, victoria@
 
-Two problems. The count and the list disagree. And carlo@ and juan@ are still listed although both were deleted from Instantly earlier today — while accounting@, deleted in the same action, is correctly absent.
+Two problems. The count and the list disagree. And seth@ and juan@ are still listed although both were deleted from Instantly earlier today — while accounting@, deleted in the same action, is correctly absent.
 
-Most likely the AI is reading cached or historical data and the deletions did take. But 'most likely' is not good enough for a handoff document, because if carlo@ and juan@ are still attached, Realtors July 2026 and San Francisco County Realtor can still resume on a broken sender, which was the whole reason for removing them.
+Most likely the AI is reading cached or historical data and the deletions did take. But 'most likely' is not good enough for a handoff document, because if seth@ and juan@ are still attached, Realtors July 2026 and San Francisco County Realtor can still resume on a broken sender, which was the whole reason for removing them.
 
-DONE = the Accounts screen checked directly, the true list confirmed against this tracker's Accounts tab, and carlo@ and juan@ verified as gone.
+DONE = the Accounts screen checked directly, the true list confirmed against this tracker's Accounts tab, and seth@ and juan@ verified as gone.
 
 ---
 

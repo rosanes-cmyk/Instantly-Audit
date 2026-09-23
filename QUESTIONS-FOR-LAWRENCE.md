@@ -44,7 +44,7 @@ Ordered by what can't be recovered later. The first three are the ones to get to
 
 ## 5 — Things I couldn't resolve from the screens
 
-**5.1** **Are carlo@ and juan@ actually deleted?** Instantly lists 11 sending accounts while reporting 9, and both still appear. accounting@ is correctly gone. If those two are still attached, Realtors July and SF County can resume on a broken sender.
+**5.1** **Are seth@ and juan@ actually deleted?** Instantly lists 11 sending accounts while reporting 9, and both still appear. accounting@ is correctly gone. If those two are still attached, Realtors July and SF County can resume on a broken sender.
 
 **5.2** **Is the CRM connected to Instantly at all?** Any webhook or integration? Where do opportunities land, and has it ever fired successfully?
 

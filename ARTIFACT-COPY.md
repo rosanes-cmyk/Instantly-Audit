@@ -287,7 +287,7 @@ Plain words, short sentences, no jargon that is not defined on the page.
 **`SOP_SETUP[2]`**  _(row: "Sending accounts")_
 > 9 active. twinhomebuyer.com: bryan@, lawrence@, rosanes@, seth@ (100/day each). metrixgenerate.com: ariana@ (100/day), christopher@, isabella@, penelope@, victoria@ (30/day each).
 **`SOP_SETUP[3]`**  _(row: "Deleted accounts")_
-> carlo@, juan@ and accounting@twinhomebuyer.com were removed on 22 Sep to protect those mailboxes' health. Do not re-add them to campaigns.
+> seth@, juan@ and accounting@twinhomebuyer.com were removed on 22 Sep to protect those mailboxes' health. Do not re-add them to campaigns.
 **`SOP_SETUP[4]`**  _(row: "Campaigns")_
 > 5 live or completed: Realtors July 2026, Oakland Realtor, San Francisco County Realtor, Phase 1 – Peninsula Listing Agents, 27 Prague St. All paused or finished.
 **`SOP_SETUP[5]`**  _(row: "Which domain sends what")_
@@ -455,7 +455,7 @@ Plain words, short sentences, no jargon that is not defined on the page.
 **`DOSSIERS.realtors_july.flags[1]`**  _(severity: warn)_
 > Best performer in the account: 9 of the 17 opportunities, on 11% progress. Paused with no reason on record.
 **`DOSSIERS.realtors_july.flags[2]`**  _(severity: warn)_
-> Still lists the deleted carlo@ and juan@ as senders. Resuming without editing the sender pool will fail.
+> Still lists the deleted seth@ and juan@ as senders. Resuming without editing the sender pool will fail.
 
 ### Oakland Realtor Campaign
 **`DOSSIERS.oakland.leadnote`**
@@ -465,7 +465,7 @@ Plain words, short sentences, no jargon that is not defined on the page.
 **`DOSSIERS.oakland.flags[1]`**  _(severity: warn)_
 > Step 1 carries a sixth variant that is blank. Confirm it is inert before this resumes, or it can send an empty email.
 **`DOSSIERS.oakland.flags[2]`**  _(severity: warn)_
-> Still lists the deleted carlo@ and juan@ as senders.
+> Still lists the deleted seth@ and juan@ as senders.
 
 ### San Francisco County Realtor
 **`DOSSIERS.sf_county.leadnote`**
@@ -475,7 +475,7 @@ Plain words, short sentences, no jargon that is not defined on the page.
 **`DOSSIERS.sf_county.flags[1]`**  _(severity: crit)_
 > STILL TAKING REPLIES WHILE PAUSED. Two replies arrived in the last four weeks against zero sends, and a $1,000 opportunity is still open. Nobody is watching a campaign that reads 0%.
 **`DOSSIERS.sf_county.flags[2]`**  _(severity: warn)_
-> Still lists the deleted carlo@ and juan@ as senders.
+> Still lists the deleted seth@ and juan@ as senders.
 
 ### Phase 1 – Peninsula Listing Agents
 **`DOSSIERS.peninsula.leadnote`**

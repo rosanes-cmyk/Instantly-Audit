@@ -5,7 +5,7 @@ Just the clicks. No findings, no reading.
 ## Today
 
 **1. Strip the dead senders — 10 minutes, do this first**
-Open each of these three campaigns → Sequences/Settings → sender pool → remove `carlo@twinhomebuyer.com` and `juan@twinhomebuyer.com`:
+Open each of these three campaigns → Sequences/Settings → sender pool → remove `seth@twinhomebuyer.com` and `juan@twinhomebuyer.com`:
 - Realtors July 2026
 - Oakland Realtor Campaign
 - San Francisco County Realtor

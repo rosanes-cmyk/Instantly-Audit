@@ -78,7 +78,7 @@ Hi Lawrence,
 
 Thanks, that clears up most of it. Two of the four are closed on your answers.
 
-**On the removed inboxes** — understood, and that's the right call. I'd logged them as an unattended error state; knowing they were pulled deliberately to protect mailbox health changes how it reads. Worth saying: the same logic applies to lawrence@, rosanes@, seth@ and bryan@, which are still sending cold at 100/day each on the same domain.
+**On the removed inboxes** — understood, and that's the right call. I'd logged them as an unattended error state; knowing they were pulled deliberately to protect mailbox health changes how it reads. Worth saying: the same logic applies to lawrence@, rosanes@, carlo@ and bryan@, which are still sending cold at 100/day each on the same domain.
 
 **On verification** — this was the most useful thing you told me, because it explains a result I'd misread. I'd assumed "verified" meant email verification. Checking whether a realtor has recently sold or listed is a better method than I'd credited, and the numbers back it: Peninsula bounces at **1.69% across 2,424 sends**, against **4.06%** on Realtors July 2026 and **4.72%** on SF County. Active realtors have live mailboxes. I've corrected my report.
 
