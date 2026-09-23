@@ -75,9 +75,9 @@ For every claim, one of four answers:
 
 **2.3** `[READ]` **81 replies** from **57** unique people.
 
-**2.4** `[READ]` **20 opportunities** worth **$19,400** in total.
+**2.4** `[READ]` **17 opportunities tagged** across the five listed campaigns, of which **10 are still live** after review; the rest were later marked Wrong Person or Not Interested. We are no longer reporting a dollar value — the amounts Instantly shows are its default $1,000 per tag, not money earned. **Please confirm the live count of 10, and that the $1,000 is a system default.**
 
-**2.5** `[MATH]` Of those, **3 opportunities worth $3,000** belong to the deleted campaign and cannot be traced to specific leads.
+**2.5** `[MATH]` A further **3 opportunities** were tagged on the deleted campaign `c05714e3` and were never reviewed before it was deleted. They are excluded from the 10.
 
 **2.6** `[MATH]` **5,378 leads contacted** across all six campaigns.
 
@@ -89,19 +89,19 @@ For every claim, one of four answers:
 
 ## 3 — The six campaigns
 
-For each: please confirm **sent, leads loaded, leads contacted, bounces, bounce %, reply %, opportunities, value, number of steps, and sending domain.**
+For each: please confirm **sent, leads loaded, leads contacted, bounces, bounce %, reply %, opportunities tagged, how many are still live, number of steps, and sending domain.**
 
-**3.1** `[READ]` **Realtors July 2026** — `67d3a54b-e374-4503-ae65-77c9eef028fc` · Paused · created 9 Jul 2026 15:29 UTC · twinhomebuyer.com · 4,867 sent · 1,713 loaded · 1,554 contacted · 198 bounces (4.07%) · 1.29% reply · 9 opportunities ($9,000) · 7 steps, 5 variants on step 1.
+**3.1** `[READ]` **Realtors July 2026** — `67d3a54b-e374-4503-ae65-77c9eef028fc` · Paused · created 9 Jul 2026 15:29 UTC · twinhomebuyer.com · 4,867 sent · 1,713 loaded · 1,554 contacted · 198 bounces (4.07%) · 1.29% reply · 9 opportunities tagged, **5 still live** · 7 steps, 5 variants on step 1.
 
-**3.2** `[READ]` **Oakland Realtor Campaign** — `54635e3e-4652-49bc-bab1-b923c007cd31` · Paused at 44% · created 25 Jul 2026 21:58 UTC · twinhomebuyer.com · 1,760 sent · 1,598 loaded · 948 contacted · 16 bounces (0.91%) · 0.32% reply · 2 opportunities ($2,000) · 7 steps, **6 variants on step 1, one of which is blank**.
+**3.2** `[READ]` **Oakland Realtor Campaign** — `54635e3e-4652-49bc-bab1-b923c007cd31` · Paused at 44% · created 25 Jul 2026 21:58 UTC · twinhomebuyer.com · 1,760 sent · 1,598 loaded · 948 contacted · 16 bounces (0.91%) · 0.32% reply · 2 opportunities, **both still live** · 7 steps, **6 variants on step 1, one of which is blank**.
 
-**3.3** `[READ]` **San Francisco County Realtor** — `c1979cb5-7009-47c6-8fdb-6ddc8cd81790` · Paused at 0% · created 29 Jul 2026 21:01 UTC · twinhomebuyer.com · 614 sent · 1,387 loaded · 203 contacted · 29 bounces (4.72%) · 0.49% reply · 1 opportunity ($1,000, still open) · 7 steps.
+**3.3** `[READ]` **San Francisco County Realtor** — `c1979cb5-7009-47c6-8fdb-6ddc8cd81790` · Paused at 0% · created 29 Jul 2026 21:01 UTC · twinhomebuyer.com · 614 sent · 1,387 loaded · 203 contacted · 29 bounces (4.72%) · 0.49% reply · 1 opportunity, **still live** · 7 steps.
 
-**3.4** `[READ]` **Phase 1 – Peninsula Listing Agents** — `2484bb6e-1c62-41fe-8be4-414a5ec058fc` · Completed · created 31 Jul 2026 23:09 UTC · metrixgenerate.com · 2,424 sent · 517 loaded · 516 contacted · 41 bounces (1.69%) · 1.16% reply · 2 opportunities ($1,400) · **5 steps**.
+**3.4** `[READ]` **Phase 1 – Peninsula Listing Agents** — `2484bb6e-1c62-41fe-8be4-414a5ec058fc` · Completed · created 31 Jul 2026 23:09 UTC · metrixgenerate.com · 2,424 sent · 517 loaded · 516 contacted · 41 bounces (1.69%) · 1.16% reply · 2 opportunities tagged, **1 still live** · **5 steps**.
 
-**3.5** `[READ]` **27 Prague St, San Mateo, CA 94401** — `e7e18f27-7411-4ff5-b770-91a5695df4c8` · Completed · created 15 Aug 2026 20:31 UTC · metrixgenerate.com · 156 sent · 156 leads · 2 bounces (1.28%) · 2.56% reply · 3 opportunities ($3,000) · 1 step.
+**3.5** `[READ]` **27 Prague St, San Mateo, CA 94401** — `e7e18f27-7411-4ff5-b770-91a5695df4c8` · Completed · created 15 Aug 2026 20:31 UTC · metrixgenerate.com · 156 sent · 156 leads · 2 bounces (1.28%) · 2.56% reply · 3 opportunities tagged, **all three later disqualified — 0 live** · 1 step.
 
-**3.6** `[READ]` **3375 17th St #311, San Francisco** — `c05714e3-35db-4223-8873-c65639a33173` · **DELETED**, returns 404 · sent 6 Aug 2026 21:26 UTC to 10 Aug 2026 18:05 UTC · metrixgenerate.com, all five addresses · ~2,000 sent · ~38 bounces (~1.9%) · ~1.15% reply · 3 opportunities ($3,000) · 1 step, signed Mariaelena Diaz. **Internally confirmed as a test run** (deleted deliberately, verified with Seth and Lawrence) — please still confirm the send figures above, since the emails reached real recipients either way.
+**3.6** `[READ]` **3375 17th St #311, San Francisco** — `c05714e3-35db-4223-8873-c65639a33173` · **DELETED**, returns 404 · sent 6 Aug 2026 21:26 UTC to 10 Aug 2026 18:05 UTC · metrixgenerate.com, all five addresses · ~2,000 sent · ~38 bounces (~1.9%) · ~1.15% reply · 3 opportunities tagged, never reviewed before deletion · 1 step, signed Mariaelena Diaz. **Internally confirmed as a test run** (deleted deliberately, verified with Seth and Lawrence) — please still confirm the send figures above, since the emails reached real recipients either way.
 
 **3.7** `[READ]` **TEST CAMPAIGN REPLY** existed with 4 sends, 0 bounces, 13 replies, 1 opportunity, created 3 Aug 2026, sender victoria@metrixgenerate.com. Deleted 22 Sep 2026.
 
@@ -209,7 +209,9 @@ For each: please confirm **sent, leads loaded, leads contacted, bounces, bounce 
 
 **8.7** I said Stanley Lo was emailed by Peninsula. He was emailed by **Realtors July 2026**, from rosanes@. **Corrected.**
 
-**8.8** I reported 17 opportunities and $17,400. The real figures are **20 and $19,400** — the deleted campaign held 3 worth $3,000. **Corrected.**
+**8.8** I reported 17 opportunities and $17,400, then 20 and $19,400. **Both withdrawn, 23 Sep.** “Opportunity” is a tag Instantly applies to a positive-looking reply, not a reviewed lead. After review, **10 are live**. And the dollar amounts are Instantly's default $1,000 per tag — a placeholder, never quoted or invoiced — so **all dollar figures have been removed from this audit.**
+
+**8.10** I called 27 Prague St our best campaign at 1 lead per 52 emails and recommended running more like it. **Withdrawn, 23 Sep.** All three of its tagged leads were later marked Wrong Person or Not Interested, so it has none. Its 2.56% reply rate is still the highest in the account — the format worked, the targeting did not.
 
 **8.9** I recorded Oakland at 948 leads and SF County at 203. Those were *contacted* counts. Real list sizes are **1,598** and **1,387**. **Corrected.**
 

@@ -18,7 +18,7 @@ Settings → Blocklist → paste in the contents of `data/blocklist-upload.txt`.
 **1c. Switch off Oakland's blank email — 2 minutes**
 Oakland Realtor Campaign → Sequences → email 1. It has six versions and the sixth is empty. Delete it or turn it off. Restart Oakland with it live and it can send blank emails.
 
-**2. Ask Carlo and Lawrence for the original spreadsheets** — the single highest-value message you will send
+**2. Ask Seth and Lawrence for the original spreadsheets** — the single highest-value message you will send
 Every campaign's leads were uploaded from an offline CSV that Instantly never kept. Those files still exist on somebody's Drive or laptop, with phone numbers and brokerages Instantly never stored. One message recovers all of them:
 
 > *"Can you send me the source CSVs you uploaded for each campaign?*
@@ -65,11 +65,18 @@ CAN-SPAM needs a valid physical address as well as the opt-out link. Open each c
 Each campaign → Leads → search: `kurt` · `jason` · `leah` · `anagnostou`. Delete hits.
 Peninsula, Realtors July, Oakland, SF County, 27 Prague St.
 
-**10. Export the 17 opportunities**
-They exist nowhere but Instantly. Download them.
+**10. Export the 10 live leads**
+They exist nowhere but Instantly. Download them. The ten:
+- Realtors July — Jonathan Lee `jonathan.a2mrealestate@gmail.com` · Andrea Ruth `aruth9563@aol.com` · Jonathan Britton `brittonco@gmail.com` · Lisa Eccleston `lisa@ecclestoninc.com` · Paul Skrabo `pskrabo@yahoo.com`
+- Oakland — Don Dunbar `dondunbar322@gmail.com` · Tim Gullicksen `timjgullicksen@gmail.com`
+- Peninsula — Amelia Middel `amelia.middel@cbnorcal.com`
+- SF County — Todd Wiley `todd.wiley@compass.com`
+- Earlier sequence — Steven `steven@ascendre.com`
+
+Don't carry the dollar amounts over. Instantly puts a default $1,000 on every tagged lead; none of it is real.
 
 **11. Get the rest of the bounces** — we have 48 of about 324
-Ask Carlo or Lawrence to run the bounce export for every campaign, using the steps in `GET-THE-BOUNCES.md`. Expect roughly 195 on Realtors July, 29 on SF County, 16 on Oakland, 2 on 27 Prague, and about 38 on the 3375 test run. All of them go on the blocklist.
+Ask Seth or Lawrence to run the bounce export for every campaign, using the steps in `GET-THE-BOUNCES.md`. Expect roughly 195 on Realtors July, 29 on SF County, 16 on Oakland, 2 on 27 Prague, and about 38 on the 3375 test run. All of them go on the blocklist.
 
 **12. Fix the signature so it matches the sender** — the identity problem
 Every email is signed *Juan Diaz* but goes out from six different addresses. Five out of six agents get mail from a name that isn't in the message, and replies land in whichever mailbox sent it instead of with Juan. Two ways to fix it, pick one:

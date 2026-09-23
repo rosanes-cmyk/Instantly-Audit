@@ -1,4 +1,6 @@
-# Questions for Carlo
+# Questions for Seth and Lawrence
+
+*(Originally addressed to Carlo. Re-pointed 23 Sep — Seth and Lawrence are the people who can walk through how the setup works and how anything was wired.)*
 
 Ordered by what can't be recovered later. The first three are the ones to get today.
 

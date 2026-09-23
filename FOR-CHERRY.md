@@ -8,10 +8,18 @@ Full detail is in the live tracker if you want it. You don't need it to answer t
 
 ## Where it stands
 
-- **11,821 emails sent since 9 July**, 2.74% failed to deliver. **17 opportunities worth $16,400** from the five funded campaigns; 20 worth $19,400 if the August test send is included.
+- **11,821 emails sent since 9 July**, 2.74% failed to deliver. **10 leads are still live.** I'm no longer reporting a dollar figure against them — see the note below.
 - **Nothing is sending.** Every campaign is paused or finished.
 - The setup is now fully documented — accounts, campaigns, sequences, lists, reporting — in a tracker anyone can pick up.
 - Daily KPI snapshot at 4pm in Google Chat, copied to you by email. Weekly on Fridays.
+
+**Two corrections, so you're not comparing against last week's numbers.**
+
+I previously reported **17 opportunities worth $16,400** (and before that, 20 worth $19,400). Both figures are withdrawn.
+
+The count was wrong because "opportunity" is a tag Instantly applies when a reply looks positive — it isn't a review. Going back through every tagged lead, **10 are actually still live.** The rest were later marked Wrong Person or Not Interested.
+
+The dollar figure was worse. Instantly assigns a **default $1,000 to each tag**. Nobody set those amounts, nothing was quoted, nothing was invoiced. Reporting it as pipeline meant reporting a placeholder as revenue, and I shouldn't have put it in front of you. **There are no dollar figures anywhere in this audit now.** We count leads until a deal actually closes.
 
 ## Three decisions I need
 
@@ -27,25 +35,27 @@ Paused on 3 August, 11% of the way through its seven emails, and nobody recorded
 
 One correction on that 11%: it's how far through the sequence it got, not how much of the list it reached. It had already contacted 1,554 of its 1,713 people, so only **159 are untouched**. An earlier draft of this page said 89% were untouched; that was wrong and it overstated the case for restarting.
 
-And the comparison that matters more than any of this — how hard each campaign worked for one lead:
+And how hard each campaign worked for a lead that is **still live**:
 
-| Campaign | Emails per lead |
+| Campaign | Emails per live lead |
 |---|---|
-| **27 Prague St** | **1 per 52** |
-| Realtors July 2026 | 1 per 541 |
 | San Francisco County | 1 per 614 |
 | Oakland Realtor | 1 per 880 |
-| Phase 1 – Peninsula | 1 per 1,212 |
+| Realtors July 2026 | 1 per 973 |
+| Phase 1 – Peninsula | 1 per 2,424 |
+| 27 Prague St | **no live leads** |
 
-27 Prague St was one property, one short email, 156 of the right people. It beat everything else by ten to twenty-three times.
+Nothing here is a runaway success, and the gaps between the top three are small enough that one lead either way reorders them.
 
-My recommendation: **rework and resume**, after the footer is fixed and the list is cleaned — but the bigger prize is **running more Prague-style property sends**, not the 159 names left in Realtors July. The untouched volume is actually in Oakland (650) and San Francisco County (1,184), already found and already paid for.
+My recommendation: **rework and resume**, after the footer is fixed and the list is cleaned. Half our live pipeline came from this audience and finishing the sequence costs almost nothing — but at one lead per 973 emails, the 159 untouched names are worth well under a single lead on their own. The real untouched volume is in Oakland (650) and San Francisco County (1,184), already found and already paid for, and both cheaper per lead.
 
 **3. Should opportunities leave Instantly?**
 
-There's no CRM connection. All 17 opportunities and the $16,400 exist only as flags inside Instantly. If we want them anywhere else, that's a decision and a small build.
+There's no CRM connection. All 10 live leads exist only as flags inside Instantly. If we want them anywhere else, that's a decision and a small build.
 
-My recommendation: **export the current 17 now**, decide on a connection later.
+Who they are, so they're written down somewhere other than Instantly at least once: **Jonathan Lee, Andrea Ruth, Jonathan Britton, Lisa Eccleston, Paul Skrabo** (Realtors July) · **Don Dunbar, Tim Gullicksen** (Oakland) · **Amelia Middel** (Peninsula) · **Todd Wiley** (SF County) · **Steven at ascendre.com** (an earlier sequence).
+
+My recommendation: **export the 10 now**, decide on a connection later.
 
 ## Closed today, so you know it's handled
 
@@ -63,7 +73,7 @@ What I want you to hear from me is the size of it. That test reached **about 2,0
 
 Two loose ends from it, both mine to close this week. One agent replied asking to be removed and was never added to the do-not-email list. Another, **Rob Edwards, replied on 7 August asking who we were, and nobody has answered him** — that message is still unread seven weeks later.
 
-On the numbers: three opportunities worth $3,000 were logged against that test. So I'd report **17 opportunities worth $16,400** from the five funded campaigns, and note $19,400 across 20 if you want everything included. **Nothing gets deleted from here without it being written down** — the rule is now in the SOP.
+On the numbers: three opportunities were tagged against that test and it was deleted before anyone reviewed them, so they are not in the count of 10. **Nothing gets deleted from here without it being written down** — the rule is now in the SOP.
 
 ## What's being done, and by whom
 

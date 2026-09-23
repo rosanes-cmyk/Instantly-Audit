@@ -37,7 +37,7 @@ Right now nothing stops it. There is no rule that a bounced address gets suppres
 1. **Upload all 324 to the do-not-email list.** Settings → Blocklist → import. Takes minutes and applies to every campaign at once, forever.
 2. **Look at the hard bounces separately.** A hard bounce means the mailbox does not exist. Those should never be retried by anyone, ever.
 3. **Check the domain grouping.** If compass.com accounts for 23 of Peninsula's 41, it will show up across the others too. A brokerage that changed its email system leaves hundreds of dead addresses behind, and that is worth knowing before buying another list.
-4. **Take them out of the source spreadsheets too** — the ones Carlo and Lawrence are sending over. Otherwise the same dead addresses get re-uploaded next time and we are back here.
+4. **Take them out of the source spreadsheets too** — the ones Seth and Lawrence are sending over. Otherwise the same dead addresses get re-uploaded next time and we are back here.
 
 ---
 
