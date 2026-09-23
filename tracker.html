@@ -118,17 +118,15 @@
 
   /* ---------- tabs ---------- */
   .tabs{
-    display:flex;gap:2px;margin-top:30px;
+    display:flex;flex-wrap:wrap;gap:2px 0;margin-top:30px;
     border-bottom:1px solid var(--rule-strong);
-    overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;
   }
-  .tabs::-webkit-scrollbar{display:none;}
   .tab{
     flex:none;display:inline-flex;align-items:center;gap:7px;
     font-family:var(--f-display);font-size:13px;font-weight:600;letter-spacing:-.005em;
     color:var(--ink-2);background:transparent;
     border:0;border-bottom:2px solid transparent;
-    padding:10px 13px;cursor:pointer;white-space:nowrap;
+    padding:10px 11px;cursor:pointer;white-space:nowrap;
   }
   .tab:hover{color:var(--ink);}
   .tab[aria-selected="true"]{color:var(--accent-ink);border-bottom-color:var(--accent);}
@@ -2408,7 +2406,12 @@
     var age = Date.now() - last;
     var left = UPDATE_WINDOW_MS - age;
     tile.textContent = relTime(updates[0].at).replace(" ago","");
-    note.textContent = updates.length + " " + plural(updates.length,"update","updates") + " posted today";
+    var dayStart = new Date(); dayStart.setHours(0,0,0,0);
+    var nToday = 0;
+    updates.forEach(function(u){ if(Date.parse(u.at) >= dayStart.getTime()) nToday++; });
+    note.textContent = nToday
+      ? nToday + " " + plural(nToday,"update","updates") + " posted today"
+      : updates.length + " " + plural(updates.length,"update","updates") + " in total, none today";
     if(left > 15*60*1000){
       pill.setAttribute("data-c","ok");
       pill.textContent = "On time · next one due in " + dur(left);
@@ -3192,7 +3195,7 @@
         var st = (roster[key][id] || {}).status;
         if(st !== "Done" && st !== "Won't do") stillOpen++;
       });
-      tabCount(key, allIds.length ? (stillOpen + "/" + allIds.length) : "", stillOpen ? "warn" : "ok");
+      tabCount(key, stillOpen || "", stillOpen ? "warn" : "ok");
     } else {
       tabCount(key, allIds.length || "", null);
     }
